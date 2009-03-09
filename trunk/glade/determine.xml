@@ -1,0 +1,1352 @@
+<?xml version="1.0"?>
+<!--Generated with glade3 3.4.5 on Wed Mar  4 23:45:06 2009 -->
+<interface>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="upper">100</property>
+    <property name="lower">0</property>
+    <property name="page_increment">10</property>
+    <property name="step_increment">1</property>
+    <property name="page_size">10</property>
+    <property name="value">0</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment2">
+    <property name="upper">100</property>
+    <property name="lower">0</property>
+    <property name="page_increment">10</property>
+    <property name="step_increment">1</property>
+    <property name="page_size">10</property>
+    <property name="value">0</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment3">
+    <property name="upper">100</property>
+    <property name="lower">0</property>
+    <property name="page_increment">10</property>
+    <property name="step_increment">1</property>
+    <property name="page_size">10</property>
+    <property name="value">0</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment4">
+    <property name="upper">64</property>
+    <property name="lower">0</property>
+    <property name="page_increment">10</property>
+    <property name="step_increment">1</property>
+    <property name="page_size">10</property>
+    <property name="value">0</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment5">
+    <property name="upper">255</property>
+    <property name="lower">0</property>
+    <property name="page_increment">10</property>
+    <property name="step_increment">1</property>
+    <property name="page_size">10</property>
+    <property name="value">0</property>
+  </object>
+  <object class="GtkUIManager" id="uimanager1">
+    <child>
+      <object class="GtkActionGroup" id="actiongroup1">
+        <child>
+          <object class="GtkAction" id="file_menu_item">
+            <property name="name">file_menu_item</property>
+            <property name="label" translatable="yes">_File</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_new">
+            <property name="stock_id" translatable="yes">gtk-new</property>
+            <property name="name">menu_new</property>
+            <signal handler="on_menu_new_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_open">
+            <property name="stock_id" translatable="yes">gtk-open</property>
+            <property name="name">menu_open</property>
+            <signal handler="on_menu_open_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_save">
+            <property name="stock_id" translatable="yes">gtk-save</property>
+            <property name="name">menu_save</property>
+            <signal handler="on_menu_save_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_save_as">
+            <property name="stock_id" translatable="yes">gtk-save-as</property>
+            <property name="name">menu_save_as</property>
+            <signal handler="on_menu_save_as_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_save_report">
+            <property name="name">menu_save_report</property>
+            <property name="label" translatable="yes">Save _Report</property>
+            <signal handler="on_menu_save_report_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_save_report_as">
+            <property name="name">menu_save_report_as</property>
+            <property name="label" translatable="yes">Save Report As</property>
+            <signal handler="on_menu_save_report_as_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_quit">
+            <property name="stock_id" translatable="yes">gtk-quit</property>
+            <property name="name">menu_quit</property>
+            <signal handler="on_main_window_destroy" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="view">
+            <property name="name">view</property>
+            <property name="label" translatable="yes">_View</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="view_site">
+            <property name="name">view_site</property>
+            <property name="tooltip" translatable="yes">View site detials</property>
+            <property name="label" translatable="yes">_Site</property>
+            <signal handler="on_view_site_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="view_report">
+            <property name="name">view_report</property>
+            <property name="label" translatable="yes">_Report</property>
+            <signal handler="on_view_report_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menuitem_site">
+            <property name="name">menuitem_site</property>
+            <property name="label" translatable="yes">_Site</property>
+            <signal handler="on_menuitem_site_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menuitem_address">
+            <property name="name">menuitem_address</property>
+            <property name="tooltip" translatable="yes">Set or edit site adddress</property>
+            <property name="label" translatable="yes">_Address</property>
+            <signal handler="on_menuitem_address_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menuitem_phases">
+            <property name="name">menuitem_phases</property>
+            <property name="label" translatable="yes">_Phases</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menuitem_add_phases">
+            <property name="name">menuitem_add_phases</property>
+            <property name="label" translatable="yes">_Add Phase</property>
+            <signal handler="on_menuitem_add_phases_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menuitem_remove_phases">
+            <property name="name">menuitem_remove_phases</property>
+            <property name="label" translatable="yes">_Remove Phase</property>
+            <signal handler="on_menuitem_remove_phases_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menuitem_edit_intergreens">
+            <property name="name">menuitem_edit_intergreens</property>
+            <property name="label" translatable="yes">Edit _Intergreens</property>
+            <signal handler="on_menuitem_edit_intergreens_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menuitem_edit_phase_delays">
+            <property name="name">menuitem_edit_phase_delays</property>
+            <property name="label" translatable="yes">Edit Phase _Delays</property>
+            <signal handler="on_menuitem_edit_phase_delays_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menuitem_stage">
+            <property name="name">menuitem_stage</property>
+            <property name="label" translatable="yes">S_tages</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_add_stage">
+            <property name="name">menu_add_stage</property>
+            <property name="label" translatable="yes">_Add Stage</property>
+            <signal handler="on_menu_add_stage_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_remove_stage">
+            <property name="name">menu_remove_stage</property>
+            <property name="label" translatable="yes">_Remove Stage</property>
+            <signal handler="on_menu_remove_stage_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_edit_stage">
+            <property name="name">menu_edit_stage</property>
+            <property name="label" translatable="yes">_Edit Stage</property>
+            <signal handler="on_menu_edit_stage_activate" name="activate"/>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="help">
+            <property name="name">help</property>
+            <property name="label" translatable="yes">_Help</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkAction" id="menu_about">
+            <property name="stock_id" translatable="yes">gtk-about</property>
+            <property name="name">menu_about</property>
+            <signal handler="on_menu_about_activate" name="activate"/>
+          </object>
+        </child>
+      </object>
+    </child>
+    <ui>
+      <menubar name="menubar">
+        <menu action="file_menu_item">
+          <menuitem action="menu_new"/>
+          <menuitem action="menu_open"/>
+          <menuitem action="menu_save"/>
+          <menuitem action="menu_save_as"/>
+          <menuitem action="menu_save_report"/>
+          <menuitem action="menu_save_report_as"/>
+          <separator/>
+          <menuitem action="menu_quit"/>
+        </menu>
+        <menu action="view">
+          <menuitem action="view_site"/>
+          <menuitem action="view_report"/>
+        </menu>
+        <menu action="menuitem_site">
+          <menuitem action="menuitem_address"/>
+        </menu>
+        <menu action="menuitem_phases">
+          <menuitem action="menuitem_add_phases"/>
+          <menuitem action="menuitem_remove_phases"/>
+          <separator/>
+          <menuitem action="menuitem_edit_intergreens"/>
+          <separator/>
+          <menuitem action="menuitem_edit_phase_delays"/>
+        </menu>
+        <menu action="menuitem_stage">
+          <menuitem action="menu_add_stage"/>
+          <menuitem action="menu_remove_stage"/>
+          <menuitem action="menu_edit_stage"/>
+        </menu>
+        <menu action="help">
+          <menuitem action="menu_about"/>
+        </menu>
+      </menubar>
+    </ui>
+  </object>
+  <object class="GtkWindow" id="main_window">
+    <property name="title" translatable="yes">Determine</property>
+    <property name="default_width">640</property>
+    <property name="default_height">480</property>
+    <property name="icon">icon-master.png</property>
+    <signal handler="on_main_window_destroy" name="destroy"/>
+    <child>
+      <object class="GtkVBox" id="vbox1">
+        <property name="visible">True</property>
+        <child>
+          <object class="GtkMenuBar" constructor="uimanager1" id="menubar">
+            <property name="visible">True</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFrame" id="mozilla_frame">
+            <property name="visible">True</property>
+            <property name="label_xalign">0</property>
+            <property name="label_yalign">0</property>
+            <property name="shadow_type">GTK_SHADOW_NONE</property>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkDialog" id="dialog_waiting_diagram">
+    <property name="height_request">0</property>
+    <property name="border_width">5</property>
+    <property name="type">GTK_WINDOW_POPUP</property>
+    <property name="window_position">GTK_WIN_POS_CENTER</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox1">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkProgressBar" id="progressbar_waiting_diagram">
+            <property name="visible">True</property>
+            <property name="activity_mode">True</property>
+            <property name="show_text">True</property>
+            <property name="pulse_step">0.25</property>
+            <property name="text" translatable="yes">Generating Report ...</property>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area1">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkDialog" id="dialog_set_site_address">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Set Site Address...</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox2">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkEntry" id="entry_site_address">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="width_chars">50</property>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area2">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+            <child>
+              <object class="GtkButton" id="button_cancel_site_address">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_cancel_site_address_clicked" name="clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_ok_site_address">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-ok</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_ok_site_address_clicked" name="clicked"/>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">button_cancel_site_address</action-widget>
+      <action-widget response="0">button_ok_site_address</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkDialog" id="dialog_add_phase">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Add a phase...</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
+    <signal handler="on_dialog_add_phase_delete_event" name="delete_event"/>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox3">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkTable" id="table1">
+            <property name="visible">True</property>
+            <property name="n_rows">6</property>
+            <property name="n_columns">2</property>
+            <child>
+              <object class="GtkFrame" id="frame_phase_type">
+                <property name="visible">True</property>
+                <property name="label_xalign">0</property>
+                <property name="label_yalign">0</property>
+                <property name="shadow_type">GTK_SHADOW_NONE</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="entry_phase_description">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="width_chars">20</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label4">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Minimum Green time:</property>
+              </object>
+              <packing>
+                <property name="top_attach">3</property>
+                <property name="bottom_attach">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label3">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Phase type:</property>
+              </object>
+              <packing>
+                <property name="top_attach">2</property>
+                <property name="bottom_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label2">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Description (e.g. Main road, eastbound):</property>
+              </object>
+              <packing>
+                <property name="top_attach">1</property>
+                <property name="bottom_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label1">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Phase letter:</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame" id="frame_phase_letter">
+                <property name="visible">True</property>
+                <property name="label_xalign">0</property>
+                <property name="label_yalign">0</property>
+                <property name="shadow_type">GTK_SHADOW_NONE</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spinbutton_mingreen">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="adjustment">adjustment1</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">3</property>
+                <property name="bottom_attach">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label5">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Post Green time (e.g. Black-out time)</property>
+              </object>
+              <packing>
+                <property name="top_attach">5</property>
+                <property name="bottom_attach">6</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spinbutton_post_green_time">
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="can_focus">True</property>
+                <property name="adjustment">adjustment2</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">5</property>
+                <property name="bottom_attach">6</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label6">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Pre-Green time</property>
+              </object>
+              <packing>
+                <property name="top_attach">4</property>
+                <property name="bottom_attach">5</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="spinbutton_pre_green_time">
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="can_focus">True</property>
+                <property name="adjustment">adjustment3</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="right_attach">2</property>
+                <property name="top_attach">4</property>
+                <property name="bottom_attach">5</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area3">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+            <child>
+              <object class="GtkButton" id="button_cancel_add_phase">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_cancel_add_phase_clicked" name="clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_add_phase">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-add</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_add_phase_clicked" name="clicked"/>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">button_cancel_add_phase</action-widget>
+      <action-widget response="0">button_add_phase</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkDialog" id="dialog_remove_phase">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Remove a phase ...</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
+    <signal handler="on_dialog_remove_phase_delete_event" name="delete_event"/>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox4">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkHBox" id="hbox1">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkLabel" id="label7">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Phase to remove :</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame" id="frame_remove_phase_letter">
+                <property name="visible">True</property>
+                <property name="label_xalign">0</property>
+                <property name="label_yalign">0</property>
+                <property name="shadow_type">GTK_SHADOW_NONE</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area4">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+            <child>
+              <object class="GtkButton" id="button_cancel_remove_phase">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_cancel_remove_phase_clicked" name="clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_remove_phase">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-remove</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_remove_phase_clicked" name="clicked"/>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">button_cancel_remove_phase</action-widget>
+      <action-widget response="0">button_remove_phase</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkDialog" id="dialog_add_stage">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Add stage ...</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox5">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkVBox" id="vbox2">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkLabel" id="label9">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">&lt;u&gt;Current Stages&lt;/u&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_add_stage_current_stages">
+                <property name="visible">True</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkHBox" id="hbox2">
+                <property name="visible">True</property>
+                <child>
+                  <object class="GtkLabel" id="label8">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Add Stage:</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="spinbutton_add_stage">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="width_chars">3</property>
+                    <property name="adjustment">adjustment4</property>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area5">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+            <child>
+              <object class="GtkButton" id="button_cancel_add_stage">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_cancel_add_stage_clicked" name="clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_add_stage">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-add</property>
+                <property name="use_stock">True</property>
+                <property name="focus_on_click">False</property>
+                <signal handler="on_button_add_stage_clicked" name="clicked"/>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">button_cancel_add_stage</action-widget>
+      <action-widget response="0">button_add_stage</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkDialog" id="dialog_edit_stage">
+    <property name="border_width">5</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
+    <signal handler="on_dialog_edit_stage_delete_event" name="delete_event"/>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox6">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkVBox" id="vbox3">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkLabel" id="label10">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">&lt;u&gt;Current Stages&lt;/u&gt;</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="label_edit_stage_current_stages">
+                <property name="visible">True</property>
+                <property name="use_markup">True</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkHBox" id="hbox3">
+                <property name="visible">True</property>
+                <child>
+                  <object class="GtkLabel" id="label11">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Edit Stage:</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="frame_edit_stage_which_stage">
+                    <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <property name="label_yalign">0</property>
+                    <property name="shadow_type">GTK_SHADOW_NONE</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkHBox" id="hbox4">
+                <property name="visible">True</property>
+                <child>
+                  <object class="GtkLabel" id="label12">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Phase:</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="frame_edit_stage_which_phase">
+                    <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <property name="label_yalign">0</property>
+                    <property name="shadow_type">GTK_SHADOW_NONE</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkVBox" id="vbox4">
+                    <property name="visible">True</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button_edit_stage_remove_phase">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="label" translatable="yes">gtk-remove</property>
+                        <property name="use_stock">True</property>
+                        <signal handler="on_button_edit_stage_remove_phase_clicked" name="clicked"/>
+                      </object>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button_edit_stage_add_phase">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="label" translatable="yes">gtk-add</property>
+                        <property name="use_stock">True</property>
+                        <signal handler="on_button_edit_stage_remove_ph_clicked" name="clicked"/>
+                      </object>
+                      <packing>
+                        <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">3</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area6">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_edit_stages_ok">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-ok</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_edit_stages_ok_clicked" name="clicked"/>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">button_edit_stage_remove_phase</action-widget>
+      <action-widget response="0">button_edit_stage_add_phase</action-widget>
+      <action-widget response="0">button_edit_stages_ok</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkDialog" id="dialog_edit_intergreens">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Edit Intergreens ...</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
+    <signal handler="on_dialog_edit_intergreens_delete_event" name="delete_event"/>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox7">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkVBox" id="vbox5">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkTable" id="table2">
+                <property name="visible">True</property>
+                <property name="n_rows">2</property>
+                <property name="n_columns">2</property>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="frame_edit_intergreens">
+                    <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <property name="label_yalign">0</property>
+                    <property name="shadow_type">GTK_SHADOW_NONE</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label15">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">From</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label14">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">To</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area7">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+            <child>
+              <object class="GtkButton" id="button_edit_intergreens_cancel">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_edit_intergreens_cancel_clicked" name="clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_edit_intergreens_ok">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-ok</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_edit_intergreens_ok_clicked" name="clicked"/>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">button_edit_intergreens_cancel</action-widget>
+      <action-widget response="0">button_edit_intergreens_ok</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkDialog" id="dialog_remove_stage">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Remove Stage ...</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
+    <signal handler="on_dialog_remove_stage_delete_event" name="delete_event"/>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox8">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkHBox" id="hbox5">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkLabel" id="label13">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Remove Stage:</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFrame" id="frame_remove_stage_which_stage">
+                <property name="visible">True</property>
+                <property name="label_xalign">0</property>
+                <property name="label_yalign">0</property>
+                <property name="shadow_type">GTK_SHADOW_NONE</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area8">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+            <child>
+              <object class="GtkButton" id="button_remove_stage_cancel">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_remove_stage_cancel_clicked" name="clicked"/>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_remove_stage_ok">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-remove</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_remove_stage_ok_clicked" name="clicked"/>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">button_remove_stage_cancel</action-widget>
+      <action-widget response="0">button_remove_stage_ok</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkDialog" id="dialog_edit_phase_delays">
+    <property name="border_width">5</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
+    <property name="has_separator">False</property>
+    <signal handler="on_dialog_edit_phase_delays_delete_event" name="delete_event"/>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox9">
+        <property name="visible">True</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkVBox" id="vbox6">
+            <property name="visible">True</property>
+            <child>
+              <object class="GtkLabel" id="label_current_phase_delays">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Current phase delays</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkHBox" id="hbox7">
+                <property name="visible">True</property>
+                <child>
+                  <object class="GtkLabel" id="label20">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Remove from Phase:</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="frame_phase_delay_phase_remove">
+                    <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <property name="label_yalign">0</property>
+                    <property name="shadow_type">GTK_SHADOW_NONE</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label21">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Delay:</property>
+                  </object>
+                  <packing>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <object class="GtkHButtonBox" id="hbuttonbox2">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkButton" id="button2">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="label" translatable="yes">gtk-remove</property>
+                        <property name="use_stock">True</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkHBox" id="hbox6">
+                <property name="visible">True</property>
+                <child>
+                  <object class="GtkLabel" id="label16">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Phase:</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="frame_phase_delay_phase_add">
+                    <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <property name="label_yalign">0</property>
+                    <property name="shadow_type">GTK_SHADOW_NONE</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label17">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Delay on a move from: </property>
+                  </object>
+                  <packing>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="frame_phase_delay_phase_stages_f">
+                    <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <property name="label_yalign">0</property>
+                    <property name="shadow_type">GTK_SHADOW_NONE</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label18">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">to stage:</property>
+                  </object>
+                  <packing>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkFrame" id="frame_phase_delay_phase_stages_to">
+                    <property name="visible">True</property>
+                    <property name="label_xalign">0</property>
+                    <property name="label_yalign">0</property>
+                    <property name="shadow_type">GTK_SHADOW_NONE</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label19">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Delay by:</property>
+                  </object>
+                  <packing>
+                    <property name="position">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="spinbutton_edit_phase_delay_time">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="adjustment">adjustment5</property>
+                  </object>
+                  <packing>
+                    <property name="position">7</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkHButtonBox" id="hbuttonbox1">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkButton" id="button_edit_phase_delays_add">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="label" translatable="yes">gtk-add</property>
+                        <property name="use_stock">True</property>
+                        <signal handler="on_button_edit_phase_delays_add_clicked" name="clicked"/>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">8</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area9">
+            <property name="visible">True</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <object class="GtkButton" id="button_edit_phase_delay_ok">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-ok</property>
+                <property name="use_stock">True</property>
+                <signal handler="on_button_edit_phase_delay_ok_clicked" name="clicked"/>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">GTK_PACK_END</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">button2</action-widget>
+      <action-widget response="0">button_edit_phase_delays_add</action-widget>
+      <action-widget response="0">button_edit_phase_delay_ok</action-widget>
+    </action-widgets>
+  </object>
+</interface>
