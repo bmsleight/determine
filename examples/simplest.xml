@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="site-transform.xsl"?>
+
+<traffic_signals>
+ <site>
+  <address>Simplest Example</address> 
+  <phases>
+   <phase>
+    <letter>A</letter>
+    <description>Southbound</description>
+    <signal_type>traffic</signal_type>
+    <mintime>7</mintime>
+   </phase>
+   <phase>
+    <letter>B</letter>
+    <description>Eastbound</description>
+    <signal_type>traffic</signal_type>
+    <mintime>7</mintime>
+   </phase>
+  </phases>
+  <stages>
+   <stage>
+    <stage_number>1</stage_number>
+    <phases>
+     <phase>A</phase>
+    </phases>
+   </stage>
+   <stage>
+    <stage_number>2</stage_number>
+    <phases>
+     <phase>B</phase>
+    </phases>
+   </stage>
+  </stages>
+  <intergreens>
+   <intergreen>
+    <from>A</from>
+    <to>B</to>
+    <length>5</length>
+   </intergreen>
+   <intergreen>
+    <from>B</from>
+    <to>A</to>
+    <length>5</length>
+   </intergreen>
+  </intergreens>
+ </site>
+ <diagrams>
+  <diagram>
+   <title>Example 24 second cycle</title>
+   <cycle>24</cycle>
+   <start>2</start>
+   <loop>1</loop>
+   <movements>
+    <move>
+     <time>0</time>
+     <to>1</to>
+    </move>
+    <move>
+     <time>0</time>
+     <to>2</to>
+    </move>
+   </movements>
+  </diagram>
+  <diagram>
+   <title>Example 30 second cycle</title>
+   <cycle>30</cycle>
+   <start>2</start>
+   <loop>1</loop>
+   <movements>
+    <move>
+     <time>0</time>
+     <to>1</to>
+    </move>
+    <move>
+     <time>15</time>
+     <to>2</to>
+    </move>
+   </movements>
+  </diagram>
+ </diagrams>
+</traffic_signals>
+

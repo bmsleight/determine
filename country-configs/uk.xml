@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<traffic_signal_types>
+ <id>UK</id>
+ <types>
+   <phase>
+    <signal_type>Traffic</signal_type>
+    <pre_green>
+     <state>Red-Amber</state>
+     <time configurable="False" length="fixed">2</time>
+    </pre_green>
+    <at_green>
+     <state>Green</state>
+     <delay_gaining></delay_gaining>
+     <time configurable="True" length="min">7</time>
+     <delay_leaving></delay_leaving>
+    </at_green>
+    <post_green>
+     <state>Amber</state>
+     <time configurable="False" length="fixed">3</time>
+    </post_green>
+    <at_red>
+     <state>Red</state>
+     <time configurable="True" length="min">0</time>
+     <phase_delay>0</phase_delay>
+    </at_red>
+   </phase>
+   <phase>
+    <signal_type>Dummy</signal_type>
+    <pre_green>
+     <state>Off</state>
+     <time configurable="False" length="fixed">0</time>
+    </pre_green>
+    <at_green>
+     <state>On</state>
+     <delay_gaining></delay_gaining>
+     <time configurable="True" length="min">0</time>
+     <delay_leaving></delay_leaving>
+    </at_green>
+    <post_green>
+     <state>Off</state>
+     <time configurable="False" length="fixed">0</time>
+    </post_green>
+    <at_red>
+     <state>Off</state>
+     <time configurable="True" length="min">0</time>
+     <phase_delay>0</phase_delay>
+    </at_red>
+   </phase>
+   <phase>
+    <signal_type>Pedestrain</signal_type>
+    <pre_green>
+     <state>Red Man</state>
+     <time configurable="False" length="fixed">1</time>
+    </pre_green>
+    <at_green>
+     <state>Green Man</state>
+     <time configurable="True" length="min">7</time>
+     <phase_delay>0</phase_delay>
+    </at_green>
+    <post_green>
+     <state>Black-Out</state>
+     <time configurable="True" length="fixed">5</time>
+    </post_green>
+    <at_red>
+     <state>Red Man</state>
+     <time configurable="True" length="min">0</time>
+     <phase_delay>0</phase_delay>
+    </at_red>
+   </phase>
+   <phase>
+    <signal_type>Right Turn Indicative Green Arrow</signal_type>
+    <pre_green>
+     <state>Arrow Off</state>
+     <time configurable="False" length="fixed">0</time>
+    </pre_green>
+    <at_green>
+     <state>Right Turn Indicative Green Arrow</state>
+     <delay_gaining></delay_gaining>
+     <time configurable="True" length="min">0</time>
+     <delay_leaving></delay_leaving>
+    </at_green>
+    <post_green>
+     <state>Arrow Off</state>
+     <time configurable="False" length="fixed">0</time>
+    </post_green>
+    <at_red>
+     <state>Arrow Off</state>
+     <time configurable="True" length="min">0</time>
+     <phase_delay>0</phase_delay>
+    </at_red>
+   </phase>
+   <phase>
+    <signal_type>Filter Arrow</signal_type>
+    <pre_green>
+     <state>Arrow Off</state>
+     <time configurable="False" length="fixed">0</time>
+    </pre_green>
+    <at_green>
+     <state>Green Filter Arrow</state>
+     <delay_gaining></delay_gaining>
+     <time configurable="True" length="min">0</time>
+     <delay_leaving></delay_leaving>
+    </at_green>
+    <post_green>
+     <state>Arrow Off</state>
+     <time configurable="False" length="fixed">0</time>
+    </post_green>
+    <at_red>
+     <state>Arrow Off</state>
+     <time configurable="True" length="min">0</time>
+     <phase_delay>0</phase_delay>
+    </at_red>
+   </phase>
+ </types>
+</traffic_signal_types>
+
+
