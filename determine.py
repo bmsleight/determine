@@ -394,6 +394,88 @@ class DetermineGUI:
 
 #    def button_edit_phase_delays_add(self, button, data=None):
 
+    def on_menuitem_remove_diagram_activate(self, menuitem, data=None):
+        self.dialog_remove_diagram = self.builder.get_object("dialog_remove_diagram")
+        frame_remove_diagram_diagrams = self.builder.get_object("frame_remove_diagram_diagrams")
+        frame_remove_diagram_diagrams.add(comboFromList(self.site.listDiagrams()))
+        # label_diagram_text
+        label_diagram_text = self.builder.get_object("label_diagram_text")
+        label_diagram_text.set_text(self.site.diagramsText())
+        self.dialog_remove_diagram.show_all()
+
+    def on_dialog_remove_diagram_delete_event(self, widget, data=None):
+        self.builder.get_object("frame_remove_diagram_diagrams").get_children()[0].destroy()
+        self.update_site_xml()
+        self.dialog_remove_diagram.hide()
+        return True
+
+    def on_button_diagram_remove_ok_clicked(self, button, data=None):
+        self.builder.get_object("frame_remove_diagram_diagrams").get_children()[0].destroy()
+        self.update_site_xml()
+        self.dialog_remove_diagram.hide()
+
+    def on_button_diagram_remove_remove_clicked(self, button, data=None):
+        diagram_title = self.builder.get_object("frame_remove_diagram_diagrams").get_children()[0].get_active_text()
+        diagram = self.site.diagram(diagram_title)
+        self.site.requiredDiagrams.remove(diagram)
+        label_diagram_text = self.builder.get_object("label_diagram_text")
+        label_diagram_text.set_text(self.site.diagramsText())
+
+    def on_menuitem_add_diagram_activate(self, menuitem, data=None):
+        self.dialog_add_diagram = self.builder.get_object("dialog_add_diagram")
+        self.newDiagram = libdetermine.requiredDiagramClass("Default Title", 96, self.site.stages.stages[0].stageName, 1)
+        frame_add_diagram_starting_stage = self.builder.get_object("frame_add_diagram_starting_stage")
+        frame_add_diagram_starting_stage.add(comboFromList(self.site.stages.listStageNames()))
+        frame_add_diagram_moveto_stage = self.builder.get_object("frame_add_diagram_moveto_stage")
+        frame_add_diagram_moveto_stage.add(comboFromList(self.site.stages.listStageNames()))
+        label_new_diagram = self.builder.get_object("label_new_diagram")
+        label_new_diagram.set_text(self.newDiagram.diagramsText())
+        self.dialog_add_diagram.show_all()
+
+    def on_dialog_add_diagram_delete_event(self, widget, data=None):
+        self.builder.get_object("frame_add_diagram_starting_stage").get_children()[0].destroy()
+        self.builder.get_object("frame_add_diagram_moveto_stage").get_children()[0].destroy()
+        self.update_site_xml()
+        self.dialog_add_diagram.hide()
+        return True
+
+    def on_button_add_diagram_cancel_clicked(self, button, data=None):
+        self.builder.get_object("frame_add_diagram_starting_stage").get_children()[0].destroy()
+        self.builder.get_object("frame_add_diagram_moveto_stage").get_children()[0].destroy()
+        self.update_site_xml()
+        self.dialog_add_diagram.hide()
+
+    def on_button_add_diagram_add_clicked(self, button, data=None):
+        self.builder.get_object("frame_add_diagram_starting_stage").get_children()[0].destroy()
+        self.builder.get_object("frame_add_diagram_moveto_stage").get_children()[0].destroy()
+        self.site.requiredDiagrams.append(self.newDiagram)
+        self.update_site_xml()
+        self.dialog_add_diagram.hide()
+
+    def on_button_add_diagram_title_clicked(self, button, data=None):
+        entry_diagram_add_title = self.builder.get_object("entry_diagram_add_title")
+        self.newDiagram.title = entry_diagram_add_title.get_text()
+        self.builder.get_object("label_new_diagram").set_text(self.newDiagram.diagramsText())
+
+    def on_button_add_diagram_starting_stage_clicked(self, button, data=None):
+        self.newDiagram.startingStageName = self.builder.get_object("frame_add_diagram_starting_stage").get_children()[0].get_active_text()
+        self.builder.get_object("label_new_diagram").set_text(self.newDiagram.diagramsText())
+
+    def on_button_add_diagram_cycle_time_clicked(self, button, data=None):
+        self.newDiagram.cycleTime = self.builder.get_object("spinbutton_add_diagram_cycle_time").get_value_as_int()
+        self.builder.get_object("label_new_diagram").set_text(self.newDiagram.diagramsText())
+
+    def on_button_add_diagram_loop_clicked(self, button, data=None):
+        self.newDiagram.loop = self.builder.get_object("spinbutton_add_diagram_loop").get_value_as_int()
+        self.builder.get_object("label_new_diagram").set_text(self.newDiagram.diagramsText())
+
+    def on_button_add_diagram_movement_clicked(self, button, data=None):
+        timeSeconds = self.builder.get_object("spinbutton_add_diagram_at_time").get_value_as_int()
+        toStageName = self.builder.get_object("frame_add_diagram_moveto_stage").get_children()[0].get_active_text()
+        movement = libdetermine.requiredDiagramMovementClass(timeSeconds, toStageName)
+        self.newDiagram.movements.append(movement)
+        self.builder.get_object("label_new_diagram").set_text(self.newDiagram.diagramsText())
+
 
     # Called when the user clicks the 'About' menu. We use gtk_show_about_dialog() 
     # which is a convenience function to show a GtkAboutDialog. This dialog will

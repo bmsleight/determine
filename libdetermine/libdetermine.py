@@ -601,10 +601,19 @@ class requiredDiagramMovementClass:
     def __init__(self, timeSeconds, toStageName):
         self.timeSeconds = int(unicode(timeSeconds))
         self.toStageName = str(unicode(toStageName))
+    def text(self):
+        text = "  At " + str(self.timeSeconds) + " move to Stage " + self.toStageName + "\n"
+        return text
+    def xml(self):
+        xml = "<move>"
+        xml = xml + "<time>" + str(self.timeSeconds) + "</time>"
+        xml = xml + "<to>" + self.toStageName + "</to>"
+        xml = xml + "</move>"
+        return xml
 
 class requiredDiagramClass:
     def __init__(self, title, cycleTime, startingStageName, loop):
-        self.title = title
+        self.title = str(unicode(title))
         self.cycleTime = int(unicode(cycleTime))
         self.startingStageName = startingStageName 
         self.loop = int(unicode(loop))
@@ -620,6 +629,25 @@ class requiredDiagramClass:
             return False
         else:
             return returnMovements
+    def diagramsText(self):
+        diagramText = self.title + "\n"  
+        diagramText = diagramText + "Cycle time: " + str(self.cycleTime) + "\n"  
+        diagramText = diagramText + "Starting from stage " + str(unicode(self.startingStageName)) + "\n"  
+        diagramText = diagramText + "Complete " + str(self.loop)  + " loop(s) of these movements:\n"  
+        for movement in self.movements:
+            diagramText = diagramText + movement.text()
+        diagramText = diagramText + "\n\n"  
+        return diagramText
+    def xml(self):
+        xml = "<diagram>"
+        xml = xml + "<title>" + self.title + "</title>"
+        xml = xml + "<cycle>" + str(self.cycleTime) + "</cycle>"
+        xml = xml + "<start>" + str(self.startingStageName) + "</start>"
+        xml = xml + "<loop>" + str(self.loop) + "</loop>"
+        for movement in self.movements:
+            xml = xml + str(movement.xml())
+        xml = xml + "</diagram>"
+        return xml
 
 class siteClass:
     def __init__(self):
@@ -628,6 +656,26 @@ class siteClass:
         self.phases = phaseArrayClass()
         self.stages = stageArrayClass()
         self.requiredDiagrams = []
+    def listDiagrams(self):
+        listDiagrams = []
+        for requiredDiagram in self.requiredDiagrams:
+            listDiagrams.append(requiredDiagram.title)
+        return listDiagrams
+    def diagramsText(self):
+        text = ""
+        for requiredDiagram in self.requiredDiagrams:
+            text = text + requiredDiagram.diagramsText()
+        return text
+    def diagram(self, title):
+        diagramFound = False
+        for requiredDiagram in self.requiredDiagrams:
+            if requiredDiagram.title == title:
+                diagramFound = True
+                returnDiagram = requiredDiagram
+        if diagramFound == False:
+            returnDiagram = self.requiredDiagrams[0]
+        return returnDiagram
+
     def xml(self):
         xml = "<?xml-stylesheet type=\"text/xsl\" href=\"traffic_signals_site.xsl\"?>"
         xml = xml + "<traffic_signals>"
@@ -638,6 +686,8 @@ class siteClass:
         xml = xml + self.phases.xmlPhaseDelay()
         xml = xml + self.phases.xmlIntergreens()
         xml = xml + "</site>"
+        for requiredDiagram in self.requiredDiagrams:
+            xml = xml + requiredDiagram.xml()
         xml = xml + "</traffic_signals>"
         xmlPretty = amara.parse(xml)
         return xmlPretty.xml(indent=u"yes")
