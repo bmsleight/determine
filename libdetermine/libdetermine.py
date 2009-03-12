@@ -351,8 +351,9 @@ class diagramPhaseClass:
         for intergreen in self.intergreens:
             if lastSecondDiagram.diagramPhase(intergreen.fromLetter).state != site.phases.phase(intergreen.fromLetter).phaseType.greenName:
                 intergreen.remaining = intergreen.remaining - 1
-                if intergreen.remaining == 0:
-                    self.intergreens.remove(intergreen)
+        for intergreen in self.intergreens:
+            if intergreen.remaining == 0:
+                self.intergreens.remove(intergreen)
     def decrementMinTime(self):
         if self.minRemaining > 0:
             self.minRemaining = self.minRemaining -1
@@ -644,8 +645,10 @@ class requiredDiagramClass:
         xml = xml + "<cycle>" + str(self.cycleTime) + "</cycle>"
         xml = xml + "<start>" + str(self.startingStageName) + "</start>"
         xml = xml + "<loop>" + str(self.loop) + "</loop>"
+        xml = xml + "<movements>"
         for movement in self.movements:
             xml = xml + str(movement.xml())
+        xml = xml + "</movements>"
         xml = xml + "</diagram>"
         return xml
 
@@ -686,8 +689,10 @@ class siteClass:
         xml = xml + self.phases.xmlPhaseDelay()
         xml = xml + self.phases.xmlIntergreens()
         xml = xml + "</site>"
+        xml = xml + "<diagrams>"
         for requiredDiagram in self.requiredDiagrams:
             xml = xml + requiredDiagram.xml()
+        xml = xml + "</diagrams>"
         xml = xml + "</traffic_signals>"
         xmlPretty = amara.parse(xml)
         return xmlPretty.xml(indent=u"yes")
@@ -817,7 +822,7 @@ def generateDigram(countryConfig, site, diagramRequired, gtk, progressbar):
     diagram.times.append(staringPoint(site, diagramRequired.startingStageName))
     timeSeconds = 0
     for loop in range(0, diagramRequired.loop):
-        for cycleTime in range(0, diagramRequired.cycleTime):
+        for cycleTime in range(0, diagramRequired.cycleTime+1):
             nextSecond = diagramTimeClass(timeSeconds)
             nextSecond.movements = nextSecondsStageMovements(diagram.atTime(timeSeconds-1).movements, diagramRequired, cycleTime)
             nextSecond.diagramPhases = copyLastSecondPhases(diagram.atTime(timeSeconds-1).diagramPhases)
