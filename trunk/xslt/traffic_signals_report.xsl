@@ -36,7 +36,24 @@ div.Red-Amber {
  background-color: red;
  background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeEAYAAAC9BaiEAAAABmJLR0T//wAAAADX49c/AAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAABAAAAHgAKz1FzAAAAHUlEQVQY02P4/5+BgYHh/38mBigYKEZPz0DaDgEA0Y4FT7mx5WcAAAAASUVORK5CYII=);
  color: Tomato;
+ font-weight: bold;
 }
+
+
+div.Off {
+ width: 30px;
+ height: 30px;
+ background-color: black;
+ color: white;
+}
+
+div.On {
+ width: 30px;
+ height: 30px;
+ background-color: white;
+ color: black;
+}
+
 
 
 <!-- Inherit Green -->
@@ -70,24 +87,22 @@ line-height:30px;
 text-align: center;
 }
 
-
-div.stage-running {
+div.stage {
  line-height:30px;
  text-align: center;
+}
+
+
+div.running {
  background-color: white;
  color: black;
 }
 
-div.stage-running-min {
- line-height:30px;
- text-align: center;
- background-color: white;
+div.min {
  color: red;
 }
 
-div.stage-movingto {
- line-height:30px;
- text-align: center;
+div.movingto {
  background-color: grey;
  color: black;
 }
@@ -120,6 +135,23 @@ table.signals td {
 	-moz-border-radius: 0px 0px 0px 0px;
 }
 
+div.time {
+position:relative;
+left:-17px
+}
+
+div.key-title {
+ text-decoration: underline;
+ padding: 20px 0px 5px 20px;
+}
+
+div.site-header {
+ text-decoration: underline;
+ font-size: large;
+ padding: 30px 0px 15px 20px;
+}
+
+
 </style>
     </head>
     <h1>
@@ -131,11 +163,7 @@ table.signals td {
   <xsl:template match="diagram">
     <xsl:variable name="diagram" select="."/>
     <div class="site-header">
-      <span size="larger">
-        <p>
-          <u>Diagram: <xsl:value-of select="$diagram/title"/></u>
-        </p>
-      </span>
+      <u>Diagram: <xsl:value-of select="$diagram/title"/></u>
     </div>
     <table class="signals">
       <tr>
@@ -143,16 +171,24 @@ table.signals td {
         <xsl:for-each select="$diagram/times/time/t">
           <xsl:sort data-type="number" select="."/>
           <xsl:variable name="t" select="."/>
-          <xsl:if test="string-length($t) &gt; 2">
-            <th>
-              <xsl:value-of select="."/>
-            </th>
-          </xsl:if>
-          <xsl:if test="string-length($t) = 2">
-            <th> <xsl:value-of select="."/></th>
-          </xsl:if>
-          <xsl:if test="string-length($t) &lt; 2">
-            <th> <xsl:value-of select="."/> </th>
+          <xsl:if test="$t &gt; -1">
+            <xsl:if test="string-length($t) &gt; 2">
+              <th>
+                <div class="time">
+                  <xsl:value-of select="."/>
+                </div>
+              </th>
+            </xsl:if>
+            <xsl:if test="string-length($t) = 2">
+              <th>
+                <div class="time">  <xsl:value-of select="."/></div>
+              </th>
+            </xsl:if>
+            <xsl:if test="string-length($t) &lt; 2">
+              <th>
+                <div class="time"> <xsl:value-of select="."/> </div>
+              </th>
+            </xsl:if>
           </xsl:if>
         </xsl:for-each>
       </tr>
@@ -161,20 +197,22 @@ table.signals td {
         <tr>
           <xsl:variable name="letter" select="letter"/>
           <td>
-            &#160;<xsl:value-of select="$letter"/>
+             &#160;<xsl:value-of select="$letter"/>
           </td>
           <xsl:for-each select="$diagram/times/time/t">
             <xsl:sort data-type="number" select="."/>
             <xsl:variable name="t" select="."/>
             <xsl:variable name="st" select="$diagram/times/time[t=$t]/phases/phase[letter=$letter]/state"/>
-            <td>
-              <div>
-                <xsl:attribute name="class">
-                  <xsl:value-of select="$st"/>
-                </xsl:attribute>
-                <xsl:apply-templates select="$diagram/times/time[t=$t]/phases/phase[letter=$letter]/state"/>
-              </div>
-            </td>
+            <xsl:if test="$t &gt; -1">
+              <td>
+                <div>
+                  <xsl:attribute name="class">
+                    <xsl:value-of select="$st"/>
+                  </xsl:attribute>
+                  <xsl:apply-templates select="$diagram/times/time[t=$t]/phases/phase[letter=$letter]/state"/>
+                </div>
+              </td>
+            </xsl:if>
           </xsl:for-each>
         </tr>
       </xsl:for-each>
@@ -185,35 +223,35 @@ table.signals td {
           <xsl:sort data-type="number" select="."/>
           <xsl:variable name="t" select="."/>
           <xsl:variable name="st" select="$diagram/times/time[t=$t]/stage"/>
-          <td>
-            <xsl:variable name="running" select="$diagram/times/time[t=$t]/stage/running"/>
-            <xsl:if test="string-length($running) &gt; 0">
-              <xsl:variable name="mins" select="sum($diagram/times/time[t=$t]/phases/*/min_remaining)"/>
-              <xsl:if test="$mins &gt; 0">
-                <div class="stage-running-min">
-                  <xsl:apply-templates select="$diagram/times/time[t=$t]/stage/running"/>
+          <xsl:if test="$t &gt; -1">
+            <td>
+              <xsl:variable name="running" select="$diagram/times/time[t=$t]/stage/running"/>
+              <xsl:if test="string-length($running) &gt; 0">
+                <xsl:variable name="mins" select="sum($diagram/times/time[t=$t]/phases/*/min_remaining)"/>
+                <xsl:if test="$mins &gt; 0">
+                  <div class="stage running min">
+                    <xsl:apply-templates select="$diagram/times/time[t=$t]/stage/running"/>
+                  </div>
+                </xsl:if>
+                <xsl:if test="$mins &lt; 1">
+                  <div class="stage running">
+                    <xsl:apply-templates select="$diagram/times/time[t=$t]/stage/running"/>
+                  </div>
+                </xsl:if>
+              </xsl:if>
+              <xsl:if test="string-length($running) &lt; 1">
+                <div class="stage movingto">
+                  <xsl:apply-templates select="$diagram/times/time[t=$t]/stage/moving_to"/>
                 </div>
               </xsl:if>
-              <xsl:if test="$mins &lt; 1">
-                <div class="stage-running">
-                  <xsl:apply-templates select="$diagram/times/time[t=$t]/stage/running"/>
-                </div>
-              </xsl:if>
-            </xsl:if>
-            <xsl:if test="string-length($running) &lt; 1">
-              <div class="stage-movingto">
-                <xsl:apply-templates select="$diagram/times/time[t=$t]/stage/moving_to"/>
-              </div>
-            </xsl:if>
-          </td>
+            </td>
+          </xsl:if>
         </xsl:for-each>
       </tr>
     </table>
   </xsl:template>
   <xsl:template name="key">
-    <p>
-      <u>Key - Phases</u>
-    </p>
+    <div class="key-title">Key - Phases</div>
     <table class="signals">
       <tr>
         <th>Symbol</th>
@@ -226,20 +264,18 @@ table.signals td {
           <td>
             <div>
               <xsl:attribute name="class">
-                <xsl:value-of select="."/>
+                &#160;<xsl:value-of select="."/>
               </xsl:attribute>
               <xsl:apply-templates select="."/>
             </div>
           </td>
           <td>
-            &#160;<xsl:value-of select="."/>
+             <xsl:value-of select="."/>
           </td>
         </tr>
       </xsl:for-each>
     </table>
-    <p>
-      <u>Key - Stages</u>
-    </p>
+    <div class="key-title">Key - Stages</div>
     <table class="signals">
       <tr>
         <th>Symbol</th>
@@ -247,21 +283,21 @@ table.signals td {
       </tr>
       <tr>
         <td>
-          <div class="stage-movingto">X</div>
+          <div class="stage movingto">X</div>
         </td>
-        <td>&#160;Moving to Stage X</td>
+        <td>&#160;Moving to Stage X&#160;</td>
       </tr>
       <tr>
         <td>
-          <div class="stage-running-min">X</div>
+          <div class="stage running min">X</div>
         </td>
-        <td>&#160;Running minimums in Stage X</td>
+        <td>&#160;Running minimums in Stage X&#160;</td>
       </tr>
       <tr>
         <td>
-          <div class="stage-running">X</div>
+          <div class="stage running">X</div>
         </td>
-        <td>&#160;Running Stage X</td>
+        <td>&#160;Running Stage X&#160;</td>
       </tr>
     </table>
   </xsl:template>
@@ -296,6 +332,12 @@ table.signals td {
     </xsl:if>
     <xsl:if test="$state = 'Black-Out'">
       <div class="state-abbr">b</div>
+    </xsl:if>
+    <xsl:if test="$state = 'Off'">
+      <div class="state-abbr">0</div>
+    </xsl:if>
+    <xsl:if test="$state = 'On'">
+      <div class="state-abbr">1</div>
     </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
