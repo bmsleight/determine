@@ -363,6 +363,11 @@ class diagramPhaseClass:
     def incrementTimeSinceGreen(self, site):
         if self.state != site.phases.phase(self.letter).phaseType.greenName:
                 self.timeSinceGreen = self.timeSinceGreen + 1 
+    def phaseMinsComplete(self):
+        if self.minRemaining > 0:
+            return False
+        else:
+            return True
     def stateChanges(self, site):
         oldState = self.state
         if self.move != None:
@@ -499,12 +504,17 @@ class diagramTimeClass:
             if phase.move != None:
                 movesComplete = False
         return movesComplete
+    def allPhaseMinsComplete(self):
+        phaseMinsComplete = True
+        for phase in self.diagramPhases:
+            if not phase.phaseMinsComplete():
+                phaseMinsComplete = False
+        return phaseMinsComplete
     def allStageMovesComplete(self):
-        movesComplete = True
-        for movement in self.movements:
-            if phase.moveTo != None:
-                movesComplete = False
-        return movesComplete
+        if self.movements:
+            return False
+        else:
+            return True
 #    def updateStageStatus(self):
 #        if self.movements != []:
 #            self.diagramStage.moveStart(self.movements[0].moveTo)
@@ -533,7 +543,7 @@ class diagramTimeClass:
                 else:
                     if diagramPhase.state != site.phases.phase(diagramPhase.letter).phaseType.redName:
                         diagramPhase.move = site.phases.phase(diagramPhase.letter).phaseType.redName
-                        # Add phase delay (Leaving)
+                        # Add phase delay  (Leaving)
                         diagramPhase.phaseDelayTime = site.phases.phase(diagramPhase.letter).phaseDelay(self.diagramStage.movingFrom, self.diagramStage.movingTo)
                         if diagramPhase.phaseDelayTime > 0:
                             # Because the very next action is to reduce by one. 
@@ -822,7 +832,10 @@ def generateDigram(countryConfig, site, diagramRequired, gtk, progressbar):
     diagram.times.append(staringPoint(site, diagramRequired.startingStageName))
     timeSeconds = 0
     for loop in range(0, diagramRequired.loop):
-        for cycleTime in range(0, diagramRequired.cycleTime+1):
+        cycleTime = 0
+        cycleFinished = False
+        appendFlag = True
+        while cycleFinished == False:
             nextSecond = diagramTimeClass(timeSeconds)
             nextSecond.movements = nextSecondsStageMovements(diagram.atTime(timeSeconds-1).movements, diagramRequired, cycleTime)
             nextSecond.diagramPhases = copyLastSecondPhases(diagram.atTime(timeSeconds-1).diagramPhases)
@@ -842,9 +855,24 @@ def generateDigram(countryConfig, site, diagramRequired, gtk, progressbar):
                 nextSecond.diagramStage.stageEnded()
             nextSecond.progressTimeSinceGreen(site)
 
-            diagram.times.append(nextSecond)
             timeSeconds = timeSeconds + 1
+            cycleTime = cycleTime + 1
 
+            if diagramRequired.cycleTime == 0:
+                if nextSecond.allStageMovesComplete():
+                    if nextSecond.allPhaseMovesComplete():
+                        if nextSecond.allPhaseMinsComplete():
+                            cycleFinished = True
+                            appendFlag = False
+            if cycleTime == diagramRequired.cycleTime and diagramRequired.cycleTime>0:
+                cycleFinished = True
+            if cycleTime > 255:
+                cycleFinished = True
+
+            if appendFlag:
+                diagram.times.append(nextSecond)
+
+    
             # Update GTK if GTK passed ...
             if gtk != None:
                 progressbar.pulse()
