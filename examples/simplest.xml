@@ -47,8 +47,8 @@
  </site>
  <diagrams>
   <diagram>
-   <title>Example 24 second cycle</title>
-   <cycle>24</cycle>
+   <title>Example Minimum cycle</title>
+   <cycle>0</cycle>
    <start>2</start>
    <loop>1</loop>
    <movements>
@@ -66,7 +66,7 @@
    <title>Example 30 second cycle</title>
    <cycle>30</cycle>
    <start>2</start>
-   <loop>1</loop>
+   <loop>2</loop>
    <movements>
     <move>
      <time>0</time>
@@ -74,6 +74,22 @@
     </move>
     <move>
      <time>15</time>
+     <to>2</to>
+    </move>
+   </movements>
+  </diagram>
+  <diagram>
+   <title>Example Minimum cycle </title>
+   <cycle>23</cycle>
+   <start>2</start>
+   <loop>2</loop>
+   <movements>
+    <move>
+     <time>0</time>
+     <to>1</to>
+    </move>
+    <move>
+     <time>0</time>
      <to>2</to>
     </move>
    </movements>
