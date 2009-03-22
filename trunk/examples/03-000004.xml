@@ -390,6 +390,30 @@
     </move>
    </movements>
   </diagram>
+  <diagram>
+   <title>Example Minimum second cycle</title>
+   <cycle>0</cycle>
+   <start>2</start>
+   <loop>1</loop>
+   <movements>
+    <move>
+     <time>0</time>
+     <to>3</to>
+    </move>
+    <move>
+     <time>0</time>
+     <to>4</to>
+    </move>
+    <move>
+     <time>0</time>
+     <to>1</to>
+    </move>
+    <move>
+     <time>0</time>
+     <to>2</to>
+    </move>
+   </movements>
+  </diagram>
 <!--
   <diagram>
    <title>Example Min cycle</title>

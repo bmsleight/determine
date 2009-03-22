@@ -485,7 +485,7 @@ class diagramStageClass:
 
 class diagramTimeClass:
     def __init__(self, timeSeconds):
-        self.timeSeconds = timeSeconds
+        self.timeSeconds = int(timeSeconds)
         self.diagramStage = diagramStageClass()
         self.diagramPhases = []
         self.movements = []
@@ -568,9 +568,10 @@ class diagramTimeClass:
     def progressTimeSinceGreen(self, site):
         for diagramPhase in self.diagramPhases:
             diagramPhase.incrementTimeSinceGreen(site)
-    def xml(self):
+    def xml(self, timeShown=True):
         xml = "<time>"
-        xml = xml + "<t>" + str(self.timeSeconds) + "</t>"
+        if timeShown:
+            xml = xml + "<t>" + str(self.timeSeconds) + "</t>"
         xml = xml + self.diagramStage.xml()
         xml = xml + "<phases>" 
         for diagramPhase in self.diagramPhases:
@@ -587,6 +588,7 @@ class diagramClass:
     def __init__(self, title):
         self.title = str(unicode(title))
         self.times = []
+        self.stableCycle = True
     def atTime(self, timeSeconds):
         timeFound = False
         for time_ in self.times:
@@ -597,13 +599,48 @@ class diagramClass:
             return returnTime
         else:
             return False
+    def removeFirstLoop(self, firstCycleTime):
+        for time_ in self.times:
+            time_.timeSeconds = time_.timeSeconds - firstCycleTime
+        removeList = []
+        for time_ in self.times:
+            if time_.timeSeconds < (-1):
+            	removeList.append(time_)
+        for time_ in removeList:
+            self.times.remove(time_)
+    def removeLastLoop(self, finalCycleTime):
+        maxTime = 0
+        for time_ in self.times:
+            if time_.timeSeconds > maxTime:
+                maxTime = time_.timeSeconds
+        if self.compareTimes(maxTime, maxTime - finalCycleTime):
+            self.stableCycle = True
+        else:
+            self.stableCycle = False
+        removeList = []
+        for time_ in self.times:
+            if time_.timeSeconds > (maxTime  - finalCycleTime):
+            	removeList.append(time_)
+        for time_ in removeList:
+            self.times.remove(time_)        
+    def compareTimes(self, OneTime, SecondTime):
+        OneTimeXml = self.atTime(OneTime).xml(timeShown=False)
+        SecondTimeXml = self.atTime(SecondTime).xml(timeShown=False)
+        if OneTimeXml == SecondTimeXml:
+            return True
+        else:
+            return False
     def xml(self):
         xml = "<diagram>"
         xml = xml + "<title>" + self.title + "</title>"
         xml = xml + "<times>" 
         for time_ in self.times:
             xml = xml + str(time_.xml())
-        xml = xml + "</times>" 
+        xml = xml + "</times>"
+        if self.stableCycle:
+            xml = xml + "<stable>True</stable>" 
+        else:
+            xml = xml + "<stable>False</stable>" 
         xml = xml + "</diagram>"
         return xml
 
@@ -831,7 +868,13 @@ def generateDigram(countryConfig, site, diagramRequired, gtk, progressbar):
     diagram = diagramClass(diagramRequired.title)
     diagram.times.append(staringPoint(site, diagramRequired.startingStageName))
     timeSeconds = 0
-    for loop in range(0, diagramRequired.loop):
+    # Need to do loop+2 
+    #  As first loop/pass is to get all the phases in the correct state
+    #   ready for the start of the real cycle.
+    #   The third pass is to confirm that the cycle is sustainable
+    #   The second and third cycles should be the same. 
+    #  Once complete we wil delete this first cycle to leave the correct number of loops (cycles) 
+    for loop in range(0, diagramRequired.loop+2):
         cycleTime = 0
         cycleFinished = False
         appendFlag = True
@@ -855,15 +898,14 @@ def generateDigram(countryConfig, site, diagramRequired, gtk, progressbar):
                 nextSecond.diagramStage.stageEnded()
             nextSecond.progressTimeSinceGreen(site)
 
-            timeSeconds = timeSeconds + 1
             cycleTime = cycleTime + 1
-
             if diagramRequired.cycleTime == 0:
                 if nextSecond.allStageMovesComplete():
                     if nextSecond.allPhaseMovesComplete():
                         if nextSecond.allPhaseMinsComplete():
                             cycleFinished = True
                             appendFlag = False
+                            cycleTime = cycleTime - 1
             if cycleTime == diagramRequired.cycleTime and diagramRequired.cycleTime>0:
                 cycleFinished = True
             if cycleTime > 255:
@@ -871,14 +913,23 @@ def generateDigram(countryConfig, site, diagramRequired, gtk, progressbar):
 
             if appendFlag:
                 diagram.times.append(nextSecond)
+                timeSeconds = timeSeconds + 1
 
-    
             # Update GTK if GTK passed ...
             if gtk != None:
                 progressbar.pulse()
                 while gtk.events_pending():
                     gtk.main_iteration_do(False)
 
+        #Save te time in seconds of the first loop/cycle
+        if loop == 0:
+            firstCycleTime = cycleTime
+        if loop == diagramRequired.loop:
+            masterCycleTime = cycleTime
+        if loop == diagramRequired.loop+1:
+            finalCycleTime = cycleTime
+    diagram.removeFirstLoop(firstCycleTime)
+    diagram.removeLastLoop(finalCycleTime)
     return diagram
 
 

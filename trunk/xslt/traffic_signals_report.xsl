@@ -151,6 +151,11 @@ div.site-header {
  padding: 30px 0px 15px 20px;
 }
 
+div.comments {
+ font-size: small;
+ padding: 30px 0px 15px 20px;
+}
+
 
 </style>
     </head>
@@ -249,6 +254,16 @@ div.site-header {
         </xsl:for-each>
       </tr>
     </table>
+    <div class="comments">
+      Comments:
+      <xsl:variable name="stable" select="$diagram/stable"/>
+      <xsl:if test="$stable = 'True'">
+        This is a stable cycle.
+      </xsl:if>
+      <xsl:if test="$stable = 'False'">
+        This is not a stable cycle, Min times ?
+      </xsl:if>
+    </div>
   </xsl:template>
   <xsl:template name="key">
     <div class="key-title">Key - Phases</div>
@@ -264,7 +279,7 @@ div.site-header {
           <td>
             <div>
               <xsl:attribute name="class">
-                &#160;<xsl:value-of select="."/>
+                <xsl:value-of select="."/>
               </xsl:attribute>
               <xsl:apply-templates select="."/>
             </div>
