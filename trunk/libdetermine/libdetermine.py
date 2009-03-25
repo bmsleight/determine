@@ -351,8 +351,11 @@ class diagramPhaseClass:
         for intergreen in self.intergreens:
             if lastSecondDiagram.diagramPhase(intergreen.fromLetter).state != site.phases.phase(intergreen.fromLetter).phaseType.greenName:
                 intergreen.remaining = intergreen.remaining - 1
+        removeList = []
         for intergreen in self.intergreens:
-            if intergreen.remaining == 0:
+            if intergreen.remaining <= 0:
+                removeList.append(intergreen)
+        for intergreen in removeList:
                 self.intergreens.remove(intergreen)
     def decrementMinTime(self):
         if self.minRemaining > 0:
@@ -423,12 +426,17 @@ class diagramPhaseClass:
         else:
             changedState = False
         return changedState
-    def xml(self):
+    def xml(self, maxTime=0):
         xml = "<phase>"
         xml = xml + "<letter>" + self.letter + "</letter>"
         xml = xml + "<state>" + self.state + "</state>"
         xml = xml + "<min_remaining>" + str(self.minRemaining) + "</min_remaining>"
-        xml = xml + "<time_since_green>" + str(self.timeSinceGreen) + "</time_since_green>"
+        if maxTime == 0:
+            xml = xml + "<time_since_green>" + str(self.timeSinceGreen) + "</time_since_green>"
+        # If we are using the XML to compare two point in time, ignore timeSinceGreen if > maxTime
+        if maxTime > 0:
+            if maxTime > self.timeSinceGreen:
+                xml = xml + "<time_since_green>" + str(self.timeSinceGreen) + "</time_since_green>"
         xml = xml + "<move>" + str(self.move) + "</move>"
         xml = xml + "<intergreens>" 
         for intergreen in self.intergreens:
@@ -568,14 +576,17 @@ class diagramTimeClass:
     def progressTimeSinceGreen(self, site):
         for diagramPhase in self.diagramPhases:
             diagramPhase.incrementTimeSinceGreen(site)
-    def xml(self, timeShown=True):
+    def xml(self, timeShown=True, maxTime=0):
         xml = "<time>"
         if timeShown:
             xml = xml + "<t>" + str(self.timeSeconds) + "</t>"
         xml = xml + self.diagramStage.xml()
         xml = xml + "<phases>" 
         for diagramPhase in self.diagramPhases:
-            xml = xml + str(diagramPhase.xml())
+            if timeShown:
+                xml = xml + str(diagramPhase.xml())
+            else:
+                xml = xml + str(diagramPhase.xml(maxTime))
         xml = xml + "</phases>"
         xml = xml + "<movements>" 
         for movement in self.movements:
@@ -624,8 +635,8 @@ class diagramClass:
         for time_ in removeList:
             self.times.remove(time_)        
     def compareTimes(self, OneTime, SecondTime):
-        OneTimeXml = self.atTime(OneTime).xml(timeShown=False)
-        SecondTimeXml = self.atTime(SecondTime).xml(timeShown=False)
+        OneTimeXml = self.atTime(OneTime).xml(False, OneTime - SecondTime)
+        SecondTimeXml = self.atTime(SecondTime).xml(False, OneTime - SecondTime)
         if OneTimeXml == SecondTimeXml:
             return True
         else:

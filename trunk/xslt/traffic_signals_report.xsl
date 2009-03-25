@@ -261,7 +261,7 @@ div.comments {
         This is a stable cycle.
       </xsl:if>
       <xsl:if test="$stable = 'False'">
-        This is not a stable cycle, Min times ?
+        This is not a stable cycle, minimum times appear not be be satisfied. 
       </xsl:if>
     </div>
   </xsl:template>
