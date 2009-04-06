@@ -1,0 +1,20 @@
+{% extends "forms/base_forms.html" %}
+{% block title %}{{siteRecord.title}} - Stages{% endblock %}
+{% block forms %}
+<form action="./" method="POST">
+
+<p><div class="formheading">Add a Stage to site</div></p>
+{{ form.as_p }}
+<input type="submit" name="{{addStageText}}"  value="{{addStageText}}" />
+
+{% if currentStages %}
+  <p><div class="formheading">Current Stages</div></p>
+  <p>{{currentStagesText|safe}}</p>
+  {% for stage in currentStages %}
+    <p><input type='submit' name='{{editStageText}}' value='{{editStageText}}{{stage}}' />&nbsp;
+    <input type='submit' name='{{deleteStageText}}' value='{{deleteStageText}}{{stage}}' /></p>
+  {% endfor %}
+{% endif %}
+
+</form>
+{% endblock %}

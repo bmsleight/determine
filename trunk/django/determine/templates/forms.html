@@ -1,0 +1,36 @@
+{% if results %}
+<ul>
+{% for r in results %}
+<li>{{ r }}</li>
+{% endfor %}
+<ul>
+{% endif %}
+
+{% if cleaned_data %}
+<ul>
+{% for r in cleaned_data %}
+<li>{{ r }}</li>
+{% endfor %}
+<ul>
+{% endif %}
+
+
+{% if post %}
+<pre>{{ post }}</pre>
+{% else %}
+<b>no post</b><br />
+{% endif %}
+
+<p>{{test}}</p>
+
+<form method='post' action=''>
+<p>
+<input type='submit' name='save' id='id_save' value='Save' />
+</p>
+<p>
+<input type='submit' name='cancel' id='id_cancel' value='1' />
+</p>
+<p>
+<input type='submit' name='cancel' id='id_cancel' value='2' />
+</p>
+</form> 

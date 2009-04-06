@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:output method="html" version="1.0" encoding="iso-8859-1" indent="yes"/>
 <xsl:template match="/">
-
+<div class="traffic-signal-site">
 <div class="site-header">
  <span size="larger"><p><u>Site: <xsl:value-of select="/traffic_signals/site/address"/></u></p></span>
 </div>
@@ -94,6 +94,7 @@
     delayed by <xsl:value-of select="length" />&#160;
     <br/><br/>
   </xsl:for-each>
+</div>
 </div>
 </xsl:template>
 </xsl:stylesheet>

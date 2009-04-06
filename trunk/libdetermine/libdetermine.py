@@ -275,6 +275,11 @@ class stageClass:
             if phase.letter == phaseLetter:
                 phaseFound = True
         return phaseFound
+    def listPhaseNames(self):
+        phaseList = []
+        for phase in self.phases:
+            phaseList.append(phase.letter)
+        return phaseList
     def printAllPhases(self):
         for phase in self.phases:
             print "Stage", self.stageName, "Contains", phase.letter
@@ -304,6 +309,7 @@ class stageArrayClass:
     def newStage(self, stageName):
         stage = stageClass(stageName)
         self.stages.append(stage)
+        return stage
     def stage(self, stageName):
         stageFound = False
         for stage in self.stages:
@@ -318,6 +324,12 @@ class stageArrayClass:
         for stage in self.stages:
             text = text + stage.text()
             text = text + " \n"
+        return text
+    def html(self):
+        text = "" 
+        for stage in self.stages:
+            text = text + stage.text()
+            text = text + " <br/>"
         return text
     def listStageNames(self):
         listStageNames = []
