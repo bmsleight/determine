@@ -1,0 +1,19 @@
+{% extends "forms/base_forms.html" %}
+{% block title %}{{siteRecord.title}} - Configure Phases{% endblock %}
+{% block forms %}
+<form action="./" method="POST">
+
+<p><div class="formheading">Configure Phase:{{letter}} as Type:{{phaseType}}</div></p>
+{{ form.as_p }}
+
+{% if fixedItems %}
+  <p><div class="formheading">Fixed Parts of a {{phaseType}} Phase</div></p>
+  {% for state, stateTime in fixedItems %}
+    <p>{{state}} is fixed at {{stateTime}}</p>
+  {% endfor %}
+{% endif %}
+
+<input type="submit" name="configure"  value="Configure Phase {{letter}}" />
+    
+</form>
+{% endblock %}

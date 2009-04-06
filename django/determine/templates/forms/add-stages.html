@@ -1,0 +1,10 @@
+{% extends "forms/base_forms.html" %}
+{% block title %}{{siteRecord.title}} - Configure Stages{% endblock %}
+{% block forms %}
+<form action="./" method="POST">
+
+<p><div class="formheading">Stage:{{stageName}} Contains phases:-</div></p>
+{{ form.as_p }}
+<input type="submit" name="configure"  value="Set Stage {{stageName}} running Phases" />
+</form>
+{% endblock %}

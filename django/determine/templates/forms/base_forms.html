@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="forms">
+  {% block forms %}{% endblock %}
+</div>
+
+
+<div class="wizard">
+  {% if previousUrl %}
+    <hr/>
+    Next Steps: <a href='{{previousUrl}}'>&lt;&lt; {{previousName}}</a>
+  {% endif %}
+  {% if nextUrl %}
+    <a href='{{nextUrl}}'>{{nextName}} &gt;&gt;</a>
+  {% endif %}
+</div>
+
+<hr/>
+
+{% if siteHtml %}
+  <p><div class="siteheading">Current Site Configuration</div></p>
+  <div id="sitehtml">
+    {{siteHtml|safe}}
+  </div>
+{% endif %}
+
+{% endblock %}

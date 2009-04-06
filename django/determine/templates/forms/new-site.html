@@ -1,0 +1,8 @@
+{% extends "forms/base_forms.html" %}
+{% block title %}New Site{% endblock %}
+{% block forms %}
+<form action="/new-site/" method="POST">
+{{ form.as_p }}
+<input type="submit" value="Configure this New Site" />
+</form>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "forms/base_forms.html" %}
+{% block title %}{{siteRecord.title}} Phases{% endblock %}
+{% block forms %}
+<form action="./" method="POST">
+
+<p><div class="formheading">Add a Phase to site</div></p>
+{{ form.as_p }}
+<input type="submit" name="{{addPhaseText}}"  value="{{addPhaseText}}" />
+
+{% if currentPhases %}
+  <p></p><div class="formheading">Remove a Phase from a site</div></p>
+  {% for phase in currentPhases %}
+    <p><input type='submit' name='{{deletePhaseText}}' value='{{deletePhaseText}}{{phase}}' /></p>
+  {% endfor %}
+{% endif %}
+
+</form>
+{% endblock %}
