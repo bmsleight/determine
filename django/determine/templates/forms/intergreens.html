@@ -1,0 +1,12 @@
+{% extends "forms/base_forms.html" %}
+{% block title %}{{siteRecord.title}} - Stages{% endblock %}
+{% block forms %}
+<form action="./" method="POST">
+
+{% if intergreenHtml %}
+  <p><div class="formheading">Intergreens</div></p>
+  <p>{{intergreenHtml|safe}}</p>
+{% endif %}
+<input type="submit" value="Update Intergreens" />
+</form>
+{% endblock %}

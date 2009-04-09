@@ -150,11 +150,72 @@ def stages(request, year, month, day, slug):
         stageName = forms.IntegerField(label="Stage :")
     form = newStageForm() # An unbound form
     siteHtml = getSiteHtml(siteRecord)
-    nextUrl = '../stages/'
-    nextName = 'Stages'
+    nextUrl = '../intergreens/'
+    nextName = 'Intergreens'
     previousUrl = '../phases/'
     previousName = 'Phases'
     return render_to_response('forms/stages.html', locals())
+
+def intergreens(request, year, month, day, slug):
+    siteRecord = siteRecordFilter(year, month, day, slug)
+    siteObject, countryObject = getSiteObject(siteRecord)
+    currentPhases = siteObject.phases.phaseListLetters()
+    intergreenHtml = ""
+    _and_ = "_intergreen_"
+    totalPhases = len(currentPhases)
+    rangePhases = range(0, totalPhases+1)
+    if request.method == 'POST':
+        for k in request.POST:
+            try:
+                new_intergreen = int(request.POST[k])
+                i = k.index(_and_)
+                fromPhaseLetter = k[:i]
+                toPhaseLetter = k[2:].lstrip(_and_)
+                toPhase = siteObject.phases.phase(toPhaseLetter)
+                old_intergreen = toPhase.intergreenFrom(fromPhaseLetter)
+                if new_intergreen != old_intergreen:
+                    try:
+                        toPhase.setIntergreenFrom(fromPhaseLetter,new_intergreen)
+                    except:
+                        pass
+            except:
+                pass
+        writeBackSiteToXml(siteRecord, siteObject) 
+        
+    if totalPhases >0:
+        intergreenHtml = intergreenHtml + '<table  class="ig">'
+        for row in range(0, totalPhases +1):
+            intergreenHtml = intergreenHtml + "<tr>"
+            for col in range(0, totalPhases +1):
+                intergreenHtml = intergreenHtml + "<td>"
+                intergreenHtml = intergreenHtml + '<div class="cell">'
+                if row==0 and col==0:
+                    intergreenHtml = intergreenHtml + "&nbsp;"
+                elif row==0:
+                    intergreenHtml = intergreenHtml + siteObject.phases.phases[col-1].letter
+                elif col==0:
+                    intergreenHtml = intergreenHtml + siteObject.phases.phases[row-1].letter
+                elif col==row:
+                    intergreenHtml = intergreenHtml + " X "
+                else:
+                    from_phase = siteObject.phases.phases[col-1]
+                    from_phase_letter = siteObject.phases.phases[row-1].letter
+                    intergreen_value = from_phase.intergreenFrom(from_phase_letter)
+#                    intergreenHtml = intergreenHtml + str(intergreen_value)
+                    inputName = siteObject.phases.phases[row-1].letter + _and_ + siteObject.phases.phases[col-1].letter
+                    intergreenHtml = intergreenHtml + '<input type="text" name="' + inputName + '" id="ig" value="' + str(intergreen_value) + '" class="ig"/>'
+                intergreenHtml = intergreenHtml + '</div>'
+                intergreenHtml = intergreenHtml + "</td>"
+            intergreenHtml = intergreenHtml + "</tr>"
+        intergreenHtml = intergreenHtml + "</table>"
+
+
+    siteHtml = getSiteHtml(siteRecord)
+    nextUrl = '../stages/'
+    nextName = 'Stages'
+    previousUrl = '../stages/'
+    previousName = 'Stages'
+    return render_to_response('forms/intergreens.html', locals())
 
 # phasesAdd
 def phasesAdd(request, year, month, day, slug, letter, phaseType):
