@@ -9,6 +9,7 @@ basePhase = base + r'phases/$'
 basePhaseAdd = base + r'phases/add/(?P<letter>[A-Za-z]+)/(?P<phaseType>[^/]+)/$'
 baseStage = base + r'stages/$'
 baseStageAdd = base + r'stages/(?P<stageName>[^/]+)/$'
+baseIntergreen = base + r'intergreens/$'
 
 urlpatterns = patterns('',
     # Example:
@@ -24,7 +25,7 @@ urlpatterns = patterns('',
     (basePhaseAdd, 'determine.web.views.phasesAdd'),
     (baseStage, 'determine.web.views.stages'),
     (baseStageAdd, 'determine.web.views.stagesAdd'),
-    
+    (baseIntergreen, 'determine.web.views.intergreens'),
 
     (r'^form/$', 'determine.web.views.form'), 
     (r'^admin/(.*)', admin.site.root),
