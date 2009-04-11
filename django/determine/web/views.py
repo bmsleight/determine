@@ -203,7 +203,11 @@ def intergreens(request, year, month, day, slug):
                     intergreen_value = from_phase.intergreenFrom(from_phase_letter)
 #                    intergreenHtml = intergreenHtml + str(intergreen_value)
                     inputName = siteObject.phases.phases[row-1].letter + _and_ + siteObject.phases.phases[col-1].letter
-                    intergreenHtml = intergreenHtml + '<input type="text" name="' + inputName + '" id="ig" value="' + str(intergreen_value) + '" class="ig"/>'
+                    if intergreen_value == 0:
+                        strIntergreen = ""
+                    else:
+                        strIntergreen = str(intergreen_value)
+                    intergreenHtml = intergreenHtml + '<input type="text" name="' + inputName + '" id="ig" value="' + strIntergreen + '" class="ig"/>'
                 intergreenHtml = intergreenHtml + '</div>'
                 intergreenHtml = intergreenHtml + "</td>"
             intergreenHtml = intergreenHtml + "</tr>"
@@ -211,11 +215,64 @@ def intergreens(request, year, month, day, slug):
 
 
     siteHtml = getSiteHtml(siteRecord)
-    nextUrl = '../stages/'
-    nextName = 'Stages'
+    nextUrl = '../diagrams/'
+    nextName = 'Diagrams'
     previousUrl = '../stages/'
     previousName = 'Stages'
     return render_to_response('forms/intergreens.html', locals())
+
+def delays(request, year, month, day, slug):
+    siteRecord = siteRecordFilter(year, month, day, slug)
+    siteObject, countryObject = getSiteObject(siteRecord)
+    currentPhases = siteObject.phases.phaseListLetters()
+    currentStages = siteObject.stages.listStageNames()
+    
+    addDelayText = 'Add Delay'
+    deleteDelayText = 'Delete '
+        
+    
+    phaseChoices = listToTupleChoices(currentPhases)
+    stageChoices = listToTupleChoices(currentStages)
+    class newDelayForm(forms.Form):
+        phase = forms.ChoiceField(choices=phaseChoices)
+        stageFrom = forms.ChoiceField(choices=stageChoices, label="Moving from stage:")
+        stageTo = forms.ChoiceField(choices=stageChoices, label="Moving to stage:")
+        delay_by = forms.IntegerField(label="Is delayed by:") 
+
+    if request.method == 'POST':
+        if request.POST.has_key(deleteDelayText):
+            delayText = request.POST[deleteDelayText].lstrip(deleteDelayText)
+            siteObject.phases.phaseDelayDelete(delayText)
+            tmp = delayText
+            writeBackSiteToXml(siteRecord, siteObject) 
+            form = newDelayForm() # An unbound form
+        if request.POST.has_key(addDelayText):
+            form = newDelayForm(request.POST) # A bound form
+            if form.is_valid(): # All validation rules pass
+                try:
+                    phase = form.cleaned_data['phase']
+                    stageFrom = form.cleaned_data['stageFrom']
+                    stageTo = form.cleaned_data['stageTo']
+                    delay_by = form.cleaned_data['delay_by']
+                    siteObject.phases.phase(str(phase)).setPhaseDelay(stageFrom, stageTo, str(delay_by))
+                    writeBackSiteToXml(siteRecord, siteObject)
+                except:
+                    pass
+
+    else:
+        form = newDelayForm() # An unbound form
+        
+    currentDelays = siteObject.phases.phaseDelayList()
+    currentDelaysText = siteObject.phases.phaseDelayHtml()
+    siteHtml = getSiteHtml(siteRecord)
+    nextUrl = '../diagrams/'
+    nextName = 'Diagrams'
+    previousUrl = '../intergreens/'
+    previousName = 'Intergreens'
+    return render_to_response('forms/delays.html', locals())
+    
+
+
 
 # phasesAdd
 def phasesAdd(request, year, month, day, slug, letter, phaseType):

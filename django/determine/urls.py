@@ -10,6 +10,7 @@ basePhaseAdd = base + r'phases/add/(?P<letter>[A-Za-z]+)/(?P<phaseType>[^/]+)/$'
 baseStage = base + r'stages/$'
 baseStageAdd = base + r'stages/(?P<stageName>[^/]+)/$'
 baseIntergreen = base + r'intergreens/$'
+baseDelays = base + r'delays/$'
 
 urlpatterns = patterns('',
     # Example:
@@ -26,7 +27,13 @@ urlpatterns = patterns('',
     (baseStage, 'determine.web.views.stages'),
     (baseStageAdd, 'determine.web.views.stagesAdd'),
     (baseIntergreen, 'determine.web.views.intergreens'),
+    (baseDelays, 'determine.web.views.delays'),
 
+#baseDelays
     (r'^form/$', 'determine.web.views.form'), 
     (r'^admin/(.*)', admin.site.root),
 )
+
+# xmlstarlet tr  /home/bms/work/legal/digrams/traffic_signals_report.xsl /home/bms/work/legal/digrams/26-000146_corrected.xml.xml | ./wkhtmltopdf - - 2>/dev/null
+# enscript -1 -p list.html -b header -h --highlight=html --color  -w html --title="XML" ./26-000146_corrected.xml.xml
+
