@@ -64,6 +64,7 @@ class phaseTypeArrayClass:
         for phaseType in self.phases:
             namesList.append(phaseType.name)
         return namesList
+        
 
 class phaseClass:
     def __init__(self, letter, phaseType, greenMin, preGreenTime=-1, postGreenTime=-1, description=None):
@@ -122,31 +123,36 @@ class phaseClass:
                 returnPhaseDelay = self.phaseDelayTime[i]
         return returnPhaseDelay
     def eachPhaseDelayText(self, i):
-        phaseText = self.letter + " on a move from " + str(self.phaseDelayFrom[i]) + \
-                       " to " + str(self.phaseDelayTo[i]) + " is delayed by " + str(self.phaseDelayTime[i]) + "\n"  
+        phaseText = "Phase " + self.letter + " on a move from stage " + str(self.phaseDelayFrom[i]) + \
+                       " to stage " + str(self.phaseDelayTo[i]) + " is delayed by " + str(self.phaseDelayTime[i])  
         return phaseText
     def phaseDelayDelete(self, phaseDelayText):
-        delLetter = phaseDelayText.split()[0]
-        delFrom = phaseDelayText.split()[5]
-        delTo = phaseDelayText.split()[7]
-        delTime = phaseDelayText.split()[11]
-        l = len(self.phaseDelayFrom)
         foundIndex = -1
+        oldList = self.phaseDelayList()
+        l = len(oldList)
         for i in range(0, l):
-            if self.phaseDelayFrom[i] == delFrom and \
-            self.phaseDelayTo[i] == delTo and \
-            str(self.phaseDelayTime[i]) == delTime:
+            if phaseDelayText == oldList[i]:
                 foundIndex = i
         if foundIndex !=-1:
             del self.phaseDelayFrom[foundIndex]
             del self.phaseDelayTo[foundIndex]
             del self.phaseDelayTime[foundIndex]
+            return True
+        else:
+            return False        
     def phaseDelayText(self):
         text = ""
         l = len(self.phaseDelayFrom)
         if l:
             for i in range(0, l):
                 text = text + self.eachPhaseDelayText(i)
+        return text
+    def phaseDelayHtml(self):
+        text = ""
+        l = len(self.phaseDelayFrom)
+        if l:
+            for i in range(0, l):
+                text = text + self.eachPhaseDelayText(i) + '<br/>'
         return text
     def phaseDelayList(self):
         delayList = []
@@ -179,8 +185,9 @@ class phaseClass:
         if len(self.phaseDelayFrom) == 0:
             return ""
         else:
-            xml = "<phase_delay>"
+            xml = ""
             for index in range(len(self.phaseDelayFrom)):
+                xml = xml + "<phase_delay>"
                 xml = xml + "<phase>"
                 xml = xml + str(self.letter)
                 xml = xml + "</phase>"
@@ -193,7 +200,7 @@ class phaseClass:
                 xml = xml + "<length>"
                 xml = xml + str(self.phaseDelayTime[index])
                 xml = xml + "</length>"            
-            xml = xml + "</phase_delay>"
+                xml = xml + "</phase_delay>"
             return xml
     def xmlIntergreens(self):
         if len(self.intergreensFromLetter) == 0:
@@ -240,6 +247,23 @@ class phaseArrayClass:
         for phase in self.phases:
             listLetters.append(phase.letter)
         return listLetters
+    def phaseDelayList(self):
+        delayList = []
+        for phase in self.phases:
+            for delay in phase.phaseDelayList():
+                delayList.append(delay)
+        return delayList
+    def phaseDelayDelete(self, phaseDelayText):
+        phaseDelayDeleteFlag = False
+        for phase in self.phases:
+            if phase.phaseDelayDelete(phaseDelayText):
+                phaseDelayDeleteFlag = True
+        return phaseDelayDeleteFlag
+    def phaseDelayHtml(self):
+        text = ""
+        for phase in self.phases:
+            text = text + phase.phaseDelayHtml()
+        return text
     def phaseDelayText(self):
         text = ""
         for phase in self.phases:
@@ -383,7 +407,7 @@ class diagramPhaseClass:
             return False
         else:
             return True
-    def stateChanges(self, site):
+    def stateChanges(self, site, lastSecondDiagram):
         oldState = self.state
         if self.move != None:
             # Phase changing colour
@@ -429,10 +453,19 @@ class diagramPhaseClass:
                     # Start the preGreen (e.g.Red-Amber)
                     if preGreenTime > 0 and self.state == site.phases.phase(self.letter).phaseType.redName \
                     and largestIntergreen <= preGreenTime:
-                        # Need to run the preGreen
-                        self.state = site.phases.phase(self.letter).phaseType.preGreenName
-                        # We have already run it for one second, it we set it here.
-                        self.minRemaining = site.phases.phase(self.letter).preGreenTime 
+                        # Need to make sure all from Intergreens as not at green (or moving to green) before we run preGreen
+                        #  For example dummy all red from intergreen of 2 sec, but all-red not had minimum
+                        allFromIntergreenNotAtGreen = True
+                        for intergreen in self.intergreens:
+                            if lastSecondDiagram.diagramPhase(intergreen.fromLetter).minRemaining > 1 or \
+                            lastSecondDiagram.diagramPhase(intergreen.fromLetter).phaseDelayTime > 1 or \
+                            site.phases.phase(intergreen.fromLetter).phaseType.greenName == lastSecondDiagram.diagramPhase(intergreen.fromLetter).move:
+                                allFromIntergreenNotAtGreen = False
+                        if allFromIntergreenNotAtGreen:                        
+                            # Need to run the preGreen
+                            self.state = site.phases.phase(self.letter).phaseType.preGreenName
+                            # We have already run it for one second, it we set it here.
+                            self.minRemaining = site.phases.phase(self.letter).preGreenTime 
         if oldState != self.state:
             changedState = True
         else:
@@ -459,7 +492,7 @@ class diagramPhaseClass:
         xml = xml + "</phase>"
         return xml
 
-class digramIntergreenClass:
+class diagramIntergreenClass:
     def __init__(self, fromLetter, remaining):
         self.fromLetter = fromLetter
         self.remaining = remaining
@@ -554,7 +587,7 @@ class diagramTimeClass:
                             timeSinceGreen = lastSecondDiagram.diagramPhase(phase.letter).timeSinceGreen
                             if intergreenLength > 0:
                                 if intergreenLength > timeSinceGreen:
-                                    intergreen = digramIntergreenClass(phase.letter, intergreenLength - timeSinceGreen)  
+                                    intergreen = diagramIntergreenClass(phase.letter, intergreenLength - timeSinceGreen)  
                                     diagramPhase.intergreens.append(intergreen)
                                 else:
                                     diagramPhase.comments = diagramPhase.comments + "Intergreen from " +  phase.letter + \
@@ -579,10 +612,10 @@ class diagramTimeClass:
     def decrementPhaseDelay(self):
         for diagramPhase in self.diagramPhases:
             diagramPhase.decrementPhaseDelay()
-    def stateChanges(self,site):
+    def stateChanges(self,site, lastSecondDiagram):
         changedState = False
         for diagramPhase in self.diagramPhases:
-            if diagramPhase.stateChanges(site):
+            if diagramPhase.stateChanges(site, lastSecondDiagram):
                 changedState = True
         return changedState
     def progressTimeSinceGreen(self, site):
@@ -912,12 +945,12 @@ def generateDigram(countryConfig, site, diagramRequired, gtk, progressbar):
             nextSecond.decrementIntergreens(site, diagram.atTime(timeSeconds-1))
             nextSecond.decrementMinTime()
             nextSecond.decrementPhaseDelay()
-            if nextSecond.stateChanges(site):
+            if nextSecond.stateChanges(site, diagram.atTime(timeSeconds-1)):
                 nextSecond.diagramStage.stageEnded()
             if nextSecond.allPhaseMovesComplete():
                 nextSecond.diagramStage.moveComplete()
                 nextSecond.primeAnyStageMovementsWaiting(site, nextSecond)
-            if nextSecond.stateChanges(site):
+            if nextSecond.stateChanges(site, diagram.atTime(timeSeconds-1)):
                 nextSecond.diagramStage.stageEnded()
             nextSecond.progressTimeSinceGreen(site)
 
