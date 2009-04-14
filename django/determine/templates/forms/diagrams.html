@@ -1,0 +1,22 @@
+{% extends "forms/base_forms.html" %}
+{% block title %}{{siteRecord.title}} - Diagrams{% endblock %}
+{% block forms %}
+<form action="./" method="POST">
+
+<p><div class="formheading">Add a Diagram to Report</div></p>
+{{ form.as_p }}
+<input type="submit" name="{{addDiagramText}}"  value="{{addDiagramText}}" />
+
+{% if currentDiagrams %}
+  <p><div class="formheading">Current Diagrams</div></p>
+  <p>{{currentDiagramText|safe}}</p>
+  {% for diagram in currentDiagrams %}
+    <p><input type='submit' name='{{editDiagramText}}' value='{{editDiagramText}}{{diagram}}' />&nbsp;
+    <input type='submit' name='{{deleteDiagramText}}' value='{{deleteDiagramText}}{{diagram}}' /></p>
+  {% endfor %}
+{% endif %}
+
+<p>kk</p>
+  <p>{{currentDiagramText|safe}}</p>
+</form>
+{% endblock %}

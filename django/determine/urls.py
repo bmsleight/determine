@@ -11,6 +11,8 @@ baseStage = base + r'stages/$'
 baseStageAdd = base + r'stages/(?P<stageName>[^/]+)/$'
 baseIntergreen = base + r'intergreens/$'
 baseDelays = base + r'delays/$'
+baseDiagrams = base + r'diagrams/$'
+basediagramEdit = base + r'diagrams/edit/(?P<diagramNumber>\d{1,2})$'
 
 urlpatterns = patterns('',
     # Example:
@@ -28,6 +30,17 @@ urlpatterns = patterns('',
     (baseStageAdd, 'determine.web.views.stagesAdd'),
     (baseIntergreen, 'determine.web.views.intergreens'),
     (baseDelays, 'determine.web.views.delays'),
+    # List current diagrams Option to add a digram or edit exisiting diagrams
+    #  each diagram has an edit button with the diagram text listed
+    (baseDiagrams, 'determine.web.views.diagrams'),
+    # Add a new diagram - with a link when finished to ../
+#    (basediagramAdd, 'determine.web.views.diagramAdd'),
+    # Scrub the above - just add a new diagram then use the edit feature
+    # Edit an existing diagram - with a link when finished to ../
+#    (basediagramEdit, 'determine.web.views.diagramEdit'),
+
+
+
 
 #baseDelays
     (r'^form/$', 'determine.web.views.form'), 
