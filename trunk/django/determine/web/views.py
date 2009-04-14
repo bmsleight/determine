@@ -215,8 +215,8 @@ def intergreens(request, year, month, day, slug):
 
 
     siteHtml = getSiteHtml(siteRecord)
-    nextUrl = '../diagrams/'
-    nextName = 'Diagrams'
+    nextUrl = '../delays/'
+    nextName = 'Delays'
     previousUrl = '../stages/'
     previousName = 'Stages'
     return render_to_response('forms/intergreens.html', locals())
@@ -271,6 +271,63 @@ def delays(request, year, month, day, slug):
     previousName = 'Intergreens'
     return render_to_response('forms/delays.html', locals())
     
+
+def diagrams(request, year, month, day, slug):
+    siteRecord = siteRecordFilter(year, month, day, slug)
+    siteObject, countryObject = getSiteObject(siteRecord)    
+    currentDiagrams = siteObject.listDiagrams()
+    
+    addDiagramText = 'Add Diagram'
+    deleteDiagramText = 'Delete Diagram '
+    editDiagramText = 'Edit Diagram '
+
+    class newDiagramform(forms.Form):
+        diagram_title = forms.CharField(max_length=200)
+        cycle_time = forms.IntegerField(initial = 60)
+    if request.method == 'POST':
+        i = None
+        if request.POST.has_key(deleteDiagramText):
+            diagramText = request.POST[deleteDiagramText].lstrip(deleteDiagramText)
+            try:
+                removeDiagram = siteObject.diagram(str(diagramText))
+                siteObject.requiredDiagrams.remove(removeDiagram)
+                currentDiagrams = siteObject.listDiagrams()
+                writeBackSiteToXml(siteRecord, siteObject)
+                form = newDiagramform() # An unbound form
+            except:
+                pass
+        if request.POST.has_key(editDiagramText):
+            try:
+                diagramText = request.POST[editDiagramText].lstrip(editDiagramText)
+                i = currentDiagrams.index(str(diagramText))
+            except:
+                pass
+        if request.POST.has_key(addDiagramText):
+            form = newDiagramform(request.POST)
+            if form.is_valid():
+                diagram_title = form.cleaned_data['diagram_title']
+                cycle_time = form.cleaned_data['cycle_time']
+                newDiagram = libdetermine.requiredDiagramClass(str(diagram_title), cycle_time, 
+                siteObject.stages.stages[0].stageName, 1)
+                siteObject.requiredDiagrams.append(newDiagram)
+
+                writeBackSiteToXml(siteRecord, siteObject)
+                currentDiagrams = siteObject.listDiagrams()
+                i = currentDiagrams.index(str(diagram_title))
+        if i is not None:
+            # diagrams/edit/(?P<diagramNumber>\d{1,2})$'
+            next_url = siteRecord.get_absolute_url() + 'diagrams/edit/' + str(i) + '/'
+            return HttpResponseRedirect(next_url)
+    else:
+        form = newDiagramform() # An unbound form
+        
+    currentDiagramText = siteObject.diagramsHtml()
+    siteHtml = getSiteHtml(siteRecord)
+    nextUrl = '../report/'
+    nextName = 'Report'
+    previousUrl = '../delays/'
+    previousName = 'Delays'
+    return render_to_response('forms/diagrams.html', locals())
 
 
 

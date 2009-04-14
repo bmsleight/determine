@@ -708,6 +708,9 @@ class requiredDiagramMovementClass:
     def text(self):
         text = "  At " + str(self.timeSeconds) + " move to Stage " + self.toStageName + "\n"
         return text
+    def Html(self):
+        text = "  At " + str(self.timeSeconds) + " move to Stage " + self.toStageName + "<br/>"
+        return text
     def xml(self):
         xml = "<move>"
         xml = xml + "<time>" + str(self.timeSeconds) + "</time>"
@@ -716,7 +719,7 @@ class requiredDiagramMovementClass:
         return xml
 
 class requiredDiagramClass:
-    def __init__(self, title, cycleTime, startingStageName, loop):
+    def __init__(self, title, cycleTime, startingStageName, loop=1):
         self.title = str(unicode(title))
         self.cycleTime = int(unicode(cycleTime))
         self.startingStageName = startingStageName 
@@ -741,6 +744,13 @@ class requiredDiagramClass:
         for movement in self.movements:
             diagramText = diagramText + movement.text()
         diagramText = diagramText + "\n\n"  
+        return diagramText
+    def diagramsHtml(self):
+        diagramText = self.title + "<br/>"  
+        diagramText = diagramText + "Cycle time: " + str(self.cycleTime) + "<br/>"  
+        for movement in self.movements:
+            diagramText = diagramText + movement.Html()
+        diagramText = diagramText + "<br/><br/>"  
         return diagramText
     def xml(self):
         xml = "<diagram>"
@@ -772,6 +782,11 @@ class siteClass:
         for requiredDiagram in self.requiredDiagrams:
             text = text + requiredDiagram.diagramsText()
         return text
+    def diagramsHtml(self):
+        text = ""
+        for requiredDiagram in self.requiredDiagrams:
+            text = text + requiredDiagram.diagramsHtml()
+        return text
     def diagram(self, title):
         diagramFound = False
         for requiredDiagram in self.requiredDiagrams:
@@ -781,7 +796,6 @@ class siteClass:
         if diagramFound == False:
             returnDiagram = self.requiredDiagrams[0]
         return returnDiagram
-
     def xml(self):
         xml = "<?xml-stylesheet type=\"text/xsl\" href=\"traffic_signals_site.xsl\"?>"
         xml = xml + "<traffic_signals>"
@@ -846,7 +860,8 @@ def parseSiteConfig(siteXML, countryConfig):
                 # in UK this is called a black-out for pedestrians.
                 postGreenTime = int(unicode(phase.black_out))
             except:
-                postGreenTime = -1
+                pass # already set to -1 above...
+#                postGreenTime = -1
             try:
                 description = str(unicode(phase.description))
             except:
@@ -876,9 +891,12 @@ def parseSiteConfig(siteXML, countryConfig):
     try:
         for diagram in siteAmaraXML.traffic_signals.diagrams.diagram:
             requiredDiagram = requiredDiagramClass(diagram.title, diagram.cycle, diagram.start, diagram.loop)
-            for movement in diagram.movements.move:
-                requiredMovement = requiredDiagramMovementClass(movement.time, movement.to)
-                requiredDiagram.movements.append(requiredMovement)
+            try:
+                for movement in diagram.movements.move:
+                    requiredMovement = requiredDiagramMovementClass(movement.time, movement.to)
+                    requiredDiagram.movements.append(requiredMovement)
+            except:
+                pass # No movements
             site.requiredDiagrams.append(requiredDiagram)
     except:
         pass
