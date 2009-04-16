@@ -705,11 +705,13 @@ class requiredDiagramMovementClass:
     def __init__(self, timeSeconds, toStageName):
         self.timeSeconds = int(unicode(timeSeconds))
         self.toStageName = str(unicode(toStageName))
-    def text(self):
-        text = "  At " + str(self.timeSeconds) + " move to Stage " + self.toStageName + "\n"
+    def text(self, cr=True):
+        text = "- At " + str(self.timeSeconds) + " move to Stage " + self.toStageName 
+        if cr is True:
+            text = text + "\n"
         return text
     def Html(self):
-        text = "  At " + str(self.timeSeconds) + " move to Stage " + self.toStageName + "<br/>"
+        text = "- At " + str(self.timeSeconds) + " move to Stage " + self.toStageName + "<br/>"
         return text
     def xml(self):
         xml = "<move>"
@@ -752,6 +754,25 @@ class requiredDiagramClass:
             diagramText = diagramText + movement.Html()
         diagramText = diagramText + "<br/><br/>"  
         return diagramText
+    def movementsList(self):
+        movementsList = []
+        for movement in self.movements:
+            movementsList.append(movement.text(cr=False))
+        print movementsList
+        return movementsList
+    def movementsDelete(self, movementText):
+        foundIndex = -1
+        oldList = self.movementsList()
+        l = len(oldList)
+        for i in range(0, l):
+            print movementText, oldList[i]
+            if movementText == oldList[i]:
+                foundIndex = i
+        if foundIndex !=-1:
+            del self.movements[foundIndex]
+            return True
+        else:
+            return False        
     def xml(self):
         xml = "<diagram>"
         xml = xml + "<title>" + self.title + "</title>"
