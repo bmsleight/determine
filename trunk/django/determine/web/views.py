@@ -411,6 +411,60 @@ def stagesAdd(request, year, month, day, slug, stageName):
     siteHtml = getSiteHtml(siteRecord)
     return render_to_response('forms/add-stages.html', locals())
 
+def diagramEdit(request, year, month, day, slug, diagramIndex):
+    siteRecord = siteRecordFilter(year, month, day, slug)
+    siteObject, countryObject = getSiteObject(siteRecord)    
+    currentDiagrams = siteObject.listDiagrams()
+    
+    addDiagramText = 'Add Movement'
+    deleteDiagramText = 'Delete Movement '
+    doneDiagramText = 'Finish Editing Diagram'
+
+    try:
+        diagram = siteObject.requiredDiagrams[int(diagramIndex)]
+    except:
+        return HttpResponseRedirect('../../')
+
+    currentStages = siteObject.stages.listStageNames()
+    stageChoices = listToTupleChoices(currentStages)
+    timeChoices = listToTupleChoices(range(0,diagram.cycleTime))
+    currentMovements = diagram.movementsList()
+
+    class newMovementForm(forms.Form):
+        timeSeconds = forms.ChoiceField(choices=timeChoices, label="At time:") 
+        toStageName = forms.ChoiceField(choices=stageChoices, label="Move to stage:")
+    
+    if request.method == 'POST':
+        if request.POST.has_key(doneDiagramText):
+            next_url =  '../../'
+            return HttpResponseRedirect(next_url)
+        if request.POST.has_key(deleteDiagramText):
+            movementText = request.POST[deleteDiagramText].lstrip(deleteDiagramText)
+            diagram.movementsDelete(str(movementText))
+            # Set start stage
+            writeBackSiteToXml(siteRecord, siteObject) 
+            form = newMovementForm() # An unbound form
+        if request.POST.has_key(addDiagramText):
+            form = newMovementForm(request.POST) # A bound form
+            if form.is_valid(): # All validation rules pass
+                try:
+#                if True:
+                    timeSeconds = form.cleaned_data['timeSeconds']
+                    toStageName = form.cleaned_data['toStageName']
+                    movementObject = libdetermine.requiredDiagramMovementClass(timeSeconds, toStageName)
+                    diagram.movements.append(movementObject)
+                    # Set start stage
+                    writeBackSiteToXml(siteRecord, siteObject)
+                except:
+                    pass
+        currentMovements = diagram.movementsList()
+    else:
+        form = newMovementForm() # An unbound form
+
+    diagramHtml = diagram.diagramsHtml()    
+    siteHtml = getSiteHtml(siteRecord)
+    return render_to_response('forms/diagram-edit.html', locals())
+
 
     
 def form(request):
