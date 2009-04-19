@@ -1,0 +1,10 @@
+{% extends "forms/base_forms.html" %}
+{% block title %}{{siteRecord.title}} - Start{% endblock %}
+{% block forms %}
+<p><div class="formheading">Reports</div></p>
+<p>Below are different reports, each type availabale as a pdf.</p>
+<p><a href='../report/pdf/simple'>Simple and quick pdf report of {{siteRecord.title}}</a></p>
+<p><a href='../report/pdf/normal'>Normal pdf report of {{siteRecord.title}}</a></p>
+<p><a href='../report/pdf/full'>Full pdf report of {{siteRecord.title}}</a> (This takes ~1min to produce)</p>
+
+{% endblock %}

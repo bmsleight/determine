@@ -5,6 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 base = r'^sites/(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/(?P<slug>[-\w]+)/'
+baseStart = base + '$'
 basePhase = base + r'phases/$'
 basePhaseAdd = base + r'phases/add/(?P<letter>[A-Za-z]+)/(?P<phaseType>[^/]+)/$'
 baseStage = base + r'stages/$'
@@ -13,6 +14,9 @@ baseIntergreen = base + r'intergreens/$'
 baseDelays = base + r'delays/$'
 baseDiagrams = base + r'diagrams/$'
 basediagramEdit = base + r'diagrams/edit/(?P<diagramIndex>\w{1,2})/$'
+baseReport = base + r'report/$'
+baseReportPdf = base + r'report/pdf/(?P<pdfType>[-\w]+)/$'
+
 
 urlpatterns = patterns('',
     # Example:
@@ -23,7 +27,9 @@ urlpatterns = patterns('',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
+    (r'^$', 'determine.web.views.home'),
     (r'^new-site/', 'determine.web.views.newSite'),
+    (baseStart, 'determine.web.views.start'),
     (basePhase, 'determine.web.views.phases'),
     (basePhaseAdd, 'determine.web.views.phasesAdd'),
     (baseStage, 'determine.web.views.stages'),
@@ -38,6 +44,8 @@ urlpatterns = patterns('',
     # Scrub the above - just add a new diagram then use the edit feature
     # Edit an existing diagram - with a link when finished to ../
     (basediagramEdit, 'determine.web.views.diagramEdit'),
+    (baseReport, 'determine.web.views.report'),
+    (baseReportPdf, 'determine.web.views.reportPdf'),
 
 
 
