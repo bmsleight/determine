@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+{% block title %}Determine{% endblock %}
+<p><div class="contentheading">Welcome to Determine</div></p>
+<p>Determine is a way to generate traffic signal timing diagrams to determine green running times.</p>
+<p>Start a generating a report by configuring a <a href=./new-site>new site</a></p>
+<p></p>
+{% if latestSites  %}
+  <p><div class="contentsubheading">Latest Sites</div></p>
+  {% for site in latestSites  %}
+    <p><a href={{site.get_absolute_url_report}}>{{site.title}} on {{site.publish_date}}</a>
+  {% endfor %}
+{% endif %}
+<p></p>
+{% endblock %}

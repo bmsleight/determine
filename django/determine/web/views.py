@@ -12,9 +12,13 @@ from django.template.defaultfilters import slugify
 from determine.web import libdetermine
 from django.conf import settings
 from django import forms
+from django.http import HttpResponse
+
+
 
 import datetime
 from lxml import etree
+import tempfile
 
 
 def newSite(request):
@@ -90,6 +94,22 @@ def listToTupleChoices(l):
         t = (item, item)
         newList.append(t)
     return tuple(newList)
+
+def home(request):
+    latestSites =  SignalSite.objects.all()[:5]
+
+    return render_to_response('home.html', locals())
+
+
+def start(request, year, month, day, slug):
+    siteRecord = siteRecordFilter(year, month, day, slug)
+    siteObject, countryObject = getSiteObject(siteRecord)
+
+    siteHtml = getSiteHtml(siteRecord)
+    nextUrl = './phases/'
+    nextName = 'Phases'
+    return render_to_response('forms/start.html', locals())
+
 
 def phases(request, year, month, day, slug):
     siteRecord = siteRecordFilter(year, month, day, slug)
@@ -427,8 +447,11 @@ def diagramEdit(request, year, month, day, slug, diagramIndex):
 
     currentStages = siteObject.stages.listStageNames()
     stageChoices = listToTupleChoices(currentStages)
-    timeChoices = listToTupleChoices(range(0,diagram.cycleTime))
-    currentMovements = diagram.movementsList()
+    if diagram.cycleTime >0:
+        timeChoices = listToTupleChoices(range(0,diagram.cycleTime))
+        currentMovements = diagram.movementsList()
+    else:
+        timeChoices = listToTupleChoices(["0"])
 
     class newMovementForm(forms.Form):
         timeSeconds = forms.ChoiceField(choices=timeChoices, label="At time:") 
@@ -465,7 +488,92 @@ def diagramEdit(request, year, month, day, slug, diagramIndex):
     siteHtml = getSiteHtml(siteRecord)
     return render_to_response('forms/diagram-edit.html', locals())
 
+def report(request, year, month, day, slug):
+    siteRecord = siteRecordFilter(year, month, day, slug)
+    siteObject, countryObject = getSiteObject(siteRecord)
 
+    siteHtml = getSiteHtml(siteRecord)
+    previousUrl = '../diagrams/'
+    previousName = 'Diagrams'
+    return render_to_response('forms/report.html', locals())
+
+
+def reportPdf(request, year, month, day, slug, pdfType):
+    siteRecord = siteRecordFilter(year, month, day, slug)
+    
+    from subprocess import *
+    
+# if site.xml is newer than report.xml
+    siteObject, countryObject = getSiteObject(siteRecord)    
+    report = libdetermine.generateReport(countryObject, siteObject)
+    reportXML = siteRecord.get_report_xml_filename_full()
+    xsl = siteRecord.get_site_xslt_report_full()
+    pdf = siteRecord.get_report_pdf_filename_full()
+
+    f=open(reportXML, 'w')
+    f.write(report.xml())
+    f.close()
+
+
+    if pdfType == 'full':
+        # Ugly code - Do something about it!
+        tmpReport = tempfile.NamedTemporaryFile(suffix='dj-dt-')
+        tmpXMLps = tempfile.NamedTemporaryFile(suffix='-dj-dt.ps')
+        tmpXMLpdf = tempfile.NamedTemporaryFile(suffix='-dj-dt.pdf')
+        tmpReportPdf = tempfile.NamedTemporaryFile(suffix='dj-dt.pdf')
+        tmpSiteHtml = tempfile.NamedTemporaryFile(suffix='dj-dt.html')
+                
+        c = ["enscript", "-5", "-p", tmpXMLps.name, "-b", siteRecord.title, '--font=Courier6', "--highlight=html", 
+        '--landscape', '--color', '--borders', '--media=A3',  '--title="XML"', 
+        "--header='$n||Page $% of $='", reportXML ]
+        enscript = Popen(c, stdout=PIPE)
+        enscript.wait()
+        
+        pstopdf = Popen(["ps2pdf", tmpXMLps.name, tmpXMLpdf.name], stdout=PIPE)
+        pstopdf.wait()
+        
+#        siteHtml = getSiteHtml(siteRecord)
+#        tmpSiteHtml.write(siteHtml)
+        xmlstarlet = Popen(["xmlstarlet", "tr", siteRecord.get_site_xslt_full(), siteRecord.get_xml_filename_full()], stdout=tmpSiteHtml)
+        print "hi"
+
+        xmlstarlet = Popen(["xmlstarlet", "tr", xsl, reportXML], stdout=PIPE)
+        wkhtmltopdf = Popen(["wkhtmltopdf", "--page-size", "A3", "--orientation", 
+        "Landscape", "-", tmpSiteHtml.name, tmpReportPdf.name], stdin=xmlstarlet.stdout, stdout=PIPE)
+        wkhtmltopdf.wait()
+    
+        final = Popen(["pdftk", tmpReportPdf.name, tmpXMLpdf.name, "cat", "output", pdf], stdout=PIPE)
+        final.wait()
+        pdf_data = open(pdf, "rb").read()
+        response = HttpResponse(pdf_data, mimetype='application/pdf')
+#    if pdfType == 'simple':
+    else:
+        xmlstarlet = Popen(["xmlstarlet", "tr", xsl, reportXML], stdout=PIPE)
+        wkhtmltopdf = Popen(["wkhtmltopdf", "--page-size", "A3", "--orientation", 
+        "Landscape", "-", "-"], stdin=xmlstarlet.stdout, stdout=PIPE)
+        response = HttpResponse(wkhtmltopdf.stdout, mimetype='application/pdf')
+
+    filename = 'attachment; filename=' + slug + '.pdf'
+    response['Content-Disposition'] = filename
+
+    return response
+
+#pdftk /tmp/report-test-simple-site-25.pdf dump_data output | grep "NumberOfPages" | cut -d\  -f 2
+
+
+# endif
+# from subprocess import *
+#>>> p1 = Popen(["df"], stdout=PIPE)
+#>>> p2 = Popen(["grep", "tmpfs"], stdin=p1.stdout, stdout=PIPE)
+#>>> output = p2.communicate()[0]
+#>>> print output
+
+    # xmlstarlet report with stylesheet produing (html) to a PIPE
+    # xmlstarlet tr  /home/bms/work/legal/digrams/traffic_signals_report.xsl /home/bms/work/legal/digrams/26-000146_corrected.xml.xml 
+    # wkhtmltopdf to PIPE
+    # wkhtmltopdf - - 2>/dev/null
+    # return pip 
+    
     
 def form(request):
     context = dict(post=dict(), results=list())
