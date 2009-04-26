@@ -3,12 +3,12 @@
 {% block forms %}
 <form action="./" method="POST">
 
-<p><div class="formheading">Add a Diagram to Report</div></p>
+<h3>Add a Diagram to Report</h3>
 {{ form.as_p }}
-<input type="submit" name="{{addDiagramText}}"  value="{{addDiagramText}}" />
+<p><input type="submit" name="{{addDiagramText}}"  value="{{addDiagramText}}" /></p>
 
 {% if currentDiagrams %}
-  <p><div class="formheading">Current Diagrams</div></p>
+  <h4>Current Diagrams</h4>
   <p>{{currentDiagramText|safe}}</p>
   {% for diagram in currentDiagrams %}
     <p><input type='submit' name='{{editDiagramText}}' value='{{editDiagramText}}{{diagram}}' />&nbsp;

@@ -3,12 +3,12 @@
 {% block forms %}
 <form action="./" method="POST">
 
-<p><div class="formheading">Add a Phase to site</div></p>
+<h3>Add a Phase to site</h3>
 {{ form.as_p }}
-<input type="submit" name="{{addPhaseText}}"  value="{{addPhaseText}}" />
+<p><input type="submit" name="{{addPhaseText}}"  value="{{addPhaseText}}" /></p>
 
 {% if currentPhases %}
-  <p></p><div class="formheading">Remove a Phase from a site</div></p>
+  <h4>Remove a Phase from a site</h4>
   {% for phase in currentPhases %}
     <p><input type='submit' name='{{deletePhaseText}}' value='{{deletePhaseText}}{{phase}}' /></p>
   {% endfor %}

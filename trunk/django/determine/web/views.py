@@ -57,11 +57,15 @@ def siteRecordFilter(year, month, day, slug):
     MONTHS = ['dummy', 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
     startOfDay = datetime.datetime(int(year), MONTHS.index(month), int(day))
     endOfDay = startOfDay + datetime.timedelta(1)
-    siteRecord = SignalSite.objects.filter(slug=slug)
-    siteRecord = siteRecord.filter(publish_date__gte=startOfDay)
-    siteRecord = siteRecord.filter(publish_date__lte=endOfDay)
-    siteRecord = siteRecord.order_by('-publish_date')[0]
-    return siteRecord
+    try:
+        siteRecord = SignalSite.objects.filter(slug=slug)
+        siteRecord = siteRecord.filter(publish_date__gte=startOfDay)
+        siteRecord = siteRecord.filter(publish_date__lte=endOfDay)
+        siteRecord = siteRecord.order_by('-publish_date')[0]
+        if siteRecord:
+            return siteRecord
+    except:
+        return False
 
 def getSiteObject(siteRecord):
     xmlFile = siteRecord.get_xml_filename_full()
@@ -97,12 +101,19 @@ def listToTupleChoices(l):
 
 def home(request):
     latestSites =  SignalSite.objects.all()[:5]
-
     return render_to_response('home.html', locals())
+
+def allSites(request):
+    latestSites =  SignalSite.objects.all()
+    return render_to_response('all-sites.html', locals())
 
 
 def start(request, year, month, day, slug):
     siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
+    if siteRecord.locked:
+        return HttpResponseRedirect(siteRecord.get_absolute_url_report())        
     siteObject, countryObject = getSiteObject(siteRecord)
 
     siteHtml = getSiteHtml(siteRecord)
@@ -113,6 +124,10 @@ def start(request, year, month, day, slug):
 
 def phases(request, year, month, day, slug):
     siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
+    if siteRecord.locked:
+        return HttpResponseRedirect(siteRecord.get_absolute_url_report())        
     siteObject, countryObject = getSiteObject(siteRecord)
     deletePhaseText = 'Delete Phase '
     addPhaseText = 'Add Phase'
@@ -144,6 +159,10 @@ def phases(request, year, month, day, slug):
 
 def stages(request, year, month, day, slug):
     siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
+    if siteRecord.locked:
+        return HttpResponseRedirect(siteRecord.get_absolute_url_report())        
     siteObject, countryObject = getSiteObject(siteRecord)
     addStageText = 'Add Stage'
     deleteStageText = 'Delete Stage '
@@ -178,6 +197,10 @@ def stages(request, year, month, day, slug):
 
 def intergreens(request, year, month, day, slug):
     siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
+    if siteRecord.locked:
+        return HttpResponseRedirect(siteRecord.get_absolute_url_report())        
     siteObject, countryObject = getSiteObject(siteRecord)
     currentPhases = siteObject.phases.phaseListLetters()
     intergreenHtml = ""
@@ -243,6 +266,10 @@ def intergreens(request, year, month, day, slug):
 
 def delays(request, year, month, day, slug):
     siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
+    if siteRecord.locked:
+        return HttpResponseRedirect(siteRecord.get_absolute_url_report())        
     siteObject, countryObject = getSiteObject(siteRecord)
     currentPhases = siteObject.phases.phaseListLetters()
     currentStages = siteObject.stages.listStageNames()
@@ -294,6 +321,10 @@ def delays(request, year, month, day, slug):
 
 def diagrams(request, year, month, day, slug):
     siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
+    if siteRecord.locked:
+        return HttpResponseRedirect(siteRecord.get_absolute_url_report())        
     siteObject, countryObject = getSiteObject(siteRecord)    
     currentDiagrams = siteObject.listDiagrams()
     
@@ -354,6 +385,10 @@ def diagrams(request, year, month, day, slug):
 # phasesAdd
 def phasesAdd(request, year, month, day, slug, letter, phaseType):
     siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
+    if siteRecord.locked:
+        return HttpResponseRedirect(siteRecord.get_absolute_url_report())        
     siteObject, countryObject = getSiteObject(siteRecord)
     phaseTypeObject = countryObject.phaseType(str(phaseType))
     fixedItems =[]
@@ -402,6 +437,10 @@ def phasesAdd(request, year, month, day, slug, letter, phaseType):
 
 def stagesAdd(request, year, month, day, slug, stageName):
     siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
+    if siteRecord.locked:
+        return HttpResponseRedirect(siteRecord.get_absolute_url_report())        
     siteObject, countryObject = getSiteObject(siteRecord)
     currentPhases = listToTupleChoices(siteObject.phases.phaseListLetters())
     stageObject = siteObject.stages.stage(stageName)
@@ -433,6 +472,10 @@ def stagesAdd(request, year, month, day, slug, stageName):
 
 def diagramEdit(request, year, month, day, slug, diagramIndex):
     siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
+    if siteRecord.locked:
+        return HttpResponseRedirect(siteRecord.get_absolute_url_report())        
     siteObject, countryObject = getSiteObject(siteRecord)    
     currentDiagrams = siteObject.listDiagrams()
     
@@ -465,6 +508,7 @@ def diagramEdit(request, year, month, day, slug, diagramIndex):
             movementText = request.POST[deleteDiagramText].lstrip(deleteDiagramText)
             diagram.movementsDelete(str(movementText))
             # Set start stage
+            diagram.startEqualLastMovement()
             writeBackSiteToXml(siteRecord, siteObject) 
             form = newMovementForm() # An unbound form
         if request.POST.has_key(addDiagramText):
@@ -477,6 +521,7 @@ def diagramEdit(request, year, month, day, slug, diagramIndex):
                     movementObject = libdetermine.requiredDiagramMovementClass(timeSeconds, toStageName)
                     diagram.movements.append(movementObject)
                     # Set start stage
+                    diagram.startEqualLastMovement()
                     writeBackSiteToXml(siteRecord, siteObject)
                 except:
                     pass
@@ -490,6 +535,8 @@ def diagramEdit(request, year, month, day, slug, diagramIndex):
 
 def report(request, year, month, day, slug):
     siteRecord = siteRecordFilter(year, month, day, slug)
+    if not siteRecord:
+        return HttpResponseRedirect('/sites/error/')
     siteObject, countryObject = getSiteObject(siteRecord)
 
     siteHtml = getSiteHtml(siteRecord)
@@ -500,6 +547,8 @@ def report(request, year, month, day, slug):
 
 def reportPdf(request, year, month, day, slug, pdfType):
     siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
     
     from subprocess import *
     

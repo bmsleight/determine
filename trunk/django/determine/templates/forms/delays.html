@@ -3,12 +3,12 @@
 {% block forms %}
 <form action="./" method="POST">
 
-<p><div class="formheading">Add a Phase Delay to site</div></p>
+<h3>Add a Phase Delay to site</h3>
 {{ form.as_p }}
 <input type="submit" name="{{addDelayText}}"  value="{{addDelayText}}" />
 
 {% if currentDelays %}
-  <p><div class="formheading">Current Delays</div></p>
+  <h4>Current Delays</h4>
   {% for delay in currentDelays %}
     <p><input type='submit' name='{{deleteDelayText}}' value='{{deleteDelayText}}{{delay}}' /></p>
   {% endfor %}

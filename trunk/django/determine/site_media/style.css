@@ -1,0 +1,463 @@
+/* CSS Template adapted from the following template                     */
+/* RED LONDON TEMPLATE BY BRETT HILLESHEIM (HTTP://WWW.MADSEASON.CO.UK) */
+
+
+
+/* GENERAL BODY ELEMENTS ----------------------------------------*/
+
+html {
+	height: 100%;
+}
+
+body {
+	margin: 0 0 0 0;
+	padding: 0;
+	height: 100%;
+	font: 96% Verdana,Tahoma,Arial,sans-serif;
+}
+
+a {
+	color: green;
+	text-decoration: none;
+}
+
+a:hover {
+	color: green;
+	text-decoration: underline;
+}
+
+blockquote {
+	margin: 5px 5px 5px 50px;
+	border-left: 5px solid DarkOrange;
+	padding: 2px;
+}
+
+
+
+
+input, textarea {
+	padding: 1px 3px;
+	margin: 2px 0;
+	font: 1em verdana, arial, sans-serif;
+	color: green;
+	background-color: #EEE;
+	border: 1px solid #DDD;
+}
+
+input:hover, input:focus, textarea:hover, textarea:focus {
+	color: DarkOrange;
+	background-color: #DDD;
+	border: 1px solid #CCC;
+}
+
+/*
+table {
+    background-color: #FFF;
+    border: solid red 2px;
+    width: 90%;
+	margin: 0 auto;
+	padding: 0;
+}
+
+
+table td {
+	font-size: 0.95em;
+}
+
+*/
+/* TABLE STYLES -----------------------------------------------------*/
+
+/*
+.data {
+    color: #000000;
+	font: 0.95em Georgia;
+    text-align: right;
+    background-color: #EEE;
+}
+
+
+.toprow {
+	color: green;
+	font-size: 0.90em;
+    font-weight: bold;
+    text-align: right;
+    background-color: #FFF;
+}
+
+
+.leftcol {
+	color: red;
+    font-weight: bold;
+	font-size: 0.90em;
+    text-align: left;
+    width: 25%;
+    background-color: #DDD;
+}
+
+*/
+/* PAGE LAYOUT STYLES ------------------------------------------*/
+
+#container {
+	width: 800px;
+	margin: 0 auto;
+	padding: 0;
+	border-right: 7px solid green;
+	border-left: 7px solid green;
+	min-height: 100%;
+#	background: #fff;
+}
+
+
+#top_bar {
+	width: 800px;
+	height: 20px;
+	background: green;
+	padding: 0;
+	margin: 0;
+}
+
+#header {
+	width: 800px;
+	height: 169px;
+	background: url(images/determine-logo.png) top left no-repeat;
+	border-bottom: 2px solid #fff;
+	padding: 0;
+	margin: 0;
+}
+
+#content_container {
+	width: 800px;
+	margin: 0;
+	padding: 0;
+	border-top: 4px solid red;
+}
+
+
+#left_menu {
+	float: left;
+	width: 200px;
+	background: #fff;
+	margin: 0;
+	padding: 0;
+}
+
+#right_content {
+	float: left;
+	width: 600px;
+	background: #fff;
+	margin: 0;
+	padding: 0;
+}
+
+#sitehtml {	
+    float: left;
+    border-style: solid;
+    border-color: DarkOrange;
+    border-width: thin;
+    margin-left: 20px;
+    margin-right: 20px;
+	width: 560px;
+}
+
+#footer {
+	clear: both;
+	width: 800px;
+	margin: 0 auto;
+	padding: 0;
+	background: green;
+}
+
+.clear {
+	clear: both;
+	width: 100%;
+	height: 20px;
+	background: transparent;
+}
+
+.line {
+	width: 570px;
+	height: 2px;
+	margin:  8px 0 8px 20px;
+	padding: 0;
+	background: #EEE;
+} 
+
+/* TOP BAR STYLES -----------------------------------------*/
+
+#top_bar p {
+	color: white;
+	font-weight: bold;
+	padding: 3px 15px 5px 0;
+	font-size: 0.85em;
+	text-align: right;
+	margin: 0;
+}
+
+/* HEADER STYLES --------------------------------------------*/
+
+#header h1 {
+	color: Red;
+	font-weight: bold;
+	text-align: right;
+	font-size: 4.0em;
+	padding: 145px 50px 0 0;
+	margin: 0;
+}
+
+/* LEFT MENU STYLES ------------------------------------------*/
+
+.menu {
+	width: 200px;
+	margin: 0 0 15px 0;
+	padding: 0;
+}
+
+#left_menu a.menu_link {
+	padding: 2px 15px 0 15px;
+	font: 0.85em Georgia;
+	text-align: justify;
+	margin: 0;
+	color: green;
+}
+
+#left_menu ul {
+	margin:0;
+	padding: 15px 0 0 15px;
+}
+
+#left_menu ul li {
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+
+#left_menu ul li a {
+	font: 1.3em Georgia;
+	font-weight: bold;
+	text-align: left;
+	text-decoration: none;
+	border-left: 4px solid red;
+	color: red;
+
+	margin: 0;
+	padding: 0;
+}	
+
+#left_menu ul li a:hover {
+	color:DarkOrange;
+	border-left: 4px solid DarkOrange;
+}
+
+#left_menu p.menu_title {
+	font: 1.5em Georgia;
+	font-weight: bold;
+	text-align: left;
+	border-left: 6px solid DarkOrange;
+	color: red;
+	margin: 8px 0 5px 15px;
+	padding: 0;
+}	
+
+.menu_bottom {
+	width: 200px;
+	height: 23px;
+	padding: 0;
+	margin: 0;
+}
+
+p.date {
+	font-weight: bold;
+	color: green;
+	padding: 5px 15px 0 15px;
+	text-align: justify;
+	margin: 0;
+}
+
+#left_menu p {
+	padding: 5px 15px 0 15px;
+	font: 0.85em Georgia;
+	text-align: justify;
+	margin: 0;
+}
+
+	
+
+
+/* RIGHT CONTENT STYLES ---------------------------*/
+
+#right_content h2 {
+	width: 570px;
+	border-bottom: 2px solid DarkOrange;
+	color: green;
+	font: 2.5em Georgia;
+	font-weight: bold;
+	margin:  15px 0 0 20px;
+	padding: 0;
+}
+
+#right_content h3 {
+	width: 570px;
+	color: green;
+	border-bottom: 1px solid DarkOrange;
+	font: 2.0em Georgia;
+	font-weight: bold;
+	margin:  15px 0 0 20px;
+	padding: 0;
+}
+
+#right_content h4 {
+	width: 570px;
+	color: green;
+	border-bottom: 1px solid DarkOrange;
+	font: 1.5em Georgia;
+	font-weight: bold;
+	margin:  15px 0 0 20px;
+	padding: 0;
+}
+
+#right_content h5 {
+	width: 570px;
+	color: green;
+	border-bottom: 1px solid DarkOrange;
+	font: 1.0em Georgia;
+	font-weight: bold;
+	margin:  15px 0 0 20px;
+	padding: 0;
+}
+
+#right_content h6 {
+	width: 570px;
+	color: green;
+#	border-bottom: 1px solid DarkOrange;
+	font: 1.0em Georgia;
+	font-weight: bold;
+	margin:  5px 0 0 20px;
+	padding: 0;
+}
+
+#right_content p {
+	color: #222222;
+	font: 0.95em Georgia;
+	margin: 0;
+	text-align: justify;
+	padding: 8px 10px 0 20px;
+}
+
+#right_content table {
+	color: #222222;
+	font: 0.95em Georgia;
+	margin: 0;
+	text-align: justify;
+	padding: 8px 10px 0 20px;
+}
+
+#right_content  a:hover {
+	color:DarkOrange;
+#	border-left: 4px solid DarkOrange;
+}
+
+#right_content ul li {
+     list-style-image: url('images/bullet.png')
+	}
+
+/* SITE STYLES ------------------------------------*/
+#sitehtml h2 {
+	width: 530px;
+	border-bottom: 2px solid DarkOrange;
+	color: green;
+	font: 2.5em Georgia;
+	font-weight: bold;
+	margin:  15px 0 0 20px;
+	padding: 0;
+}
+
+#sitehtml h3 {
+	width: 530px;
+	color: green;
+	border-bottom: 1px solid DarkOrange;
+	font: 2.0em Georgia;
+	font-weight: bold;
+	margin:  15px 0 0 20px;
+	padding: 0;
+}
+
+#sitehtml h4 {
+	width: 530px;
+	color: green;
+	border-bottom: 1px solid DarkOrange;
+	font: 1.5em Georgia;
+	font-weight: bold;
+	margin:  15px 0 0 20px;
+	padding: 0;
+}
+
+#sitehtml h5 {
+	width: 530px;
+	color: green;
+	border-bottom: 1px solid DarkOrange;
+	font: 1.0em Georgia;
+	font-weight: bold;
+	margin:  15px 0 0 20px;
+	padding: 0;
+}
+
+#sitehtml h6 {
+	width: 530px;
+	color: green;
+#	border-bottom: 1px solid DarkOrange;
+	font: 1.0em Georgia;
+	font-weight: bold;
+	margin:  5px 0 0 20px;
+	padding: 0;
+}
+
+
+
+
+/* FOOTER STYLES ----------------------------------*/
+
+#footer p {
+	font: 0.80em Georgia;
+	color: #FFF;
+	text-align: right;
+	margin: 0 15px 0 0;
+	padding: 0;
+}	
+
+
+#footer a {
+	padding: 0;
+	margin: 0;
+	color: #EEE;
+	text-decoration: underline;
+}	
+
+#footer a:hover {
+	color: #DDD;
+	text-decoration: none;
+}	
+
+/* A FEW STRAY IMAGE STYLES -------------------------*/
+
+p img {
+	padding: 0;
+	max-width: 100%;
+}
+
+img.alignright {
+	float:right;
+	margin:5px 15px 6px;
+	padding:5px;
+	clear: both;
+	background: #eee;
+	border: 1px solid #ddd;
+}
+
+img.alignleft {
+	float:left;
+	margin:5px 15px 6px;
+	padding:5px;
+	clear: both;
+	background: #eee;
+	border: 1px solid #ddd;
+}
