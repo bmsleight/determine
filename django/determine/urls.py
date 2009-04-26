@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -29,6 +30,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^$', 'determine.web.views.home'),
     (r'^new-site/', 'determine.web.views.newSite'),
+    (r'^all-sites/', 'determine.web.views.allSites'),
     (baseStart, 'determine.web.views.start'),
     (basePhase, 'determine.web.views.phases'),
     (basePhaseAdd, 'determine.web.views.phasesAdd'),
@@ -54,6 +56,12 @@ urlpatterns = patterns('',
     (r'^form/$', 'determine.web.views.form'), 
     (r'^admin/(.*)', admin.site.root),
 )
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^site_media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT + "site_media/"}),
+    )
+
 
 # xmlstarlet tr  /home/bms/work/legal/digrams/traffic_signals_report.xsl /home/bms/work/legal/digrams/26-000146_corrected.xml.xml | ./wkhtmltopdf - - 2>/dev/null
 # enscript -1 -p list.html -b header -h --highlight=html --color  -w html --title="XML" ./26-000146_corrected.xml.xml

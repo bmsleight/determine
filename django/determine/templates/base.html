@@ -2,37 +2,16 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<!--    <link rel="stylesheet" href="style.css" /> -->
-    <title>{% block title %}{% endblock %}</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="description" content="_your description goes here_" />
+  <meta name="keywords" content="_your,keywords,goes,here_" />
+  <meta name="author" content="Brendan M. Sleight et al" />
+  <link rel="stylesheet" type="text/css" href="/site_media/style.css" media="screen" title="Green London" />
+  <link rel="icon" type="image/png" href="/site_media/images/favicon.png" />
+    <title>determine - {% block title %}{% endblock %}</title>
 </head>
 
 <style type="text/css">
-table.ig {
-	border-width: 0px 0px 0px 0px;
-	border-spacing: 2px;
-	border-style: solid solid solid solid;
-	border-color: black black black black;
-	border-collapse: collapse;
-	background-color: white;
-        margin-left: 20px;
-}
-table.ig th {
-	border-width: 1px 1px 1px 1px;
-	padding: 2px 2px 2px 2px;
-	border-style: inset inset inset inset;
-	border-color: gray gray gray gray;
-	background-color: white;
-	-moz-border-radius: 0px 0px 0px 0px;
-        font-size: x-small;
-}
-table.ign td {
-	border-width: 1px 1px 1px 1px;
-	padding: 0px 0px 0px 0px;
-	border-style: inset inset inset inset;
-	border-color: gray gray gray gray;
-	background-color: white;
-	-moz-border-radius: 0px 0px 0px 0px;
-}
 
 
 input.ig
@@ -44,19 +23,96 @@ input.ig
 
 </style>
 <body>
-<!--
-    <div id="sidebar">
-        {% block sidebar %}
-        <ul>
-            <li><a href="/">Foo</a></li>
-            <li><a href="/">Bar</a></li>
-        </ul>
-        {% endblock %}
-    </div>
--->
+	<div id="container">
 
-    <div id="content">
+		<!-- TOP HEADER SECTION -->
+
+		<div id="top_bar">
+			<p>Generate traffic signal timing diagrams to determine green running times.</p>
+		</div>
+
+		<div id="header">
+<!--			<h1>Green London</h1> -->
+		</div>
+
+		<!-- END TOP HEADER SECTION -->
+
+		<!-- LEFT SIDE MENU -->
+
+			<div id="left_menu">
+				<div class="menu">
+					<ul>
+						<li><a href="/">&nbsp; Introduction</a></li>
+						<li><a href="/new-site/">&nbsp; New Site</a></li>
+						<li><a href="/all-sites/">&nbsp; All Sites</a></li>
+						<li><a href="#">&nbsp; FAQ</a></li>
+						<li><a href="http://code.google.com/p/determine/">&nbsp; Code</a></li>
+						<li><a href="#">&nbsp; Contacts</a></li>
+					</ul>
+					<br/>
+<!--					<p class="menu_title">&nbsp; Site News</p>
+					
+					<p class="date">3.09.06</p>
+					<p>Some News Stuff Could Probably Go over here in Your Side Bar, But Beware, the sidebar background is only 500 pixels long. Sorry about that, but I had to stay below 25kb for images.</p>
+
+					<p class="date">3.08.06</p>
+					<p>One More News Entry, just to give everything a better feel. BTW, this template is Valid XHTML 1.0 Strict and Valid CSS 2.0.</p>
+					<div class="menu_bottom"></div>
+				</div>
+
+
+				<div class="menu"><br/>
+					<p class="menu_title">&nbsp; Linkage</p>
+					
+					<a href="http://www.madseason.co.uk" class="menu_link">Mad Season Design</a><br/>
+					<a href="http://www.openwebdesign.org" class="menu_link">OWD</a><br/>
+					<a href="http://www.oswd.org" class="menu_link">OSWD</a><br/>
+					<a href="http://www.browsehappy.com" class="menu_link">Browse Happy</a><br/>
+
+					<div class="menu_bottom"></div>
+				</div>
+
+
+
+				<div class="menu"><br/>
+					<p class="menu_title">&nbsp; Search</p>
+					
+
+					<p>Enter Your Search Term Below To Search Our Archives</p>
+
+					<ul>
+						<li><input type="text" value="Search Term" size="12" />&nbsp;<input type="submit" value="Search" /></li>
+					</ul>
+					<br/>
+
+					<div class="menu_bottom"></div>
+-->
+				</div>
+			</div>
+
+			<!-- END LEFT SIDE MENU -->
+			
+			<!-- RIGHT CONTENT AREA -->
+
+			<div id="right_content">
+
         {% block content %}{% endblock %}
-    </div>
+			</div>
+			
+			<!-- END RIGHT CONTENT AREA -->
+			
+			<div class="clear"></div>
+		
+
+		<!-- FOOTER AREA -->
+		
+		<div id="footer">
+			<br/>
+			<p>&copy; Determine etc</p>
+		</div>
+		<!-- END FOOTER AREA -->
+
+	</div>	
+
 </body>
 </html>

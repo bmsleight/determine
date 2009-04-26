@@ -4,48 +4,44 @@
 <xsl:template match="/">
 <div class="traffic-signal-site">
 <div class="site-header">
- <span size="larger"><p><u>Site: <xsl:value-of select="/traffic_signals/site/address"/></u></p></span>
+ <h4>Site: <xsl:value-of select="/traffic_signals/site/address"/></h4>
 </div>
 
 <div class="site-phases">
-  <span size="larger"><p><u>Phases</u></p></span>
+  <span size="larger"><h5>Phases</h5></span>
   <xsl:for-each select="//traffic_signals/site/phases/phase">
     <xsl:sort select="letter"/>
-    <xsl:value-of select="letter" />&#160;
+    <h6><xsl:value-of select="letter" />&#160;</h6>
     <xsl:if test="string-length(description) &gt; 0" >
-      (<xsl:value-of select="description" />)<br/>
+      <h6></h6>(<xsl:value-of select="description" />)<h6/>
     </xsl:if>
-    <xsl:if test="string-length(description) &lt; 1" >
-      <br/>
-    </xsl:if>
-    Phase type: <xsl:value-of select="signal_type" />.
+    <p>Phase type: <xsl:value-of select="signal_type" />.</p>
     <xsl:if test="string-length(mintime) &gt; 0" >
-       Minimum green running time: <xsl:value-of select="mintime" />
+       <p>Minimum green running time: <xsl:value-of select="mintime" /></p>
     </xsl:if>
     <xsl:if test="string-length(black_out) &gt; 0" >
-       Black out period: <xsl:value-of select="black_out" /> 
+       <p>Black out period: <xsl:value-of select="black_out" /></p>
     </xsl:if>
     <xsl:if test="string-length(post_green_time) &gt; 0" >
-       Post Green Time: <xsl:value-of select="post_green_time" /> 
+       <p>Post Green Time: <xsl:value-of select="post_green_time" /></p>
     </xsl:if>
-    <br/><br/>
   </xsl:for-each>
 </div>
 
 <div class="site-stages">
-  <span size="larger"><p><u>Stages</u></p></span>
+  <h5>Stages</h5>
   <xsl:for-each select="//traffic_signals/site/stages/stage">
     <xsl:sort select="stage_number"/>
     <xsl:variable name="sn" select="stage_number"/>
-    Stage <xsl:value-of select="stage_number" />
+    <p>Stage <xsl:value-of select="stage_number" />
     <xsl:variable name="ph"  select="//traffic_signals/site/stages/stage[stage_number=$sn]/phases" />
       runs phases: <xsl:value-of select="$ph" />
-    <br/>
+    </p>
   </xsl:for-each>
 </div>
 
 <div class="site-intergreens">
-<span size="larger"><p><u>Intergreen table</u></p></span>
+  <h5>Intergreen table</h5>
 <table>
 <tr>
 <td>&#160;</td>
@@ -82,17 +78,18 @@
 </div>
 
 <div class="site-phase-delays">
-  <span size="larger"><p><u>Phase Delays</u></p></span>
+  <h5>Phase Delays</h5>
   <xsl:variable name="phase_delays_all" select="//traffic_signals/site/phase_delays/phase_delay" />
   <xsl:if test="string-length($phase_delays_all) &lt; 1" >
      <p>No phase delays&#160;</p>
   </xsl:if>  
   <xsl:for-each select="//traffic_signals/site/phase_delays/phase_delay">
+    <p>
     Phase <xsl:value-of select="phase" />&#160; 
     on a move from <xsl:value-of select="from" />&#160;
     to <xsl:value-of select="to" />&#160;
     delayed by <xsl:value-of select="length" />&#160;
-    <br/><br/>
+    </p>
   </xsl:for-each>
 </div>
 </div>

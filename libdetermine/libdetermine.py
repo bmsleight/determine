@@ -738,6 +738,16 @@ class requiredDiagramClass:
             return False
         else:
             return returnMovements
+    def lastMovement(self):
+        last = self.startingStageName
+        lastSeconds = 0
+        for movement in self.movements:
+            if movement.timeSeconds >= lastSeconds:
+                lastSeconds = movement.timeSeconds
+                last = movement.toStageName
+        return last
+    def startEqualLastMovement(self):
+        self.startingStageName = self.lastMovement()
     def diagramsText(self):
         diagramText = self.title + "\n"  
         diagramText = diagramText + "Cycle time: " + str(self.cycleTime) + "\n"  

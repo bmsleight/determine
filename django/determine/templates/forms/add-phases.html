@@ -3,17 +3,18 @@
 {% block forms %}
 <form action="./" method="POST">
 
-<p><div class="formheading">Configure Phase:{{letter}} as Type:{{phaseType}}</div></p>
+<h3>Configure Phase {{letter}}</h3>
+<h4>Type:{{phaseType}}</h4>
 {{ form.as_p }}
 
 {% if fixedItems %}
-  <p><div class="formheading">Fixed Parts of a {{phaseType}} Phase</div></p>
+  <h4>Fixed Parts of a {{phaseType}} Phase</h4>
   {% for state, stateTime in fixedItems %}
     <p>{{state}} is fixed at {{stateTime}}</p>
   {% endfor %}
 {% endif %}
 
-<input type="submit" name="configure"  value="Configure Phase {{letter}}" />
+<p><input type="submit" name="configure"  value="Configure Phase {{letter}}" /></p>
     
 </form>
 {% endblock %}

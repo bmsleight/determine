@@ -4,22 +4,29 @@
   {% block forms %}{% endblock %}
 </div>
 
-
+{% if siteRecord.locked %}
+  <div class="wizard">
+    <p>Site locked, no further edits available.</p>
+  </div>
+{% else %}
 <div class="wizard">
+{% if previousUrl or nextUrl %}
+  <h3>Edit Site Configuration</h3>
+  <p>Next Steps:&nbsp;
   {% if previousUrl %}
-    <hr/>
-    Next Steps: <a href='{{previousUrl}}'>&lt;&lt; {{previousName}}</a>
+    <a href='{{previousUrl}}'>&lt;&lt; {{previousName}}</a>
   {% endif %}
   {% if nextUrl %}
     <a href='{{nextUrl}}'>{{nextName}} &gt;&gt;</a>
   {% endif %}
+  </p>
+{% endif %}
 </div>
-
-<hr/>
-
+{% endif %}
+<p>&nbsp;</p>
 {% if siteHtml %}
-  <p><div class="siteheading">Current Site Configuration</div></p>
   <div id="sitehtml">
+  <h3>Current Site Configuration</h3>
     {{siteHtml|safe}}
   </div>
 {% endif %}

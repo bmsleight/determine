@@ -3,7 +3,7 @@
 {% block forms %}
 <form action="./" method="POST">
 
-<p><div class="formheading">Edit Diagram</div></p>
+<h3>Edit Diagram</h3>
 {% if diagramHtml %}
   <p>{{diagramHtml|safe}}</p>
 {% endif %}
@@ -12,15 +12,14 @@
 <input type="submit" name="{{addDiagramText}}"  value="{{addDiagramText}}" />
 
 {% if currentMovements %}
-  <p><div class="formheading">Current Movements</div></p>
+  <h4>Current Movements</h4>
   {% for movement in currentMovements %}
     <p><input type='submit' name='{{deleteDiagramText}}' value='{{deleteDiagramText}}{{movement}}' /></p>
   {% endfor %}
 {% endif %}
-<p><div class="formheading">Finished Diagram</div></p>
+<h4>Finished Diagram</h4>
 <p><input type="submit" name="{{doneDiagramText}}"  value="{{doneDiagramText}}" />
 </p>
-
 <p>{{currentDiagramText|safe}}</p>
 </form>
 {% endblock %}

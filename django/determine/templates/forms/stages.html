@@ -3,12 +3,12 @@
 {% block forms %}
 <form action="./" method="POST">
 
-<p><div class="formheading">Add a Stage to site</div></p>
+<h3>Add a Stage to site</h3>
 {{ form.as_p }}
-<input type="submit" name="{{addStageText}}"  value="{{addStageText}}" />
+<p><input type="submit" name="{{addStageText}}"  value="{{addStageText}}" /></p>
 
 {% if currentStages %}
-  <p><div class="formheading">Current Stages</div></p>
+  <h4>Current Stages</h4>
   <p>{{currentStagesText|safe}}</p>
   {% for stage in currentStages %}
     <p><input type='submit' name='{{editStageText}}' value='{{editStageText}}{{stage}}' />&nbsp;
