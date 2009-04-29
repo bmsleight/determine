@@ -1,0 +1,14 @@
+{% extends "forms/base_forms.html" %}
+{% block title %}{{siteRecord.title}} - Lock Site{% endblock %}
+{% block forms %}
+<form action="./" method="POST">
+
+<p><h3>Lock Site</h3>
+<p>Lock site against any further edits. Really no more changes, this is 
+good for ensuring anyone else using this site can not change any the details. 
+Only use this option if you are really happy with the diagram timings.</p>
+<p>If you want the site locked, tick the box below.</p>
+<p><input type="submit" name="True"  value="Lock Site" />&nbsp;
+<input type="submit" name="False"  value="Do not Lock" /></p>
+</form>
+{% endblock %}

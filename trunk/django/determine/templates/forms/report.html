@@ -8,4 +8,9 @@
 <li><a href='../report/pdf/normal'>Normal pdf report of {{siteRecord.title}}</a></li>
 <li><a href='../report/pdf/full'>Full pdf report of {{siteRecord.title}}</a> (This takes ~1min to produce)</li>
 </ul>
+{% if siteRecord.locked %}
+  <p>&nbsp;</p>
+{% else %}
+    <p><a href='../lock/'>Lock site against further edits.</a></p>
+{% endif %}
 {% endblock %}

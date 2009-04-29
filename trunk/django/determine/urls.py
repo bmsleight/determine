@@ -16,6 +16,7 @@ baseDelays = base + r'delays/$'
 baseDiagrams = base + r'diagrams/$'
 basediagramEdit = base + r'diagrams/edit/(?P<diagramIndex>\w{1,2})/$'
 baseReport = base + r'report/$'
+baseLock = base + r'lock/$'
 baseReportPdf = base + r'report/pdf/(?P<pdfType>[-\w]+)/$'
 
 
@@ -46,6 +47,7 @@ urlpatterns = patterns('',
     # Scrub the above - just add a new diagram then use the edit feature
     # Edit an existing diagram - with a link when finished to ../
     (basediagramEdit, 'determine.web.views.diagramEdit'),
+    (baseLock, 'determine.web.views.lock'),
     (baseReport, 'determine.web.views.report'),
     (baseReportPdf, 'determine.web.views.reportPdf'),
 
