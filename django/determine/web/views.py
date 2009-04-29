@@ -43,7 +43,7 @@ def newSite(request):
             f=open(xmlFile, 'w')
             f.write(site.xml())
             f.close()
-            next_url = siteRecord.get_absolute_url() + "phases/"
+            next_url = siteRecord.get_absolute_url()
    
             # Step number 2..... better url than /thanks/
             return HttpResponseRedirect(next_url) # Redirect after POST
@@ -317,6 +317,31 @@ def delays(request, year, month, day, slug):
     previousUrl = '../intergreens/'
     previousName = 'Intergreens'
     return render_to_response('forms/delays.html', locals())
+
+def lock(request, year, month, day, slug):
+    siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
+    if siteRecord.locked:
+        return HttpResponseRedirect(siteRecord.get_absolute_url_report())        
+    siteObject, countryObject = getSiteObject(siteRecord)
+
+    if request.method == 'POST':
+        if request.POST.has_key('True'):
+            siteRecord.locked = True
+            siteRecord.save()
+        else:
+            siteRecord.locked = False
+            siteRecord.save()
+        next_url = siteRecord.get_absolute_url() + 'report/'
+        return HttpResponseRedirect(next_url)
+
+    currentDiagramText = siteObject.diagramsHtml()
+    siteHtml = getSiteHtml(siteRecord)
+    previousUrl = '../report/'
+    previousName = 'Report'
+    return render_to_response('forms/lock.html', locals())
+
     
 
 def diagrams(request, year, month, day, slug):
