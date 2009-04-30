@@ -1,0 +1,2 @@
+Depends:
+apache2-mpm-prefork sqlite3 python-pysqlite2 python-amara subversion-tools python-django xvfb
