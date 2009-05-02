@@ -121,6 +121,15 @@ def start(request, year, month, day, slug):
     nextName = 'Phases'
     return render_to_response('forms/start.html', locals())
 
+def plain(request, year, month, day, slug):
+    siteRecord = siteRecordFilter(year, month, day, slug)
+    if siteRecord is False:
+        return HttpResponseRedirect('/sites/error/')
+    siteObject, countryObject = getSiteObject(siteRecord)
+
+    siteHtml = getSiteHtml(siteRecord)
+    return render_to_response('plain-site.html', locals())
+
 
 def phases(request, year, month, day, slug):
     siteRecord = siteRecordFilter(year, month, day, slug)
@@ -577,12 +586,13 @@ def reportPdf(request, year, month, day, slug, pdfType):
     
     from subprocess import *
     
-# if site.xml is newer than report.xml
     siteObject, countryObject = getSiteObject(siteRecord)    
     report = libdetermine.generateReport(countryObject, siteObject)
     reportXML = siteRecord.get_report_xml_filename_full()
     xsl = siteRecord.get_site_xslt_report_full()
-    pdf = siteRecord.get_report_pdf_filename_full()
+#    pdf = siteRecord.get_report_pdf_filename_full()
+    tmp = tempfile.NamedTemporaryFile()
+    pdf = tmp.name
 
     f=open(reportXML, 'w')
     f.write(report.xml())
@@ -590,46 +600,19 @@ def reportPdf(request, year, month, day, slug, pdfType):
 
 
     if pdfType == 'full':
-        # Ugly code - Do something about it!
-        tmpReport = tempfile.NamedTemporaryFile(suffix='dj-dt-')
-        tmpXMLps = tempfile.NamedTemporaryFile(suffix='-dj-dt.ps')
-        tmpXMLpdf = tempfile.NamedTemporaryFile(suffix='-dj-dt.pdf')
-        tmpReportPdf = tempfile.NamedTemporaryFile(suffix='dj-dt.pdf')
-        tmpSiteHtml = tempfile.NamedTemporaryFile(suffix='dj-dt.html')
-                
-        c = ["enscript", "-5", "-p", tmpXMLps.name, "-b", siteRecord.title, '--font=Courier6', "--highlight=html", 
-        '--landscape', '--color', '--borders', '--media=A3',  '--title="XML"', 
-        "--header='$n||Page $% of $='", reportXML ]
-        enscript = Popen(c, stdout=PIPE)
-        enscript.wait()
-        
-        pstopdf = Popen(["ps2pdf", tmpXMLps.name, tmpXMLpdf.name], stdout=PIPE)
-        pstopdf.wait()
-        
-#        siteHtml = getSiteHtml(siteRecord)
-#        tmpSiteHtml.write(siteHtml)
-        xmlstarlet = Popen(["xmlstarlet", "tr", siteRecord.get_site_xslt_full(), siteRecord.get_xml_filename_full()], stdout=tmpSiteHtml)
-        print "hi"
-
-        xmlstarlet = Popen(["xmlstarlet", "tr", xsl, reportXML], stdout=PIPE)
-        wkhtmltopdf = Popen(["wkhtmltopdf", "--page-size", "A3", "--orientation", 
-        "Landscape", "-", tmpSiteHtml.name, tmpReportPdf.name], stdin=xmlstarlet.stdout, stdout=PIPE)
+        p = "http://127.0.0.1/" + siteRecord.get_absolute_url_plain()
+        wkhtmltopdf = Popen(["determine-make-pdf.sh", "-d", "-s", str(p), reportXML, xsl, pdf], stdout=PIPE)
         wkhtmltopdf.wait()
-    
-        final = Popen(["pdftk", tmpReportPdf.name, tmpXMLpdf.name, "cat", "output", pdf], stdout=PIPE)
-        final.wait()
-        pdf_data = open(pdf, "rb").read()
-        response = HttpResponse(pdf_data, mimetype='application/pdf')
 #    if pdfType == 'simple':
     else:
-        xmlstarlet = Popen(["xmlstarlet", "tr", xsl, reportXML], stdout=PIPE)
-        wkhtmltopdf = Popen(["wkhtmltopdf", "--page-size", "A3", "--orientation", 
-        "Landscape", "-", "-"], stdin=xmlstarlet.stdout, stdout=PIPE)
-        response = HttpResponse(wkhtmltopdf.stdout, mimetype='application/pdf')
+        wkhtmltopdf = Popen(["determine-make-pdf.sh", reportXML, xsl, pdf], stdout=PIPE)
+        wkhtmltopdf.wait()
+
+    pdf_data = open(pdf, "rb").read()
+    response = HttpResponse(pdf_data, mimetype='application/pdf')
 
     filename = 'attachment; filename=' + slug + '.pdf'
     response['Content-Disposition'] = filename
-
     return response
 
 #pdftk /tmp/report-test-simple-site-25.pdf dump_data output | grep "NumberOfPages" | cut -d\  -f 2
