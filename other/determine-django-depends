@@ -1,2 +1,5 @@
 Depends:
-apache2-mpm-prefork sqlite3 python-pysqlite2 python-amara subversion-tools python-django xvfb
+apache2-mpm-prefork sqlite3 python-pysqlite2 python-amara subversion-tools python-django xvfb libapache2-mod-python
+
+Activate:
+mod_python

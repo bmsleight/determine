@@ -26,6 +26,8 @@ class SignalSite(models.Model):
         return "/sites/%s/%s/" % (self.publish_date.strftime("%Y/%b/%d").lower(), self.slug)
     def get_absolute_url_report(self):
         return "/sites/%s/%s/report/" % (self.publish_date.strftime("%Y/%b/%d").lower(), self.slug)
+    def get_absolute_url_plain(self):
+        return "/sites/%s/%s/plain/" % (self.publish_date.strftime("%Y/%b/%d").lower(), self.slug)
 
 
     def get_xml_filename(self):
