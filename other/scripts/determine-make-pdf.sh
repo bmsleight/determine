@@ -16,6 +16,10 @@ get_global_variables ()
  TMP_DEBUG_PS=$(tempfile --prefix=determine --suffix=.html)
  TMP_DEBUG_HTML=$(tempfile --prefix=determine --suffix=.html)
  TMP_DEBUG_PDF=$(tempfile --prefix=determine --suffix=.pdf) 
+ TMP_BACKGROUND_HTML=$(tempfile --prefix=determine --suffix=.html)
+ TMP_BACKGROUND_PDF=$(tempfile --prefix=determine --suffix=.pdf)
+ TMP_BACKGROUND_DIR=$(mktemp -d)
+ TMP_PDF_NO_BACK=$(tempfile --prefix=determine --suffix=.html)
  PDFS="$TMP_REPORT_PDF "
 }
 
@@ -27,6 +31,10 @@ clean_up ()
   rm $TMP_DEBUG_PS
   rm $TMP_DEBUG_HTML
   rm $TMP_DEBUG_PDF
+  rm $TMP_BACKGROUND_HTML
+  rm $TMP_BACKGROUND_PDF
+  rm $TMP_BACKGROUND_DIR -R
+  rm $TMP_PDF_NO_BACK
 }
 
 launch_xvfb ()
@@ -58,8 +66,54 @@ get_html ()
 html_pdf ()
 {
   launch_xvfb
-  WKHTMLTOPDF="wkhtmltopdf --page-size A3 --orientation Landscape"
+  WKHTMLTOPDF="wkhtmltopdf --margin-top 15 --margin-bottom 15  --page-size A3 --orientation Landscape"
   DISPLAY=:$DISP $WKHTMLTOPDF $1 $2
+}
+
+
+background_html ()
+{
+echo boo
+cat >$TMP_BACKGROUND_HTML <<EOF
+<html>
+<p align="right"><font size=3><img src="http://www.determine.org.uk/site_media/images/determine-logo.png" width=150></font></p>
+</html>
+EOF
+}
+
+make_background ()
+{
+  PAGES=$(pdftk $1 dump_data | grep "NumberOfPages" | cut -d\   -f 2)
+  PAGES_HTML=" "
+  for i in `seq 1 $PAGES`
+  do
+     PAGES_HTML="$PAGES_HTML $TMP_BACKGROUND_HTML "
+  done
+  launch_xvfb
+  NOW=$(date +"Created: %F %H:%M:%S")
+  DISPLAY=:$DISP wkhtmltopdf --page-size A3 --orientation Landscape \
+  --margin-top 1 --margin-right 2 --margin-bottom 5   --margin-left 2 \
+  --footer-font-size 8  \
+  --footer-center "[page] of [topage]" \
+  --footer-right "www.determine.org.uk" \
+  --footer-left "$NOW" \
+  $PAGES_HTML $TMP_BACKGROUND_PDF
+  
+  # Yes this is terriable code. Its really bad.
+  # I feel bad even writing comments about it
+  # The Shame....
+  cd $TMP_BACKGROUND_DIR
+  pdftk $TMP_BACKGROUND_PDF  burst output p_%04d.pdf
+  pdftk $1  burst output b_p_%04d.pdf
+for i in $(ls p_*.pdf);
+do
+        echo processing page $i...
+        pdftk $i background b_$i output x_$i.pdf
+done
+pdftk x_p_*.pdf cat output $OUTPUT
+ cd /tmp/
+  # I am still Hiding....
+  # Please fix the above. 
 }
 
 
@@ -112,7 +166,12 @@ if [ "$DEBUG" == "YES" ]; then
   PDFS="$PDFS $TMP_DEBUG_PDF "
 fi
 
-pdftk $PDFS cat output $OUTPUT
+# Combine all pages requested into a single PDF
+pdftk $PDFS cat output $TMP_PDF_NO_BACK
+#$OUTPUT
+
+background_html
+make_background $TMP_PDF_NO_BACK
 
 kill_xvfb
 clean_up
