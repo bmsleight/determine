@@ -31,7 +31,7 @@ class SignalSite(models.Model):
 
 
     def get_xml_filename(self):
-        return str("sites/%s/%s.xml" % (self.publish_date.strftime("%Y/%b/%d").lower(), self.slug))
+        return str(settings.MEDIA_ROOT + "sites/%s/%s.xml" % (self.publish_date.strftime("%Y/%b/%d").lower(), self.slug))
     def get_xml_filename_full(self):
         return str(settings.MEDIA_ROOT + "sites/%s/%s.xml" % (self.publish_date.strftime("%Y/%b/%d").lower(), self.slug))
     def get_xml_dirs(self):
