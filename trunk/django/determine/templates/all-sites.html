@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Determine{% endblock %}
+{% block content %}
+<h2>All Sites</h2>
+<p>Below are is a list of all sites that have been entered. No guarantee is made that sites will be kept for any length of time.</p>
+{% if latestSites  %}
+  <h3>Sites</h3>
+  <ul>
+  {% for site in latestSites  %}						
+    <li><a href={{site.get_absolute_url}}>{{site.title}}, entered on {{site.publish_date|date:"D d M Y" }}</a></li>
+  {% endfor %}
+  <ul>
+{% endif %}
+<p></p>
+{% endblock %}
