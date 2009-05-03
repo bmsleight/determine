@@ -604,7 +604,7 @@ def reportPdf(request, year, month, day, slug, pdfType):
         wkhtmltopdf = Popen(["determine-make-pdf.sh", "-d", "-s", str(p), reportXML, xsl, pdf], stdout=PIPE)
         wkhtmltopdf.wait()
 #    if pdfType == 'simple':
-    if pdfType == 'normal':
+    elif pdfType == 'normal':
         p = "http://127.0.0.1/" + siteRecord.get_absolute_url_plain()
         wkhtmltopdf = Popen(["determine-make-pdf.sh",  "-s", str(p), reportXML, xsl, pdf], stdout=PIPE)
         wkhtmltopdf.wait()
