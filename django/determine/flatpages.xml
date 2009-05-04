@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+  <object pk="2" model="flatpages.flatpage">
+    <field type="CharField" name="url">/contacts/</field>
+    <field type="CharField" name="title">Contacts</field>
+    <field type="TextField" name="content">&lt;h4&gt;Contact details&lt;/h4&gt;
+&lt;p&gt;To be filled in, at the moment try: &lt;i&gt;b m s  @ d e t e r m i n e . o r g . u k&lt;/i&gt;&lt;p&gt;</field>
+    <field type="BooleanField" name="enable_comments">False</field>
+    <field type="CharField" name="template_name"></field>
+    <field type="BooleanField" name="registration_required">False</field>
+    <field to="sites.site" name="sites" rel="ManyToManyRel"><object pk="1"></object></field>
+  </object>
+  <object pk="1" model="flatpages.flatpage">
+    <field type="CharField" name="url">/faq/</field>
+    <field type="CharField" name="title">Frequently Asked Questions</field>
+    <field type="TextField" name="content">&lt;h4&gt;Why ?&lt;/h4&gt;
+&lt;p&gt;Because it was too hard to do. &lt;/p&gt;
+&lt;h4&gt;
+Why no use Linsig ?&lt;/h4&gt;
+&lt;p&gt;&lt;a href=http://www.jctconsultancy.co.uk/Software/LinSigV2/features.php&gt;Linsig&lt;/a&gt; is very very good. However I did not like the output and it is not &lt;a href=http://en.wikipedia.org/wiki/Free_software&gt;Free Software.&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;What does it not do ?&lt;/h4&gt;
+&lt;p&gt;Lots of things including :-&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Phase delaying gaining;&lt;/li&gt;
+&lt;li&gt;Type 2/3 appearance;&lt;/li&gt;
+&lt;li&gt;Special conditioning;&lt;/li&gt;
+&lt;li&gt;Variable intergreens;&lt;/li&gt;
+&lt;li&gt;Lots more ...&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Although I plan to tackle some of the above and add them a features in the future&lt;/p&gt;
+&lt;h4&gt;I do not like the Logos, headers and footers on the reports&lt;/h4&gt;
+&lt;p&gt;The code is open-source you can change it and run your own copy.&lt;/p&gt;
+&lt;p&gt;I can set up a separate private website with customized logos, headers and footers for a small fee. Use the &lt;a href=/contacts/&gt;contacts link&lt;/a&gt; for more details. &lt;/p&gt;</field>
+    <field type="BooleanField" name="enable_comments">False</field>
+    <field type="CharField" name="template_name"></field>
+    <field type="BooleanField" name="registration_required">False</field>
+    <field to="sites.site" name="sites" rel="ManyToManyRel"><object pk="1"></object></field>
+  </object>
+</django-objects>
