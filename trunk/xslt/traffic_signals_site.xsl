@@ -3,12 +3,10 @@
 <xsl:output method="html" version="1.0" encoding="iso-8859-1" indent="yes"/>
 <xsl:template match="/">
 <div class="traffic-signal-site">
-<div class="site-header">
- <h4>Site: <xsl:value-of select="/traffic_signals/site/address"/></h4>
-</div>
+ 
+<h4>Site: <xsl:value-of select="/traffic_signals/site/address"/></h4>
 
-<div class="site-phases">
-  <span size="larger"><h5>Phases</h5></span>
+<h5>Phases</h5>
   <xsl:for-each select="//traffic_signals/site/phases/phase">
     <xsl:sort select="letter"/>
     <h6><xsl:value-of select="letter" />&#160;</h6>
@@ -26,10 +24,8 @@
        <p>Post Green Time: <xsl:value-of select="post_green_time" /></p>
     </xsl:if>
   </xsl:for-each>
-</div>
-
-<div class="site-stages">
-  <h5>Stages</h5>
+  
+<h5>Stages</h5>
   <xsl:for-each select="//traffic_signals/site/stages/stage">
     <xsl:sort select="stage_number"/>
     <xsl:variable name="sn" select="stage_number"/>
@@ -38,10 +34,8 @@
       runs phases: <xsl:value-of select="$ph" />
     </p>
   </xsl:for-each>
-</div>
 
-<div class="site-intergreens">
-  <h5>Intergreen table</h5>
+<h5>Intergreen table</h5>
 <table>
 <tr>
 <td>&#160;</td>
@@ -75,10 +69,8 @@
  </tr>
 </xsl:for-each>
 </table>
-</div>
 
-<div class="site-phase-delays">
-  <h5>Phase Delays</h5>
+<h5>Phase Delays</h5>
   <xsl:variable name="phase_delays_all" select="//traffic_signals/site/phase_delays/phase_delay" />
   <xsl:if test="string-length($phase_delays_all) &lt; 1" >
      <p>No phase delays&#160;</p>
@@ -91,7 +83,6 @@
     delayed by <xsl:value-of select="length" />&#160;
     </p>
   </xsl:for-each>
-</div>
 </div>
 </xsl:template>
 </xsl:stylesheet>
