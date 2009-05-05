@@ -11,7 +11,7 @@
     <xsl:sort select="letter"/>
     <h6><xsl:value-of select="letter" />&#160;</h6>
     <xsl:if test="string-length(description) &gt; 0" >
-      <h6></h6>(<xsl:value-of select="description" />)<h6/>
+      <h6>(<xsl:value-of select="description" />)</h6>
     </xsl:if>
     <p>Phase type: <xsl:value-of select="signal_type" />.</p>
     <xsl:if test="string-length(mintime) &gt; 0" >
