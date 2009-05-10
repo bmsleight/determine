@@ -26,24 +26,20 @@
     PythonHandler django.core.handlers.modpython
     SetEnv DJANGO_SETTINGS_MODULE determine.settings
     PythonDebug On
-    PythonPath "['/home/bms/determine/django'] + sys.path"
+</Location>
+
+<Location "/site_media">
+    SetHandler None
 </Location>
 
 <Location "/media">
     SetHandler None
 </Location>
 
-<Location "/files">
+<Location "/examples">
     SetHandler None
 </Location>
 
-<Location "/flowplayer">
-    SetHandler None
-</Location>
-
-<LocationMatch "\.(jpg|JPG|gif|png|flv)$">
-    SetHandler None
-</LocationMatch>
 
 
 	ErrorLog /var/log/apache2/error.log
