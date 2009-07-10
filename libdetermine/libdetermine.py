@@ -25,7 +25,8 @@ import copy
 class phaseTypeClass:
     def __init__(self, name="Traffic", preGreenName="Red-Amber", preGreenTime=2, preGreenTimeConfigurable=False, greenName="Green", 
                  greenConfigurable=True, greenMin=7,
-                 postGreenName="Amber", postGreenTime=3, postGreenConfigurable=False, redName="Red"):
+                 postGreenName="Amber", postGreenTime=3, postGreenConfigurable=False, redName="Red",
+                 terminated_by_another_phase = "False"):
         self.name = str(unicode(name))
         self.preGreenName = str(unicode(preGreenName)) 
         self.preGreenTime = int(unicode(preGreenTime)) 
@@ -46,6 +47,11 @@ class phaseTypeClass:
         else:
             self.postGreenConfigurable = True
         self.redName = str(unicode(redName))
+        if terminated_by_another_phase == "True":
+            self.terminated_by_another_phase = True
+        else:
+            self.terminated_by_another_phase = False
+            
 
 class phaseTypeArrayClass:
     def __init__(self):
@@ -67,7 +73,7 @@ class phaseTypeArrayClass:
         
 
 class phaseClass:
-    def __init__(self, letter, phaseType, greenMin, preGreenTime=-1, postGreenTime=-1, description=None):
+    def __init__(self, letter, phaseType, greenMin, preGreenTime=-1, postGreenTime=-1, description=None, terminated_by_another_phase=None):
         self.letter = str(unicode(letter))
         self.phaseType = phaseType
         self.preGreenTimeConfigurable = phaseType.preGreenTimeConfigurable
@@ -97,6 +103,10 @@ class phaseClass:
         self.phaseDelayTo = []
         self.phaseDelayTime = []
         self.description = description
+        if terminated_by_another_phase:
+            self.terminated_by_another_phase = terminated_by_another_phase
+        else:
+            self.terminated_by_another_phase = None
     def setIntergreenFrom(self, FromPhaseLetter, FromTime):
         try:
             i = self.intergreensFromLetter.index(FromPhaseLetter)
@@ -179,6 +189,10 @@ class phaseClass:
             xml = xml + "<post_green_time>"
             xml = xml + str(self.postGreenTime)
             xml = xml + "</post_green_time>"
+        if self.terminated_by_another_phase:
+            xml = xml + "<terminated_by_another_phase>"
+            xml = xml + self.terminated_by_another_phase
+            xml = xml + "</terminated_by_another_phase>"
         xml = xml + "</phase>"
         return xml
     def xmlPhaseDelay(self):
@@ -230,8 +244,8 @@ class phaseClass:
 class phaseArrayClass:
     def __init__(self):
         self.phases = []
-    def newPhase(self, letter, phaseType, greenMin, preGreenTime=-1, postGreenTime=-1, description=None):
-        phase = phaseClass(letter, phaseType, greenMin, preGreenTime, postGreenTime, description)
+    def newPhase(self, letter, phaseType, greenMin, preGreenTime=-1, postGreenTime=-1, description=None, terminated_by_another_phase=None):
+        phase = phaseClass(letter, phaseType, greenMin, preGreenTime, postGreenTime, description, terminated_by_another_phase)
         self.phases.append(phase)
     def phase(self, letter):
         phaseFound = False
@@ -867,11 +881,16 @@ def parseCountryConfig(countryXML):
     countryAmaraXML = amara.parse(countryXML)
     countryConfig = phaseTypeArrayClass()
     for phaseType in countryAmaraXML.traffic_signal_types.types.phase:
+        try:
+            terminated_by_another_phase = phaseType.terminated_by_another_phase
+        except:
+            terminated_by_another_phase = "False"
         newPhaseType = phaseTypeClass(phaseType.signal_type, phaseType.pre_green.state, phaseType.pre_green.time, 
                                       phaseType.pre_green.time.configurable, phaseType.at_green.state, 
                                       phaseType.at_green.time.configurable, phaseType.at_green.time,
                                       phaseType.post_green.state, phaseType.post_green.time, 
-                                      phaseType.post_green.time.configurable, phaseType.at_red.state)
+                                      phaseType.post_green.time.configurable, phaseType.at_red.state,
+                                      terminated_by_another_phase)
 #        print phaseType.signal_type, phaseType.post_green.time.configurable
         countryConfig.phases.append(newPhaseType)
     return countryConfig
@@ -897,8 +916,12 @@ def parseSiteConfig(siteXML, countryConfig):
                 description = str(unicode(phase.description))
             except:
                 description = None
+            try:
+                terminated_by_another_phase = str(unicode(phase.terminated_by_another_phase))
+            except:
+                terminated_by_another_phase = None
             site.phases.newPhase(phase.letter, countryConfig.phaseType(phase.signal_type), greenMin=phase.mintime, postGreenTime=postGreenTime,
-                                 description=description)
+                                 description=description, terminated_by_another_phase=terminated_by_another_phase)
     except:
         pass
     try:

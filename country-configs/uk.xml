@@ -91,6 +91,7 @@
    </phase>
    <phase>
     <signal_type>Filter Arrow</signal_type>
+    <terminated_by_another_phase>True</terminated_by_another_phase>
     <pre_green>
      <state>Arrow Off</state>
      <time configurable="False" length="fixed">0</time>
