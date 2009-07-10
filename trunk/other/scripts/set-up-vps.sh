@@ -37,6 +37,7 @@ ln -s /home/www-data/determine/other/apache/default /etc/apache2/sites-available
 wget http://www.barwap.com/files/2009/May/10/wkhtmltopdf
 chmod +x ./wkhtmltopdf
 mv ./wkhtmltopdf /usr/bin/
+ln -s /home/www-data/determine/other/scripts/determine-make-pdf.sh /usr/bin
 su www-data
 cd /home/www-data/determine/django/determine/
 python ./manage.py syncdb
@@ -47,3 +48,24 @@ exit
 ln -s /home/www-data/determine/django/determine/site_media /var/www/
 apt-get install python-lxml 
 /etc/init.d/apache2 restart
+dpkg-reconfigure exim4-config
+nano .forward
+# Set to forward email address
+su bms
+cd /home/bms
+nano .forward
+# Set to forward email address
+
+exit
+apt-get install denyhosts
+nano /var/lib/denyhosts/allowed-hosts
+
+##  Never block
+## 87.74.83.14
+
+/etc/init.d/denyhosts stop
+denyhosts purge
+
+nano /etc/hosts.allow
+#ALL : 87.74.83.14
+
