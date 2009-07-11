@@ -112,6 +112,28 @@
      <phase_delay>0</phase_delay>
     </at_red>
    </phase>
+   <phase>
+    <signal_type>Tramcars</signal_type>
+    <pre_green>
+     <state>Tramcar-Stop</state>
+     <time configurable="False" length="fixed">0</time>
+    </pre_green>
+    <at_green>
+     <state>Tramcar-Proceed</state>
+     <delay_gaining></delay_gaining>
+     <time configurable="True" length="min">7</time>
+     <delay_leaving></delay_leaving>
+    </at_green>
+    <post_green>
+     <state>Tramcar-do-not-Proceed</state>
+     <time configurable="False" length="fixed">5</time>
+    </post_green>
+    <at_red>
+     <state>Tramcar-Stop</state>
+     <time configurable="True" length="min">0</time>
+     <phase_delay>0</phase_delay>
+    </at_red>
+   </phase>
  </types>
 </traffic_signal_types>
 
