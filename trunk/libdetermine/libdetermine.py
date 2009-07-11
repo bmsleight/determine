@@ -441,8 +441,16 @@ class diagramPhaseClass:
                     else:
                         if site.phases.phase(self.letter).postGreenTime == 0:
                             # Going to Red, with postGreen = 0
-                            self.state = site.phases.phase(self.letter).phaseType.redName
-                            self.move = None
+#                            if site.phases.phase(self.letter).terminated_by_another_phase:
+                                # Filter need the full green to terminate.
+#                                terminate_phase = site.phases.phase(self.letter).terminated_by_another_phase
+#                                if lastSecondDiagram.diagramPhase(terminate_phase).state == site.phases.phase(terminate_phase).phaseType.greenName:
+#                                    self.state = site.phases.phase(self.letter).phaseType.redName
+#                                    self.move = None
+#                            else: 
+                            if not site.phases.phase(self.letter).terminated_by_another_phase:
+                                self.state = site.phases.phase(self.letter).phaseType.redName
+                                self.move = None
                         else:
                             # Going to Red, with postRed > 0 e.g. Leaving Amber
                             self.state = site.phases.phase(self.letter).phaseType.postGreenName
@@ -479,7 +487,29 @@ class diagramPhaseClass:
                             # Need to run the preGreen
                             self.state = site.phases.phase(self.letter).phaseType.preGreenName
                             # We have already run it for one second, it we set it here.
-                            self.minRemaining = site.phases.phase(self.letter).preGreenTime 
+                            self.minRemaining = site.phases.phase(self.letter).preGreenTime
+            
+        if oldState != self.state:
+            changedState = True
+        else:
+            changedState = False
+        return changedState
+    def terminatedByOthers(self, site, lastSecondDiagram):
+        oldState = self.state
+        if self.move == site.phases.phase(self.letter).phaseType.redName:
+            if site.phases.phase(self.letter).terminated_by_another_phase:
+                terminate_phase = site.phases.phase(self.letter).terminated_by_another_phase
+                if lastSecondDiagram.diagramPhase(terminate_phase).state == site.phases.phase(terminate_phase).phaseType.greenName:
+                # The phase we are waiting to be green is green so we cna terminate this phase.
+                    if not (self.minRemaining > 0 or self.phaseDelayTime > 0):
+                        if site.phases.phase(self.letter).postGreenTime == 0:
+                            self.state = site.phases.phase(self.letter).phaseType.redName
+                            self.move = None
+                        else:
+                            # Going to Red, with postRed > 0 e.g. Leaving Amber
+                            self.state = site.phases.phase(self.letter).phaseType.postGreenName
+                            # We have already run it for one second, it we set it here.
+                            self.minRemaining = site.phases.phase(self.letter).postGreenTime
         if oldState != self.state:
             changedState = True
         else:
@@ -603,6 +633,10 @@ class diagramTimeClass:
                                 if intergreenLength > timeSinceGreen:
                                     intergreen = diagramIntergreenClass(phase.letter, intergreenLength - timeSinceGreen)  
                                     diagramPhase.intergreens.append(intergreen)
+                                    if timeSinceGreen > 0:
+                                        diagramPhase.comments = diagramPhase.comments + "Intergreen from " +  phase.letter + \
+                                                                 " adjusted as phase has not been green for " + \
+                                                                 str(timeSinceGreen) + " seconds. "
                                 else:
                                     diagramPhase.comments = diagramPhase.comments + "Intergreen from " +  phase.letter + \
                                                             " already statified, " + phase.letter + " has not been green for " + \
@@ -630,6 +664,12 @@ class diagramTimeClass:
         changedState = False
         for diagramPhase in self.diagramPhases:
             if diagramPhase.stateChanges(site, lastSecondDiagram):
+                changedState = True
+        return changedState
+    def terminatedByOthers(self, site, lastSecondDiagram):
+        changedState = False
+        for diagramPhase in self.diagramPhases:
+            if diagramPhase.terminatedByOthers(site, lastSecondDiagram):
                 changedState = True
         return changedState
     def progressTimeSinceGreen(self, site):
@@ -1019,11 +1059,13 @@ def generateDigram(countryConfig, site, diagramRequired, gtk, progressbar):
             nextSecond.decrementPhaseDelay()
             if nextSecond.stateChanges(site, diagram.atTime(timeSeconds-1)):
                 nextSecond.diagramStage.stageEnded()
+            nextSecond.terminatedByOthers(site, nextSecond)
             if nextSecond.allPhaseMovesComplete():
                 nextSecond.diagramStage.moveComplete()
                 nextSecond.primeAnyStageMovementsWaiting(site, nextSecond)
             if nextSecond.stateChanges(site, diagram.atTime(timeSeconds-1)):
                 nextSecond.diagramStage.stageEnded()
+#            nextSecond.terminatedByOthers(site, diagram.atTime(timeSeconds-1)):
             nextSecond.progressTimeSinceGreen(site)
 
             cycleTime = cycleTime + 1
