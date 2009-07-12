@@ -78,24 +78,23 @@ div.Black-Out {width: 30px;
 
 <!-- No Inherit -->
 div.Tramcar-Stop {width: 30px;
+ width: 30px;
  height: 30px;
- background-color: black;
- background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeEAYAAABroHLhAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAeAAAAHgD4T+E9AAADI0lEQVRYw91Zy64pURBd3c4EI4nHQOgEYwMzfIQJ8QH8gDDoiLkQP+IV4Q+8f0IkYmggEo8J6gz6lpZ7ruPR2OeeNVnpePRavaurateW6A9gEIfD4XA4AMPhcDgcAp1Op9Pp6NfT6XQ6nQLL5XK5XOq/s9lsNpsN8Pl8Pp8PiEaj0WgUiMVisVgMiEQikUgEMJlMJpPJqEoA9CC22+12uyUqFovFYpHI4XA4HA5+cM9jp9PpdDqJSqVSqVTS7/so7jZcrVar1SqR2+12u93PN3iNvV6v1+slqtVqtVrtBYa1UCVSVVVV1fcbvMSSJEmSRJTP5/P5vK7zYcP8B/F4PB6Pizd4jROJRCKRIDoej8fj8QHDP21Fb2Ve8ZsN1+v1er0uXvijzKHeaDQajcY3hjn7iUpGz2aPx+PxeIh2u91ut/uHYS4vooU+m7mcnQzv9/v9fq/XO9ECn80ul8vlculJGN1ut9vtihf2au73+/1+n+ij3W63222cwK2elub16/8F3LpqyVe/PvkMh8PhcJjIYrFYLBai+Xw+n8+JNpvNZrO5r4v5CWDd7IN9aT06EbgHTqfT6XSaaL1er9dr0bKNg32kUqlUKqXnKHm1Wq1WK8But9vtdsBqtVqtVtGBaRzsIxAIBAIBgH3K/IXFYrFYLACtHouWaxxaaAOTyWQymZx9wCH9297h2Ww2m82IzGaz2WzWQ/qDl3w8Ho/HYyAYDAaDQUDbNAB+v9/v94ter9vBK8pZWuu0gFAoFAqFAGSz2Ww2K75OvppzuVwulyNCr9fr9XriBb2aB4PBYDA4ay25BRMt7Nn8d2sp83Ask8lkMhn8OmihDMiyLMsy8GV7yNuqVz3xd7GiKIqifLM9ZPAAgDfSooXfy6y72Ww2m82vZQt0ATwqEW3gXi4UCoVC4XKdvmiYh2E8HBNt5Bonk8lkMmlgiMfg7MYr/lNCnXXwil4zerPhS+84D8TfbZTv22q1Wq3WveofMMzgrF4ul8vl8uvqOP9vpVKpVCrGj1qkk3OD0EIKGI1Go9FInzDcepjGPT0fnvFhmjagOKujBvEJVl1O2MNrVeYAAAAASUVORK5CYII=);
- color: white;
+ background-color: red;
+ color: Black;
 }
 
 div.Tramcar-Proceed {width: 30px;
  height: 30px;
- background-color: black;
- background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeEAYAAABroHLhAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAeAAAAHgD4T+E9AAADh0lEQVRYw92Zy44xURSFt2OCiRhgIEiEh8BDECEewGUkQiJxHYnEJUJ4C7cI74CHIBIRAyYicZuw/0H1Vp3urnZP5e9vclJO1am1qtSpXetI8AN4ktPpdDqdAAaDwWAwAOj3+/1+n9+eTqfT6RRgvV6v12v+OJVKpVKpAEwmk8lkArDb7Xa7HcDhcDgcDgCbzWaz2QCkUqlUKn1WJQDgg+z3+/1+j5jP5/P5PKJarVar1XTh+JYzhBgMBoPBIGI8Ho/H4/w29X89jlqNRqPRaBCLxWKxWOTP+yh3G240Go1GA1Gn0+l0OmGhCoVCoVAgzufz+XyOuNvtdrsdPw5tUz/tLzQetQaDwWAwIDabzWaz+QbD3F8VMZFIJBKJ64Ko9fv9fr8fcbvdbrdb4fGp3+fz+Xy+28eXSCQSiQQxlUqlUile58OGaQC32+12u28XQi1doFuhR+Pe81Dr8Xg8Hg/i+Xw+n8/C52FCz3Y6nU6n0wDtdrvdbr9gsngzrVar1WoBZDKZTCYjvN83w2SwUCgUCgWxbdwP908B6HQ6nU7nF8OHw+FwOABEIpFIJCK27Mf5eFIhGo1Go1GA4/F4PB5/MFyr1Wq1GsBisVgsFmLLfh5u9geo1+v1ev2TYSoYqtVqtVoVW+brqVQqlUoFgJvMABhVQqvVarVaiS3v9SyXy+VyCTAcDofDIQDr9Xq9Xk9sWe+HfLLRaDQajcSW837IJ5tMJpPJRGw572c8Ho/HYwC22Ww2m43Yct4P+WTPD/V/wZRKpVKpFFvG+yGfzGw2m81mseW8H4vFYrFYABglCn8dq9VqtVoBGEUpfx2n0+l0Oj/dYa1Wq9VqxZb1esjX5Q5TOEZfF3+NWCwWi8UAGGOMsU+vpXA4HA6HAfR6vV6vF1vm8xiNRqPRCBAKhUKhEP/7xbBcLpfL5fzXBZcZiS37fkg3+ZDJZDKZ7AfDBJdhASSTyWQyKbb8+6FoyuVyuVyu7/2ClVYul8vlcgBcOCa2jet4vV6v1wuQzWaz2ewvO94a01IcSvEoHS3UUuz6NY9+dUzLhXbX08qrMa0QXDrIB+JCgm4N4mez2Ww2Q+TmkNuD+G632+1271X/gGGCljxKpVKpVELk3nfCSy2BQCAQCCByaSgf1HM1rrBBGrdcLpfL5eeXWiQX509CmRFFKZQw3LqYRjU9FUJUAV4Kho/36LP8A0CqmRA8Il73AAAAAElFTkSuQmCC);
- color: white;
+ background-color: green;
+ color: Black;
 }
 
 div.Tramcar-do-not-Proceed {width: 30px;
+ width: 30px;
  height: 30px;
- background-color: black;
- background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeEAYAAABroHLhAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAeAAAAHgD4T+E9AAADIklEQVRYw+VZy6riQBCtRNCluFAXooLkJ9Q/8L1Q8h0+FkHcCIIP/BFfBF2L4nMR/AZ/QRAxG7VmkSlzuTNejencXGbO5mDA7nPSnarqag5/A0zier1er1eAzWaz2WwAJpPJZDLRf+/3+/1+D3A4HA6Hg/4/j8fj8XgAIpFIJBIBiMfj8XgcIJvNZrNZgFgsFovFABwOh8PhMKsSAPBNnM/n8/mM2Gw2m80motfr9Xq99OLYsc/n8/l8iO12u91u6/O+C8OGe71er9dDDAQCgUCAvcFnHAqFQqEQYr/f7/f7FhjWtiqiJEmSJH2/wUfMcRzHcYjVarVareo63zZMA+Tz+Xw+b7/BZ1woFAqFAuLtdrvdbm8Y/mkr+irTir9seDAYDAYD+4W/y7TVh8PhcDj8wjBFP7uCEWsOBoPBYBBRVVVVVf9imNKL3UJZM6Wzu+HL5XK5XPR8Z7dA1uz3+/1+vx6EYbFYLBYL6ybM5XK5XA5xPp/P53PE0+l0Op10pueZTCaTyVinY7VarVYrRCiVSqVSif0ErVar1WoZKQk0NBqNRqPBXk+lUqlUKogQjUaj0Si7gbUa2LjRz0in0+l0mp0urUZHBNY1MG1Rs5jNZrPZjJ2ue4xyOp1Op5PdwPRtmsXxeDwej+x0uVwul8uFyMN/Bt7tdrvdbnYDKoqiKIr5cXa73W63Y6fr7pN10KJgYxbJZDKZTFoQtMrlcrlcZp8GKL0YRb1er9frFqal5XK5XC6tS/ipVCqVSulRl4IR8XQ6nU6niIlEIpFIWKdjvV6v1+sPpSWVYFZNaBd/Li15ao4Vi8VisQj/HLStDMDzPM/zAPfTEh0P6Vhl1Rv/Lg6Hw+Fw+IvjIYEaAHSQtlu4USbdo9FoNBr9GRQBH4BaJXYbMMq1Wq1Wqz3OAg8NUzOMmmN2G3nGoiiKomiiiUeg6EYr/lO2OumgFX1m9GXDj75xaoh/t1GaV5ZlWZaNqn/DMIGieqfT6XQ61uVxGrfb7Xa7XfNXLdzduUloWwpgu91ut1uA8Xg8Ho9fv0wTBEEQBP3yjC7TtFr/Qx41iV/ygAv4UelVPgAAAABJRU5ErkJggg==);
- color: white;
+ background-color: DarkOrange;
+ color: Black;
 }
 
 
@@ -378,13 +377,13 @@ div.comments {
       <div class="state-abbr">1</div>
     </xsl:if>
     <xsl:if test="$state = 'Tramcar-Stop'">
-      <div class="state-abbr"></div>
+      <div class="state-abbr">S</div>
     </xsl:if>
     <xsl:if test="$state = 'Tramcar-Proceed'">
-      <div class="state-abbr"></div>
+      <div class="state-abbr">P</div>
     </xsl:if>
     <xsl:if test="$state = 'Tramcar-do-not-Proceed'">
-      <div class="state-abbr"></div>
+      <div class="state-abbr">n</div>
     </xsl:if>
   </xsl:template>
 </xsl:stylesheet>
