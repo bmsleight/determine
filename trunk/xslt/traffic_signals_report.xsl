@@ -34,7 +34,7 @@ div.Red-Amber {
  width: 30px;
  height: 30px;
  background-color: red;
- background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAeEAYAAAC9BaiEAAAABmJLR0T//wAAAADX49c/AAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAABAAAAHgAKz1FzAAAAHUlEQVQY02P4/5+BgYHh/38mBigYKEZPz0DaDgEA0Y4FT7mx5WcAAAAASUVORK5CYII=);
+ background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeEAYAAABroHLhAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAeAAAAHgD4T+E9AAAAVUlEQVRYw+3SsQ0AMAgDQSfKYtTsP09SZAeQzH9B7ZNY90rSvxPa3QMAAwYMGDBgwHMC7B5g944U0T2iGJzZPaKycS8N2D3A7gF2D7B7gN0D7N448AMLLAVUo9WUXgAAAABJRU5ErkJggg==);
  color: Tomato;
  font-weight: bold;
 }
@@ -80,20 +80,20 @@ div.Black-Out {width: 30px;
 div.Tramcar-Stop {width: 30px;
  width: 30px;
  height: 30px;
- background-color: red;
+ background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeEAYAAABroHLhAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAeAAAAHgD4T+E9AAACh0lEQVRYw92Zy06zUBSFd6sTYESCOjBqIryE+hBOIAbewujAGOdG44soGqNv4P0hJCaEIQPCAJyo5x/srlaav+HS1kO7B/04aQtrcTbnsukIQUTEn+PE9zfz5YV5f19sf3wwk6T4P11nbm4yd3aYu7vM7W3mwsK4CnsBw3WZ58zTU+bS0u8bNzkuLzPPzorXbaq7tuHLS+bq6nQMlnF9nXl1NSXDnKpCHB3JMTiKnQ7z+Lios7FhnMC222GwjI7D/PlpaLhtPVqV6PHKhn2/HcKbEql+fV1iGKOfrMFo0lxbY35+jjCM6UW20EkT01nf8NcXH2C+ky1w0lxZYWIQpoeHdgibNp+emIt3d1QIXdd1XSdyHMdxnEF7ViJJkiRJiHzf931/0O773Npi56qqqqoqRBRFURQJkWVZlmVi5gK64QO+eI0uRDcI2LjneZ7nDXqUfyi7v+oHdMOH67qu6xK9v/P33TTlA8MwDMMg0jRN0zTZsscP+LAsy7IsIvjs4gdxHMdxTJTnec5z8mwHpzZREAQBspiIiLCtm7dnOAzDMAyFUBRFUZTBtNvBoPX2xjcAuW/btm3bRKZpmqYpu7+qB3oUo3SapmmaDgoLdHDAhrk1vzw87LUfH9shaNp8fu61sbTEEky2sElzeGnZRXFsf5/mMjiVibqYj4a3h9hWVb2DbeXGBnPk9nC4AICNtGzhdQndNzdFXyMNgyiVyDZQlycn//dTahjFMBTHZBsp495eUXdtwyBGN/R4W1IdOtCjZUYrGx71jKMg/tdGcd3b23q6GxseHtXPz5nTmsdx3ouL4nWb6u70nY8ZnFJEr69MVBiqvkyzLCZenuFlGq/1f82jY8Y/AgzrM9JniNcAAAAASUVORK5CYII=);
  color: Black;
 }
 
 div.Tramcar-Proceed {width: 30px;
  height: 30px;
- background-color: green;
+ background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeEAYAAABroHLhAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAeAAAAHgD4T+E9AAAC5klEQVRYw+WZTU/qQBiFXxqNSk20laW6oUnrx9aPGDXRhca1ZVH8M/6f+gM0UTcaje41NmGl7MA2GFs0Gr2Lt+eWEuilcKWX3rN5Am3hPTPDzHAmQ3R4SPT9TT3r64v59MS0LObjI9NxmG9v4edGR5mSxJydZaoqc2aGKQi910g01P2jHx/Mmxvm9TXTdRvvkiRJkiSiQuHgoFAIXjuO4zgOkWmapmkSOU65zE1SLvOTV1dMUWSurTGXl5nDw91UnYnfw3d3zJMT5stLq7uy2Ww2myWyLMuyLCJZlmVZDt73PM/zPCLbtm3bJlJVVVXV4P32mphg7uwwFxbiGO5gmKAxTk+ZphllFCoWi8ViMehRGG1uEFw3DMMwjE5KrtWYR0fMs7NwnV0bxgfA4OVlnJbM5XK5XI5IFEURg7KVcF1RFEVR4nwD6ru4CDdAtPEIw2i5+/s4ZSQn/NTOz2MahsF4PfrvCHW37qgGw5h1j4+TLrk3YUhjUv38bGMYy0v0ZDQ4wuQGX78NY8OAdTRtgi/ueSHYGYU3DOnR6yuTfQpEDw9Jl9QfsU8h2MqlXexTILLtpEvpj56ffcPN/17Sqvd33/D/JSH4P5p2jYz4hmU56VL6o6kp3zAShbRreto3jCgl7dI03zB6eHw86ZJ+RvDFPoUgHFtdTbq0nxGysEzGNwytrDCRGQ26JieZCP1YDYaRAu7uNrbI4Al1w8dQKJltsfGYn2euryddenfa2GDOzbW6GrHT2t5mxotBk9PiInNrK+quCMMYGrrORMt1NtQrlUqlUvlzzuy6ruu6RKVSqVQqxTGIOjY3mfv7ndTXRRCPcAyZEaKUsDoN4qvVarVaJdI0TdM0onq9Xq/Xo74fk+reHpPX146bqfuzJYR+t7dMRClIGFgI2nVd13WdKJ/P5/P5oEdx1FKr1Wqtmw7rKJaXpSVm345a2gmfgcgISQpe4zCtuf/GxpjY02Mj1HyY9ndWjV+jYRVnKapExwAAAABJRU5ErkJggg==);
  color: Black;
 }
 
 div.Tramcar-do-not-Proceed {width: 30px;
  width: 30px;
  height: 30px;
- background-color: DarkOrange;
+ background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeEAYAAABroHLhAAAABmJLR0T///////8JWPfcAAAACXBIWXMAAABIAAAASABGyWs+AAAACXZwQWcAAAAeAAAAHgD4T+E9AAADsUlEQVRYw92ZTU9TQRSGnxYQMBJoCLiSEuMSla2VAEETtd8hGkzUuFc0fC4QNtWijSKJxn+AiQaQBBbKorYBxUXTjSZu0WhciBGkNGIiMC4m01YFodwpFZ7NpB/33vedO3PmzBmTEH19IAQGWV5eWQGYmnr/HmBs7O3b1M/T01+/AszNLS6mXmexFBYC7N9fWgpw9GhlJYDHU1UFYLNZrQA5OWazUY0Aps0aXlz8+RPg3r0XLwD6+ycnAb58icd1CFOUl+/ZA9DeXlcHcOVKTQ1AYWFe3pYYHhx8/RqgrW1sDODTp/l5nQbXo6KipASgr8/lAjhz5vDhdK5fd5isrMjO6Op6+hSgqWlgIBtGFR8+fPsmdTx8CNDd/exZqs5NG1Y3UAYDgVAoGwbXQgip7+bN588Bzp6VHaC+T9uw6rnh4Tdvsm1uIwwNyanW0zM+npZhZfB/e6Mb5dYtqfvJk9VfVMKwirotLaOj2RZtBDWkW1tlUP3xY2lpVcNqeclWMNLNx48yuN2/L30lWFq6fRuEkOudmvA7p927t6gIhFhevnMHhDCrTGhmRm/CoPB6vV6vF8LhcDgchng8Ho/Hk6363u12u91u/c///HlhAeDVK+mTtra6ukz0bCAQCAQCIm38fr/f79evp6Ojvh6E4MgRq1XnjT0ej8fjSd/on7hcLpfLpU+XzNGFoKxM79yVQ9S44VAoFAqF9OlKxKhdu3JydBqWc9O44VgsFovF9OnKz8/NBSG0bLm2E+biYrkf1UUkEolEIsbvE41Go9GoPl3FxQUFANqDlgo2RnE4HA6HIwNBS26s9S8DanlJF5/P5/P5MrgsTU5evpzJTMfpdDqdzmTUVcFItcFgMBgMCmG32+12e+Z0vHzZ3AxCJFJLlYJl6oHZav9KLVVxrLW1tpYdSEeHrIWZzSYTpOyWrl6VxbF9+2TNaLtjtVosAM3N0pciYVhVAfv7ZQpvMske2W4o3cpHQUFu7qqGFadPHzoE0NXV0JBt8Zuhu/vYMYDGxoMHV/t9zUzL7z95EtIvg2aLpqbqaoDr10+c+Nf/1jSshsbjx+fPA1y7JnvufxnqSkdPz/HjAI8enTu3EX3r5tIquvX2njoFMDh44QIkC+JbjXruyMjFiwA3bsiRuNEXYfio5cGDqSmAu3cnJiBZYdCFXEehs7O+HuDSJZsNtvCoZS1U4V6VUkZH1WHau3cA09OzswBzc9+/p15nsezeDXDggDxMs9l+P0yTuX5ypBnlF8EPpFRyRlqpAAAAAElFTkSuQmCC);
  color: Black;
 }
 
@@ -377,13 +377,13 @@ div.comments {
       <div class="state-abbr">1</div>
     </xsl:if>
     <xsl:if test="$state = 'Tramcar-Stop'">
-      <div class="state-abbr">S</div>
+      <div class="state-abbr"></div>
     </xsl:if>
     <xsl:if test="$state = 'Tramcar-Proceed'">
-      <div class="state-abbr">P</div>
+      <div class="state-abbr"></div>
     </xsl:if>
     <xsl:if test="$state = 'Tramcar-do-not-Proceed'">
-      <div class="state-abbr">n</div>
+      <div class="state-abbr"></div>
     </xsl:if>
   </xsl:template>
 </xsl:stylesheet>

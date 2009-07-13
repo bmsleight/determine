@@ -117,11 +117,12 @@ pdftk x_p_*.pdf cat output $OUTPUT
 }
 
 
-while getopts s:d opt
+while getopts s:dh opt
 do
     case "$opt" in
       d)  DEBUG="YES";;
       s)  SITE_URL="$OPTARG";;
+      h)  HTML_SKIP="YES";;
       
       \?)		# unknown flag
       	  echo >&2 \
@@ -149,8 +150,12 @@ OUTPUT=$FULL_PATH
 get_global_variables
 launch_xvfb
 
-get_html $REPORT_STYLE $REPORT_XML $TMP_REPORT_HTML
-html_pdf $TMP_REPORT_HTML $TMP_REPORT_PDF
+if [ "$HTML_SKIP" != "YES" ]; then
+  get_html $REPORT_STYLE $REPORT_XML $TMP_REPORT_HTML
+  html_pdf $TMP_REPORT_HTML $TMP_REPORT_PDF
+else 
+  html_pdf $REPORT_XML $TMP_REPORT_PDF
+fi
 
 if [ "$SITE_URL" != "" ]; then
   html_pdf $SITE_URL $TMP_SITE_PDF
