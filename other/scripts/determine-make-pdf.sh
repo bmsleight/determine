@@ -91,12 +91,13 @@ make_background ()
   done
   launch_xvfb
   NOW=$(date +"Created: %F %H:%M:%S")
+  VERSION=$(svn info | grep Revision | cut -d\  -f 2)
   DISPLAY=:$DISP wkhtmltopdf --page-size A3 --orientation Landscape \
   --margin-top 1 --margin-right 2 --margin-bottom 5   --margin-left 2 \
   --footer-font-size 8  \
   --footer-center "[page] of [topage]" \
   --footer-right "www.determine.org.uk" \
-  --footer-left "$NOW" \
+  --footer-left "$NOW, using Determine version: $VERSION" \
   $PAGES_HTML $TMP_BACKGROUND_PDF
   
   # Yes this is terriable code. Its really bad.

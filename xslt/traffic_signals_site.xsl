@@ -14,6 +14,9 @@
       <h6>(<xsl:value-of select="description" />)</h6>
     </xsl:if>
     <p>Phase type: <xsl:value-of select="signal_type" />.</p>
+    <xsl:if test="string-length(terminated_by_another_phase) &gt; 0" >
+       <p>This phase is terminated by phase: <xsl:value-of select="terminated_by_another_phase" /></p>
+    </xsl:if>    
     <xsl:if test="string-length(mintime) &gt; 0" >
        <p>Minimum green running time: <xsl:value-of select="mintime" /></p>
     </xsl:if>

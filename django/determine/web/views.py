@@ -425,6 +425,9 @@ def phasesAdd(request, year, month, day, slug, letter, phaseType):
         return HttpResponseRedirect(siteRecord.get_absolute_url_report())        
     siteObject, countryObject = getSiteObject(siteRecord)
     phaseTypeObject = countryObject.phaseType(str(phaseType))
+    currentPhases = siteObject.phases.phaseListLetters()
+    phaseChoices = listToTupleChoices(currentPhases)
+
     fixedItems =[]
     class phaseDetailsForm(forms.Form):
         description = forms.CharField(label='Optional description:', max_length=255, help_text='(e.g. Southbound)', required=False)
@@ -452,6 +455,14 @@ def phasesAdd(request, year, month, day, slug, letter, phaseType):
             hidden = None
         postGreen = forms.IntegerField(label=phaseTypeObject.postGreenName, initial = phaseTypeObject.postGreenTime, widget=hidden)
 
+        if not phaseTypeObject.terminated_by_another_phase:
+            hidden = forms.HiddenInput
+        else:
+            hidden = None
+        terminated_by_another_phase = forms.ChoiceField(choices=phaseChoices, label='Terminate Phase when this phases starts', 
+                                                        help_text='(e.g. Terminate filter arrow on full green.)', 
+                                                        initial = "", required=False, widget=hidden)
+
     if request.method == 'POST':
         form = phaseDetailsForm(request.POST)
         if form.is_valid():
@@ -459,8 +470,13 @@ def phasesAdd(request, year, month, day, slug, letter, phaseType):
             preGreen = form.cleaned_data['preGreen']
             green = form.cleaned_data['green']
             postGreen = form.cleaned_data['postGreen']
+            if phaseTypeObject.terminated_by_another_phase:
+                terminated_by_another_phase = form.cleaned_data['terminated_by_another_phase']
+            else:
+                terminated_by_another_phase = None
             siteObject.phases.newPhase(letter, countryObject.phaseType(phaseType), greenMin=green, 
-            postGreenTime=postGreen, preGreenTime=preGreen, description=description)
+            postGreenTime=postGreen, preGreenTime=preGreen, description=description, 
+            terminated_by_another_phase=terminated_by_another_phase)
             writeBackSiteToXml(siteRecord, siteObject) 
             next_url = siteRecord.get_absolute_url() + 'phases/'
             return HttpResponseRedirect(next_url)
