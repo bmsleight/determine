@@ -91,7 +91,7 @@ make_background ()
   done
   launch_xvfb
   NOW=$(date +"Created: %F %H:%M:%S")
-  VERSION=$(svn info | grep Revision | cut -d\  -f 2)
+  VERSION=$(cd /home/www-data/determine ; svn info | grep Revision | cut -d\  -f 2)
   DISPLAY=:$DISP wkhtmltopdf --page-size A3 --orientation Landscape \
   --margin-top 1 --margin-right 2 --margin-bottom 5   --margin-left 2 \
   --footer-font-size 8  \
