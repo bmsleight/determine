@@ -69,3 +69,7 @@ denyhosts purge
 nano /etc/hosts.allow
 #ALL : 87.74.83.14
 
+# Add crontabe for tmp-clean.sh
+# Add the following in to file and crontab file
+# "7 * * * * /home/www-data/determine/other/scripts/tmp-clean.sh >>/dev/null 2>&1"
+

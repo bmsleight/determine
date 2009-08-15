@@ -23,7 +23,8 @@ DATABASE_PORT = ''             # Set to empty string for default. Not used with 
 # although not all choices may be available on all operating systems.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'America/Chicago'
+#TIME_ZONE = 'America/Chicago'
+TIME_ZONE = 'Europe/London'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -54,7 +55,7 @@ MEDIA_ROOT = '/home/www-data/determine/django/determine/'
 ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = 'jykw6ut@&m-4efz0gxc$7*uqx*cl5%%pxfi%g4lo+wo3#6=y-n'
+SECRET_KEY = 'Will-have-to-change-this-now'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
