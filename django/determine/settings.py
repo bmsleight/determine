@@ -2,7 +2,7 @@
 import os
 here = lambda x: os.path.join(os.path.dirname(__file__),x)
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -56,6 +56,7 @@ ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'Will-have-to-change-this-now'
+
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
