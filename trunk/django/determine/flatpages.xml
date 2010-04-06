@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<django-objects version="1.0">
-  <object pk="2" model="flatpages.flatpage">
-    <field type="CharField" name="url">/contacts/</field>
-    <field type="CharField" name="title">Contacts</field>
-    <field type="TextField" name="content">&lt;h4&gt;Contact details&lt;/h4&gt;
-&lt;p&gt;To be filled in, at the moment try: &lt;i&gt;b m s  @ d e t e r m i n e . o r g . u k&lt;/i&gt;&lt;p&gt;</field>
-    <field type="BooleanField" name="enable_comments">False</field>
-    <field type="CharField" name="template_name"></field>
-    <field type="BooleanField" name="registration_required">False</field>
-    <field to="sites.site" name="sites" rel="ManyToManyRel"><object pk="1"></object></field>
-  </object>
-  <object pk="1" model="flatpages.flatpage">
-    <field type="CharField" name="url">/faq/</field>
-    <field type="CharField" name="title">Frequently Asked Questions</field>
-    <field type="TextField" name="content">&lt;h4&gt;Why ?&lt;/h4&gt;
+<django-objects version="1.0"><object pk="2" model="flatpages.flatpage"><field type="CharField" name="url">/contacts/</field><field type="CharField" name="title">Contacts</field><field type="TextField" name="content">&lt;h4&gt;Contact details&lt;/h4&gt;
+&lt;p&gt;&lt;i&gt;b m s  @ d e t e r m i n e . o r g . u k&lt;/i&gt;&lt;p&gt;
+&lt;p&gt; For other projects contact: &lt;a href="http://www.junctionconsulting.co.uk"&gt;Junction Consulting&lt;/a&gt;&lt;/p&gt;</field><field type="BooleanField" name="enable_comments">False</field><field type="CharField" name="template_name"></field><field type="BooleanField" name="registration_required">False</field><field to="sites.site" name="sites" rel="ManyToManyRel"><object pk="1"></object></field></object><object pk="3" model="flatpages.flatpage"><field type="CharField" name="url">/example/</field><field type="CharField" name="title">Example Site Entered in to Determine</field><field type="TextField" name="content">&lt;p&gt;Below is an example of a traffic signal timing diagrams can be produced.&lt;/p&gt;
+&lt;p&gt;The video is 5 minutes long.&lt;/p&gt; 
+&lt;p&gt;&lt;a href='/site_media/test/example.html?keepThis=true&amp;TB_iframe=true&amp;height=500&amp;width=820'  title="Example Site" class="thickbox" &gt;Example Site&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;
+</field><field type="BooleanField" name="enable_comments">False</field><field type="CharField" name="template_name"></field><field type="BooleanField" name="registration_required">False</field><field to="sites.site" name="sites" rel="ManyToManyRel"><object pk="1"></object></field></object><object pk="1" model="flatpages.flatpage"><field type="CharField" name="url">/faq/</field><field type="CharField" name="title">Frequently Asked Questions</field><field type="TextField" name="content">&lt;h4&gt;Why ?&lt;/h4&gt;
 &lt;p&gt;Because it was too hard to do. &lt;/p&gt;
 &lt;h4&gt;
 Why no use Linsig ?&lt;/h4&gt;
@@ -30,10 +22,22 @@ Why no use Linsig ?&lt;/h4&gt;
 &lt;p&gt;Although I plan to tackle some of the above and add them a features in the future&lt;/p&gt;
 &lt;h4&gt;I do not like the Logos, headers and footers on the reports&lt;/h4&gt;
 &lt;p&gt;The code is open-source you can change it and run your own copy.&lt;/p&gt;
-&lt;p&gt;I can set up a separate private website with customized logos, headers and footers for a small fee. Use the &lt;a href=/contacts/&gt;contacts link&lt;/a&gt; for more details. &lt;/p&gt;</field>
-    <field type="BooleanField" name="enable_comments">False</field>
-    <field type="CharField" name="template_name"></field>
-    <field type="BooleanField" name="registration_required">False</field>
-    <field to="sites.site" name="sites" rel="ManyToManyRel"><object pk="1"></object></field>
-  </object>
-</django-objects>
+&lt;p&gt;I can set up a separate private website with customized logos, headers and footers for a small fee. Use the &lt;a href=/contacts/&gt;contacts link&lt;/a&gt; for more details. &lt;/p&gt;</field><field type="BooleanField" name="enable_comments">False</field><field type="CharField" name="template_name"></field><field type="BooleanField" name="registration_required">False</field><field to="sites.site" name="sites" rel="ManyToManyRel"><object pk="1"></object></field></object><object pk="4" model="flatpages.flatpage"><field type="CharField" name="url">/how-to/</field><field type="CharField" name="title">Screen-cast and How to</field><field type="TextField" name="content">&lt;h2&gt;Screen-cast and How to&lt;/h2&gt;
+
+&lt;p&gt;Below is a walk-though video of entering a simple traffic site on determine.org.uk. it is a &lt;a href="http://maps.google.co.uk/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=51.398821,-0.1869&amp;mrt=all&amp;sll=53.800651,-4.064941&amp;sspn=22.350317,67.104492&amp;ie=UTF8&amp;z=16"&gt;real traffic signal site&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The screen-cast covers entering all the phasing, staging and intergreen in to determine.org.uk. The details of two cycles are entered and a report in PDF format is generated.&lt;/p&gt;
+&lt;br&gt;
+&lt;/div&gt;
+&lt;div class="clear"&gt;&lt;/div&gt;
+  &lt;object id="video" width="782" height="446" type="application/x-shockwave-flash" data="http://view.vzaar.com/263245.flashplayer"&gt;
+    &lt;param name="movie" value="http://view.vzaar.com/263245.flashplayer"&gt;	
+    &lt;param name="allowScriptAccess" value="always"&gt;
+    &lt;param name="allowFullScreen" value="true"&gt;
+    &lt;param name="movie" value="http://view.vzaar.com/263245.flashplayer"&gt;
+    &lt;param name="wmode" value="transparent"&gt;
+    &lt;param name="flashvars" value=""&gt;
+    &lt;embed src="http://view.vzaar.com/263245.flashplayer" type="application/x-shockwave-flash" wmode="transparent" width="782" height="446" allowScriptAccess="always" allowFullScreen="true" flashvars=""&gt;&lt;/embed&gt;
+    &lt;video width="1280" height="720" src="http://view.vzaar.com/263245.mobile" poster="http://view.vzaar.com/263245.image" controls&gt;&lt;/video&gt;
+  &lt;/object&gt;
+</field><field type="BooleanField" name="enable_comments">False</field><field type="CharField" name="template_name"></field><field type="BooleanField" name="registration_required">False</field><field to="sites.site" name="sites" rel="ManyToManyRel"><object pk="1"></object></field></object></django-objects>
