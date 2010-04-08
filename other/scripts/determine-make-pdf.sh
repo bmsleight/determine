@@ -74,11 +74,20 @@ html_pdf ()
 background_html ()
 {
 echo boo
+#PLAIN
+if [ "$PLAIN" != "YES" ]; then
 cat >$TMP_BACKGROUND_HTML <<EOF
 <html>
 <p align="right"><font size=3><img src="http://www.determine.org.uk/site_media/images/determine-logo.png" width=150></font></p>
 </html>
 EOF
+else 
+cat >$TMP_BACKGROUND_HTML <<EOF
+<html>
+<p align="right">&nbsp;</p>
+</html>
+EOF
+fi
 }
 
 make_background ()
@@ -92,12 +101,19 @@ make_background ()
   launch_xvfb
   NOW=$(date +"Created: %F %H:%M:%S")
   VERSION=$(cd /home/www-data/determine ; svn info | grep Revision | cut -d\  -f 2)
+  #FOOTER_URL
+  if [ -z "$FOOTER_URL" ]; then
+    FOOTER_LEFT="$NOW, using Determine version: $VERSION"
+    FOOTER_URL="www.determine.org.uk"
+  else
+    FOOTER_LEFT="$NOW"
+  fi
   DISPLAY=:$DISP wkhtmltopdf --page-size A3 --orientation Landscape \
   --margin-top 1 --margin-right 2 --margin-bottom 5   --margin-left 2 \
   --footer-font-size 8  \
   --footer-center "[page] of [topage]" \
-  --footer-right "www.determine.org.uk" \
-  --footer-left "$NOW, using Determine version: $VERSION" \
+  --footer-right "$FOOTER_URL" \
+  --footer-left "$FOOTER_LEFT" \
   $PAGES_HTML $TMP_BACKGROUND_PDF
   
   # Yes this is terriable code. Its really bad.
@@ -118,12 +134,14 @@ pdftk x_p_*.pdf cat output $OUTPUT
 }
 
 
-while getopts s:dh opt
+while getopts s:w:dhp opt
 do
     case "$opt" in
       d)  DEBUG="YES";;
       s)  SITE_URL="$OPTARG";;
       h)  HTML_SKIP="YES";;
+      p)  PLAIN="YES";;
+      w)  FOOTER_URL="$OPTARG";;
       
       \?)		# unknown flag
       	  echo >&2 \
