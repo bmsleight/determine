@@ -411,7 +411,7 @@ class diagramPhaseClass:
         if self.minRemaining > 0:
             self.minRemaining = self.minRemaining -1
     def decrementPhaseDelay(self):
-        if self.phaseDelayTime > 0:
+        if self.phaseDelayTime > 0 and self.intergreens == []:
             self.phaseDelayTime = self.phaseDelayTime - 1
     def incrementTimeSinceGreen(self, site):
         if self.state != site.phases.phase(self.letter).phaseType.greenName:
@@ -458,7 +458,7 @@ class diagramPhaseClass:
                             self.minRemaining = site.phases.phase(self.letter).postGreenTime
             else:
             # Moving to Green
-                if self.minRemaining > 0 or self.phaseDelayTime > 0:
+                if self.minRemaining > 0 :
                 # Min Times!
                     pass
                 else:
@@ -466,7 +466,7 @@ class diagramPhaseClass:
                     largestIntergreen = self.largestIntergreen()
                     # If (preGreen has run or preGreen is zero) and largestIntergreen = 0
                     #     then start Green and set timeSinceGreen = 0
-                    if largestIntergreen == 0:
+                    if largestIntergreen == 0 and self.phaseDelayTime == 0:
                         if preGreenTime == 0 or self.state == site.phases.phase(self.letter).phaseType.preGreenName:
                                 self.state = site.phases.phase(self.letter).phaseType.greenName
                                 self.move = None
@@ -474,16 +474,17 @@ class diagramPhaseClass:
                                 self.minRemaining = site.phases.phase(self.letter).greenMin
                     # Start the preGreen (e.g.Red-Amber)
                     if preGreenTime > 0 and self.state == site.phases.phase(self.letter).phaseType.redName \
-                    and largestIntergreen <= preGreenTime:
+                    and largestIntergreen <= preGreenTime and self.phaseDelayTime <= preGreenTime:
                         # Need to make sure all from Intergreens as not at green (or moving to green) before we run preGreen
                         #  For example dummy all red from intergreen of 2 sec, but all-red not had minimum
+                        #  Also make sure phaseDelayTime is low enough.
                         allFromIntergreenNotAtGreen = True
                         for intergreen in self.intergreens:
                             if lastSecondDiagram.diagramPhase(intergreen.fromLetter).minRemaining > 1 or \
                             lastSecondDiagram.diagramPhase(intergreen.fromLetter).phaseDelayTime > 1 or \
                             site.phases.phase(intergreen.fromLetter).phaseType.greenName == lastSecondDiagram.diagramPhase(intergreen.fromLetter).move:
                                 allFromIntergreenNotAtGreen = False
-                        if allFromIntergreenNotAtGreen:                        
+                        if allFromIntergreenNotAtGreen:
                             # Need to run the preGreen
                             self.state = site.phases.phase(self.letter).phaseType.preGreenName
                             # We have already run it for one second, it we set it here.
@@ -641,6 +642,13 @@ class diagramTimeClass:
                                     diagramPhase.comments = diagramPhase.comments + "Intergreen from " +  phase.letter + \
                                                             " already statified, " + phase.letter + " has not been green for " + \
                                                             str(timeSinceGreen) + " seconds. "
+
+                        diagramPhase.phaseDelayTime = site.phases.phase(diagramPhase.letter).phaseDelay(self.diagramStage.movingFrom, self.diagramStage.movingTo)
+#                        if diagramPhase.phaseDelayTime > 0:
+                            # Because the very next action is to reduce by one. 
+                            #  This is not a fudge... really!
+#                            diagramPhase.phaseDelayTime = diagramPhase.phaseDelayTime +1
+
                 else:
                     if diagramPhase.state != site.phases.phase(diagramPhase.letter).phaseType.redName:
                         diagramPhase.move = site.phases.phase(diagramPhase.letter).phaseType.redName
@@ -1054,9 +1062,9 @@ def generateDigram(countryConfig, site, diagramRequired, gtk, progressbar):
             if diagram.atTime(timeSeconds-1).allPhaseMovesComplete():
                 nextSecond.diagramStage.moveComplete()
                 nextSecond.primeAnyStageMovementsWaiting(site, diagram.atTime(timeSeconds-1))
+            nextSecond.decrementPhaseDelay()
             nextSecond.decrementIntergreens(site, diagram.atTime(timeSeconds-1))
             nextSecond.decrementMinTime()
-            nextSecond.decrementPhaseDelay()
             if nextSecond.stateChanges(site, diagram.atTime(timeSeconds-1)):
                 nextSecond.diagramStage.stageEnded()
             nextSecond.terminatedByOthers(site, nextSecond)
