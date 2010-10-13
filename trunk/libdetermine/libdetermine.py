@@ -21,6 +21,11 @@ from optparse import OptionParser
 import amara
 import copy
 
+PHASE_DELAY_CHOICES = (
+    ('normal', 'Normal phase delay (additional to green times and intergreen)'),
+    ('alternative', 'Phase gaining - inclusive of intergreen except pre-green (red-amber) '),
+)
+
 
 class phaseTypeClass:
     def __init__(self, name="Traffic", preGreenName="Red-Amber", preGreenTime=2, preGreenTimeConfigurable=False, greenName="Green", 
@@ -102,6 +107,7 @@ class phaseClass:
         self.phaseDelayFrom = []
         self.phaseDelayTo = []
         self.phaseDelayTime = []
+        self.phaseDelayType = []
         self.description = description
         if terminated_by_another_phase:
             self.terminated_by_another_phase = terminated_by_another_phase
@@ -121,10 +127,11 @@ class phaseClass:
         except:
             fromTime = 0
         return fromTime
-    def setPhaseDelay(self, phaseDelayFrom, phaseDelayTo, phaseDelayTime):
+    def setPhaseDelay(self, phaseDelayFrom, phaseDelayTo, phaseDelayTime, phaseDelayType="normal"):
         self.phaseDelayFrom.append(str(unicode(phaseDelayFrom)))
         self.phaseDelayTo.append(str(unicode(phaseDelayTo)))
         self.phaseDelayTime.append(int(unicode(phaseDelayTime)))
+        self.phaseDelayType.append(str(unicode(phaseDelayType)))
     def phaseDelay(self, phaseDelayFrom, phaseDelayTo):
         returnPhaseDelay = 0
         l = len(self.phaseDelayFrom)
@@ -132,9 +139,17 @@ class phaseClass:
             if phaseDelayFrom == self.phaseDelayFrom[i] and phaseDelayTo == self.phaseDelayTo[i]:
                 returnPhaseDelay = self.phaseDelayTime[i]
         return returnPhaseDelay
+    def gphaseDelayType(self, phaseDelayFrom, phaseDelayTo):
+        returnPhaseDelayType = "normal"
+        l = len(self.phaseDelayFrom)
+        for i in range(0, l):
+            if phaseDelayFrom == self.phaseDelayFrom[i] and phaseDelayTo == self.phaseDelayTo[i]:
+                returnPhaseDelayType = self.phaseDelayType[i]
+        return returnPhaseDelayType
     def eachPhaseDelayText(self, i):
         phaseText = "Phase " + self.letter + " on a move from stage " + str(self.phaseDelayFrom[i]) + \
-                       " to stage " + str(self.phaseDelayTo[i]) + " is delayed by " + str(self.phaseDelayTime[i])  
+                       " to stage " + str(self.phaseDelayTo[i]) + " is delayed by " + \
+                       str(self.phaseDelayTime[i]) + " (type " + str(self.phaseDelayType[i]) + ")"
         return phaseText
     def phaseDelayDelete(self, phaseDelayText):
         foundIndex = -1
@@ -147,6 +162,7 @@ class phaseClass:
             del self.phaseDelayFrom[foundIndex]
             del self.phaseDelayTo[foundIndex]
             del self.phaseDelayTime[foundIndex]
+            del self.phaseDelayType[foundIndex]
             return True
         else:
             return False        
@@ -214,6 +230,9 @@ class phaseClass:
                 xml = xml + "<length>"
                 xml = xml + str(self.phaseDelayTime[index])
                 xml = xml + "</length>"            
+                xml = xml + "<dtype>"
+                xml = xml + str(self.phaseDelayType[index])
+                xml = xml + "</dtype>"            
                 xml = xml + "</phase_delay>"
             return xml
     def xmlIntergreens(self):
@@ -644,6 +663,14 @@ class diagramTimeClass:
                                                             str(timeSinceGreen) + " seconds. "
 
                         diagramPhase.phaseDelayTime = site.phases.phase(diagramPhase.letter).phaseDelay(self.diagramStage.movingFrom, self.diagramStage.movingTo)
+                        if diagramPhase.phaseDelayTime > 0:
+                            dtype = site.phases.phase(diagramPhase.letter).gphaseDelayType(self.diagramStage.movingFrom, self.diagramStage.movingTo)
+                            if dtype == "alternative":
+                            	# We have funny Siemens 800 Phase delay gaining !
+                            	# Suspect inter code from them is short :)
+                            	diagramPhase.phaseDelayTime = diagramPhase.phaseDelayTime + site.phases.phase(diagramPhase.letter).preGreenTime - diagramPhase.largestIntergreen()
+                            	if diagramPhase.phaseDelayTime < 0:
+                            		diagramPhase.phaseDelayTime = 0
 #                        if diagramPhase.phaseDelayTime > 0:
                             # Because the very next action is to reduce by one. 
                             #  This is not a fudge... really!
@@ -987,7 +1014,7 @@ def parseSiteConfig(siteXML, countryConfig):
         pass
     try:
         for phaseDelay in siteAmaraXML.traffic_signals.site.phase_delays.phase_delay:
-            site.phases.phase(phaseDelay.phase).setPhaseDelay(phaseDelay.from_, phaseDelay.to, phaseDelay.length)
+            site.phases.phase(phaseDelay.phase).setPhaseDelay(phaseDelay.from_, phaseDelay.to, phaseDelay.length, phaseDelay.dtype)
     except:
         pass
     try:

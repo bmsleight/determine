@@ -294,6 +294,7 @@ def delays(request, year, month, day, slug):
         stageFrom = forms.ChoiceField(choices=stageChoices, label="Moving from stage:")
         stageTo = forms.ChoiceField(choices=stageChoices, label="Moving to stage:")
         delay_by = forms.IntegerField(label="Is delayed by:") 
+        dType = forms.ChoiceField(choices=libdetermine.PHASE_DELAY_CHOICES, label="Type:")
 
     if request.method == 'POST':
         if request.POST.has_key(deleteDelayText):
@@ -310,7 +311,8 @@ def delays(request, year, month, day, slug):
                     stageFrom = form.cleaned_data['stageFrom']
                     stageTo = form.cleaned_data['stageTo']
                     delay_by = form.cleaned_data['delay_by']
-                    siteObject.phases.phase(str(phase)).setPhaseDelay(stageFrom, stageTo, str(delay_by))
+                    dType = form.cleaned_data['dType']
+                    siteObject.phases.phase(str(phase)).setPhaseDelay(stageFrom, stageTo, str(delay_by), dType)
                     writeBackSiteToXml(siteRecord, siteObject)
                 except:
                     pass
