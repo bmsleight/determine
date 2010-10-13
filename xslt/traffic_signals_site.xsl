@@ -84,6 +84,7 @@
     on a move from <xsl:value-of select="from" />&#160;
     to <xsl:value-of select="to" />&#160;
     delayed by <xsl:value-of select="length" />&#160;
+    (<xsl:value-of select="dtype" />)&#160;
     </p>
   </xsl:for-each>
 </div>
