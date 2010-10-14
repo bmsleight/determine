@@ -493,7 +493,7 @@ class diagramPhaseClass:
                                 self.minRemaining = site.phases.phase(self.letter).greenMin
                     # Start the preGreen (e.g.Red-Amber)
                     if preGreenTime > 0 and self.state == site.phases.phase(self.letter).phaseType.redName \
-                    and largestIntergreen <= preGreenTime and self.phaseDelayTime <= preGreenTime:
+                    and largestIntergreen <= preGreenTime and (self.phaseDelayTime + largestIntergreen) <= preGreenTime:
                         # Need to make sure all from Intergreens as not at green (or moving to green) before we run preGreen
                         #  For example dummy all red from intergreen of 2 sec, but all-red not had minimum
                         #  Also make sure phaseDelayTime is low enough.
@@ -1014,9 +1014,13 @@ def parseSiteConfig(siteXML, countryConfig):
         pass
     try:
         for phaseDelay in siteAmaraXML.traffic_signals.site.phase_delays.phase_delay:
-            site.phases.phase(phaseDelay.phase).setPhaseDelay(phaseDelay.from_, phaseDelay.to, phaseDelay.length, phaseDelay.dtype)
+            site.phases.phase(phaseDelay.phase).setPhaseDelay(phaseDelay.from_, phaseDelay.to, phaseDelay.length, phaseDelay.dtype)    
     except:
-        pass
+    	try:
+            for phaseDelay in siteAmaraXML.traffic_signals.site.phase_delays.phase_delay:
+                site.phases.phase(phaseDelay.phase).setPhaseDelay(phaseDelay.from_, phaseDelay.to, phaseDelay.length)
+        except:
+        	pass
     try:
         for diagram in siteAmaraXML.traffic_signals.diagrams.diagram:
             requiredDiagram = requiredDiagramClass(diagram.title, diagram.cycle, diagram.start, diagram.loop)
