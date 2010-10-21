@@ -401,7 +401,7 @@ class stageArrayClass:
         return xml
 
 class diagramPhaseClass:
-    def __init__(self, letter, state="Red", minRemaining=0, timeSinceGreen=180, move=None):
+    def __init__(self, letter, state="Red", minRemaining=0, timeSinceGreen=180, move=None, description=None):
         self.letter = letter
         self.state = state
         self.minRemaining = minRemaining
@@ -410,6 +410,7 @@ class diagramPhaseClass:
         self.intergreens = [] 
         self.phaseDelayTime = 0
         self.comments = ""
+        self.description = description
     def largestIntergreen(self):
         largest = 0
         for intergreen in self.intergreens:
@@ -538,6 +539,8 @@ class diagramPhaseClass:
     def xml(self, maxTime=0):
         xml = "<phase>"
         xml = xml + "<letter>" + self.letter + "</letter>"
+        if self.description:
+            xml = xml + "<description>" + self.description + "</description>"
         xml = xml + "<state>" + self.state + "</state>"
         xml = xml + "<min_remaining>" + str(self.minRemaining) + "</min_remaining>"
         if maxTime == 0:
@@ -1040,9 +1043,9 @@ def staringPoint(site, startingStageName):
     startingtime = diagramTimeClass(-1)
     for phase in site.phases.phases:
         if site.stages.stage(startingStageName).doesContainPhase(phase.letter):
-            diagramPhase = diagramPhaseClass(phase.letter, state=phase.phaseType.greenName, timeSinceGreen=0)
+            diagramPhase = diagramPhaseClass(phase.letter, state=phase.phaseType.greenName, description=phase.description, timeSinceGreen=0)
         else:
-            diagramPhase = diagramPhaseClass(phase.letter, state=phase.phaseType.redName)
+            diagramPhase = diagramPhaseClass(phase.letter, state=phase.phaseType.redName, description=phase.description)
         startingtime.diagramPhases.append(diagramPhase)
     startingtime.diagramStage.running = str(unicode(startingStageName))
     return startingtime

@@ -194,6 +194,7 @@ div.comments {
     </div>
     <table class="signals">
       <tr>
+        <td style="white-space: nowrap; padding-right: 20px; border-width: 0px 0px 0px 0px;"> </td>
         <td> </td>
         <xsl:for-each select="$diagram/times/time/t">
           <xsl:sort data-type="number" select="."/>
@@ -222,6 +223,10 @@ div.comments {
       <xsl:for-each select="$diagram/times/time[t=0]/phases/phase">
         <xsl:sort/>
         <tr>
+          <xsl:variable name="description" select="description"/>
+          <td style="white-space: nowrap; padding-right: 20px; border-width: 0px 0px 0px 0px; text-align: right;">
+             &#160;<xsl:value-of select="$description"/>
+          </td>
           <xsl:variable name="letter" select="letter"/>
           <td>
              &#160;<xsl:value-of select="$letter"/>
@@ -245,6 +250,7 @@ div.comments {
       </xsl:for-each>
       <tr>&#160;</tr>
       <tr>
+        <td style="white-space: nowrap; padding-right: 20px; border-width: 0px 0px 0px 0px;"> </td>
         <td>Stage&#160;</td>
         <xsl:for-each select="$diagram/times/time/t">
           <xsl:sort data-type="number" select="."/>
