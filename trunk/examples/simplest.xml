@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="site-transform.xsl"?>
-
 <traffic_signals>
  <site>
   <address>Simplest Example</address> 
@@ -17,6 +16,12 @@
     <signal_type>traffic</signal_type>
     <mintime>7</mintime>
    </phase>
+   <phase>
+    <letter>C</letter>
+    <description>All Red</description>
+    <signal_type>Dummy</signal_type>
+    <mintime>1</mintime>
+   </phase>
   </phases>
   <stages>
    <stage>
@@ -29,6 +34,12 @@
     <stage_number>2</stage_number>
     <phases>
      <phase>B</phase>
+    </phases>
+   </stage>
+   <stage>
+    <stage_number>0</stage_number>
+    <phases>
+     <phase>C</phase>
     </phases>
    </stage>
   </stages>
@@ -45,6 +56,21 @@
    </intergreen>
   </intergreens>
  </site>
+ <moc>
+  <fixedtime>
+   <cycle>30</cycle>
+   <movements>
+    <move>
+     <time>0</time>
+     <to>1</to>
+    </move>
+    <move>
+     <time>15</time>
+     <to>2</to>
+    </move>
+   </movements>
+  </fixedtime>
+ </moc>
  <diagrams>
   <diagram>
    <title>Example Minimum cycle</title>

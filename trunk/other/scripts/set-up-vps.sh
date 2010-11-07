@@ -8,7 +8,7 @@ dpkg-reconfigure locales
 # │    [*] en_GB.ISO-8859-15 ISO-8859-15                                                                                                   ▒   │ 
 # │    [*] en_GB.UTF-8 UTF-8
 # default -   en_GB.UTF-8    
-apt get install apache2-mpm-prefork sqlite3 python-pysqlite2 python-amara subversion-tools python-django xvfb libapache2-mod-python pdftk xmlstarlet enscript ghostscript less
+apt-get install apache2-mpm-prefork sqlite3 python-pysqlite2 python-amara subversion-tools python-django xvfb libapache2-mod-python pdftk xmlstarlet enscript ghostscript less
 adduser bms
 # change the su passwd
 

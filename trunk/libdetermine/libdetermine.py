@@ -753,7 +753,7 @@ class diagramClass:
         removeList = []
         for time_ in self.times:
             if time_.timeSeconds < (-1):
-            	removeList.append(time_)
+                removeList.append(time_)
         for time_ in removeList:
             self.times.remove(time_)
     def removeLastLoop(self, finalCycleTime):
@@ -768,7 +768,7 @@ class diagramClass:
         removeList = []
         for time_ in self.times:
             if time_.timeSeconds > (maxTime  - finalCycleTime):
-            	removeList.append(time_)
+                removeList.append(time_)
         for time_ in removeList:
             self.times.remove(time_)        
     def compareTimes(self, OneTime, SecondTime):
@@ -888,6 +888,53 @@ class requiredDiagramClass:
         xml = xml + "</diagram>"
         return xml
 
+class FixedTimeMovementsClass:
+    def __init__(self, timeSeconds, toStageName):
+        self.timeSeconds = int(unicode(timeSeconds))
+        self.toStageName = str(unicode(toStageName))
+    def xml(self):
+        xml = "<move>"
+        xml = xml + "<time>" + str(self.timeSeconds) + "</time>"
+        xml = xml + "<to>" + self.toStageName + "</to>"
+        xml = xml + "</move>"
+        return xml
+
+class FixedTimeClass:
+    def __init__(self):
+        self.cycleTime = 0
+        self.currentTime = 0
+        self.movements = []
+    def addmove(self, timeSeconds, toStageName):
+        newMovement = FixedTimeMovementsClass(int(unicode(timeSeconds)), int(unicode(toStageName)) )
+        self.movements.append(newMovement)
+    def tick(self):
+        self.currentTime = self.currentTime +1
+        if self.currentTime == self.cycleTime:
+            self.currentTime = 0
+    def getMovements(self):
+        returnMovements = []
+        for movement in self.movements:
+            if movement.timeSeconds == self.currentTime:
+                 returnMovements.append(movement)
+        return returnMovements
+
+    def xml(self):
+        xml = "<cycle>" + str(self.cycleTime) + "</cycle>"
+        xml = xml + "<movements>"
+        for movement in self.movements:
+            xml = xml + str(movement.xml())
+        xml = xml + "</movements>"
+        return xml
+
+class methodOfControlClass:
+    def __init__(self):
+        self.fixedTime = FixedTimeClass()
+        self.currentMoC = self.fixedTime
+    def xml(self):
+        xml = "<fixedtime>" + str(self.fixedTime.xml()) + "</fixedtime>"
+        return xml
+
+
 class siteClass:
     def __init__(self):
         self.address = ""
@@ -895,6 +942,7 @@ class siteClass:
         self.phases = phaseArrayClass()
         self.stages = stageArrayClass()
         self.requiredDiagrams = []
+        self.methodOfControl = methodOfControlClass()
     def listDiagrams(self):
         listDiagrams = []
         for requiredDiagram in self.requiredDiagrams:
@@ -929,6 +977,7 @@ class siteClass:
         xml = xml + self.phases.xmlPhaseDelay()
         xml = xml + self.phases.xmlIntergreens()
         xml = xml + "</site>"
+        xml = xml + "<moc>" + str(self.methodOfControl.xml()) + "</moc>" 
         xml = xml + "<diagrams>"
         for requiredDiagram in self.requiredDiagrams:
             xml = xml + requiredDiagram.xml()
@@ -1036,6 +1085,14 @@ def parseSiteConfig(siteXML, countryConfig):
             site.requiredDiagrams.append(requiredDiagram)
     except:
         pass
+
+    try:
+        site.methodOfControl.fixedTime.cycleTime = int(unicode(siteAmaraXML.traffic_signals.moc.fixedtime.cycle))
+        for move in siteAmaraXML.traffic_signals.moc.fixedtime.movements.move:
+            site.methodOfControl.fixedTime.addmove(move.time, move.to)
+    except:
+        pass
+
     return site
 
 
