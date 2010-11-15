@@ -902,7 +902,7 @@ class FixedTimeMovementsClass:
 class FixedTimeClass:
     def __init__(self):
         self.cycleTime = 0
-        self.currentTime = 0
+        self.currentTime = -1
         self.movements = []
     def addmove(self, timeSeconds, toStageName):
         newMovement = FixedTimeMovementsClass(int(unicode(timeSeconds)), int(unicode(toStageName)) )
@@ -933,6 +933,13 @@ class methodOfControlClass:
     def xml(self):
         xml = "<fixedtime>" + str(self.fixedTime.xml()) + "</fixedtime>"
         return xml
+    def getMovements(self):
+        movements = []
+        self.currentMoC.tick()    
+        for movement in self.currentMoC.getMovements():
+            newMovement = diagramMovementClass(movement.toStageName)
+            movements.append(newMovement)
+        return movements
 
 
 class siteClass:
