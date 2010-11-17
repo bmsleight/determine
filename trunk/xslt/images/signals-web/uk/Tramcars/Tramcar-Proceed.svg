@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <circle fill="black" r="50" cy="50" cx="50"/>
+  <rect fill="white" stroke="white" height="80" width="10" ry="10" rx="10" y="10" x="45"/>
+ </g>
+</svg>
